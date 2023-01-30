@@ -28,6 +28,7 @@ UserSeeder extends ModelSeeder
         ];
 
         $admins = $this->useData($adminsData)
+            ->setAmount(count($adminsData))
             ->setHeader("Seeding Admins")
             ->seedModel(User::class, function ($user) {
                 $user->admin = 1;
