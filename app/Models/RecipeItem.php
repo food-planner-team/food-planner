@@ -7,14 +7,12 @@ use App\Support\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class RecipeItem extends Model
 {
     use HasFactory, Filterable, Searchable;
     protected $fillable = [
-        'imageable_id',
-        'imageable_type',
-        'name',
-        'path',
-        'url',
+        'receipt_id',
+        'quantity',
+        'optional',
     ];
 }
