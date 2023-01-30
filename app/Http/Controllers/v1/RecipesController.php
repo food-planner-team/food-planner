@@ -7,7 +7,7 @@ use App\Transformers\RecipeTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
-class RecipeController extends ApiController
+class RecipesController extends ApiController
 {
     /**
      * Display a listing of the resource.

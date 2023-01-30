@@ -9,9 +9,10 @@
         "codingphase/fractalfy": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
-        "laravel/sanctum": "^3.0",
+        "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^4.2"
+        "laravel/ui": "^4.2",
+        "league/fractal": "^0.20.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
