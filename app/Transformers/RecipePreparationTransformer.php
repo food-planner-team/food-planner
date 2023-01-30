@@ -24,7 +24,7 @@ class RecipePreparationTransformer extends TransformerAbstract
     }
     public function includeRecipe(RecipeItem $recipeItem): Collection
     {
-        return $this->collection($recipeItem->image, new RecipeTransformer);
+        return $this->collection($recipeItem->recipe, new RecipeTransformer);
     }
 
 }
