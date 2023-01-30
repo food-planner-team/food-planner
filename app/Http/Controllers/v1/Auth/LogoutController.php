@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\v1\Auth;
 
 use App\Http\Controllers\Controller;
@@ -11,9 +12,14 @@ class LogoutController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        Auth::logout();
+        if ($request->user()) {
+            $request->user()->tokens()->delete();
+            return new JsonResponse([
+                'message' => "Successfully logged out"
+            ], 200);
+        }
         return new JsonResponse([
-            'message' => "Successfully logged out"
-        ], 200);
+            'message' => 'Sorry, something went wrong'
+        ], 500);
     }
 }
