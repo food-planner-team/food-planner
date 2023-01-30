@@ -26,68 +26,75 @@ class RecipesController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $data  = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'preparation_time' => 'required'
+        ]);
+        $recipe = Recipe::create($data);
+
+        if ($recipe) {
+
+            return $this->fractal
+                ->item($recipe, new RecipeTransformer())
+                ->get();
+        }
+
+        return $this->respondUnprocessable();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recipe  $recipe
+     * @param \App\Models\Recipe $recipe
      * @return \Illuminate\Http\Response
      */
     public function show(Recipe $recipe)
     {
-        //
+        return $this->fractal
+            ->item($recipe, new RecipeTransformer())
+            ->get();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Recipe  $recipe
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recipe $recipe)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recipe  $recipe
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Recipe $recipe
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        if ($recipe->update($request->all())) {
+
+            return $this->fractal
+                ->item($recipe, new RecipeTransformer())
+                ->get();
+        }
+
+        return $this->respondUnprocessable();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recipe  $recipe
+     * @param \App\Models\Recipe $recipe
      * @return \Illuminate\Http\Response
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        if ($recipe->delete()) {
+            return $this->respondOK();
+        }
+
+        return $this->respondUnprocessable();
     }
 }
