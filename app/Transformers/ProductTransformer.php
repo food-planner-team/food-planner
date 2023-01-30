@@ -19,7 +19,6 @@ class ProductTransformer extends TransformerAbstract
     {
         return [
             'id'   =>$product->id,
-            'parent_id' =>$product->parent_id,
             'name' =>$product->name,
             'quantity' =>$product->quantity,
             'quantity_type' =>$product->quantityType,

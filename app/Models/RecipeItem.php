@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecipeItem extends Model
 {
-    use HasFactory, Filterable, Searchable;
+    use HasFactory;
     protected $fillable = [
         'receipt_id',
         'quantity',

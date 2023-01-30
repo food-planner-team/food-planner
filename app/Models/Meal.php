@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Meal extends Model
 {
-    use HasFactory, Filterable, Searchable;
+    use HasFactory;
     protected $fillable = [
         'name',
         'order',
