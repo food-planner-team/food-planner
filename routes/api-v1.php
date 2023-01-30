@@ -23,9 +23,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::get('/recipes', [RecipesController::class, 'index']);
+    Route::resource('/recipes', RecipesController::class);
 
+    Route::post('/logout', LogoutController::class);
 });
-Route::post('/logout', LogoutController::class);
 Route::post('/login', LoginController::class);
 Route::post('/register', RegisterController::class);
