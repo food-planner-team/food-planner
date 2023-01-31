@@ -1,13 +1,9 @@
-import System from "../../app/System/routes/index.jsx";
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import { Route } from "react-router-dom";
+import { SystemRoutes } from "../../app/System/routes";
 
-const AllRouters = () => (
-    <Routes>
-        <Route>
-            <System/>
-        </Route>
-    </Routes>
+export const AllRoutes = () => (
+    <React.Fragment>
+        <SystemRoutes />
+    </React.Fragment>
 );
-
-export default AllRouters;
