@@ -18,7 +18,7 @@ class RegisterController extends ApiController
         $credentials = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6|confirmed'
         ]);
         $user = User::create([
             'name' => $credentials['name'],
@@ -35,6 +35,5 @@ class RegisterController extends ApiController
         return new JsonResponse([
             'message' => 'Sorry, something went wrong'
         ], 500);
-
     }
 }
