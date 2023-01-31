@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import { Home, Login, NotFound, Signup, User } from "./pages";
 
-export const App = () => {
+export const Recipes = () => {
     return (
         <>
             <nav>

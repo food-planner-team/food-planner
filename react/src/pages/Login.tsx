@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import Api from "../Api";
+import Api from "../app/common/services/Api";
 
 
 export const Login = () => {
