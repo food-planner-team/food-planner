@@ -16,7 +16,7 @@ export const Home = () => {
                         <Link to="/signup">Signup</Link>
                     </li>
                     <li>
-                        <Link to="/user">User</Link>
+                        <Link to="/recipes">Recipes</Link>
                     </li>
                 </ul>
             </nav>
