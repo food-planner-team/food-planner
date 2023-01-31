@@ -1,47 +1,26 @@
-import React from "react";
-import { useState } from "react";
-import { useFormik } from "formik";
-import axios, { AxiosError } from "axios";
+import React, {useState} from 'react';
+import Api from '../../common/services/Api';
 import "./Login.css";
-import { useSignIn } from "react-auth-kit";
+import {useNavigate} from "react-router-dom";
 
-function Login(poprs: any) {
-    const [error, setError] = useState("");
-    const signIn = useSignIn();
+interface Props {
+}
 
-    const onSubmit = async (values: any) => {
-        console.log("Values:", values);
-        setError("");
+const Login: React.FC<Props> = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-        try {
-            const response = await axios.post(
-                "http://food-planner.test/api/v1/login",
-                values
-            );
-
-            signIn({
-                token: response.data.token,
-                expiresIn: 3600,
-                tokenType: "Bearer",
-                authState: { email: values.email },
-            });
-        } catch (err) {
-            if (err && err instanceof AxiosError)
-                setError(err.response?.data.message);
-            else if (err && err instanceof Error) setError(err.message);
-
-            console.log("Error: ", err);
-        }
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        Api.post('/login', {email, password}).then(response => {
+            sig
+            localStorage.setItem('token',response.data.token)
+            navigate('/')
+        }).then(e => {
+            console.log(e)
+        })
     };
-
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-        onSubmit,
-    });
-
     return (
         <>
             <main className="main">
@@ -51,7 +30,7 @@ function Login(poprs: any) {
                     </div>
                     <form
                         className="panel__form"
-                        onSubmit={formik.handleSubmit}
+                        onSubmit={handleSubmit}
                     >
                         <label className="form__label">
                             <div className="label__group">
@@ -65,8 +44,8 @@ function Login(poprs: any) {
                                 className="form__input"
                                 type="email"
                                 name="email"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)}
                             />
                         </label>
                         <label className="form__label">
@@ -80,8 +59,8 @@ function Login(poprs: any) {
                                 className="form__input form__input--error"
                                 type="password"
                                 name="password"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
                             />
                         </label>
                         <div className="form__group">
@@ -118,6 +97,6 @@ function Login(poprs: any) {
             </main>
         </>
     );
-}
+};
 
 export default Login;

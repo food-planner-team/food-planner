@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 const routers = [
     {
         path: "/",
+        name: 'Home',
         element: <Home />,
     },
     {
