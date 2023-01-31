@@ -7,16 +7,11 @@ use App\Support\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class RecipePreparation extends Model
 {
-    use HasFactory, Filterable, Searchable;
+    use HasFactory;
     protected $fillable = [
-        'parent_id',
-        'name',
-        'quantity',
-        'quantity_type',
-        'image_id',
-        'external_id',
-        'provider',
+        'receipe_id',
+        'order',
     ];
 }
