@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
-import Api from '../../common/services/Api';
+import Api from '../../common/services/Api.jsx';
 import "./Login.css";
 import {useNavigate} from "react-router-dom";
+import {useSignIn} from "react-auth-kit";
 
-interface Props {
-}
 
-const Login: React.FC<Props> = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const signIn = useSignIn();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = event => {
         event.preventDefault();
         Api.post('/login', {email, password}).then(response => {
-            sig
-            localStorage.setItem('token',response.data.token)
+            signIn({})
+            signIn(
+                {
+                    token: response.data.token,
+                    expiresIn: response.data.expiresIn || 3600,
+                    tokenType: "Bearer",
+                    authState: {},
+                })
+            localStorage.setItem('token', response.data.token)
             navigate('/')
         }).then(e => {
             console.log(e)
@@ -45,7 +52,7 @@ const Login: React.FC<Props> = () => {
                                 type="email"
                                 name="email"
                                 value={email}
-                                onChange={(event) => setEmail(event.target.value)}
+                                onChange={event => setEmail(event.target.value)}
                             />
                         </label>
                         <label className="form__label">
@@ -60,7 +67,7 @@ const Login: React.FC<Props> = () => {
                                 type="password"
                                 name="password"
                                 value={password}
-                                onChange={(event) => setPassword(event.target.value)}
+                                onChange={event => setPassword(event.target.value)}
                             />
                         </label>
                         <div className="form__group">

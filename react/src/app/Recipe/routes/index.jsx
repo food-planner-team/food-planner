@@ -1,4 +1,4 @@
-import { Recipes } from "../pages/Recipes";
+import { Recipes } from "../pages/Recipes.jsx";
 
 const routers = [
     {

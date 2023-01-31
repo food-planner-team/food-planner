@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Api from "../app/common/services/Api";
+import Api from "../app/common/services/Api.jsx";
 
 export const Login = () => {
     useEffect(() => {
