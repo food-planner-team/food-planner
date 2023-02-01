@@ -4,13 +4,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider, RequireAuth } from "react-auth-kit";
 
-import { Home } from "../pages/Home.jsx";
-import { Login } from "./System/pages/Login/Login";
-import { Register } from "./System/pages/Register/Register";
-import { NotFound } from "../pages/NotFound";
-import { UnauthorizedLayout } from "./common/layouts/UnauthorizedLayout";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./common/theme/theme";
+import { SystemRoutes } from "./System/routes";
+import { Home } from "./System/pages";
 
 export const App = () => {
     return (
@@ -31,28 +28,26 @@ export const App = () => {
                                 </RequireAuth>
                             }
                         />
-                        <Route
-                            path={"/login"}
-                            element={
-                                <UnauthorizedLayout>
-                                    <Login />
-                                </UnauthorizedLayout>
-                            }
-                        />
-
-                        <Route
-                            path={"/register"}
-                            element={
-                                <UnauthorizedLayout>
-                                    <Register />
-                                </UnauthorizedLayout>
-                            }
-                        />
-
-                        <Route path={"*"} element={<NotFound />} />
+                        <Route path={"*"} element={<SystemRoutes />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
         </AuthProvider>
     );
 };
+
+{
+    /* <Route
+                            path={"/"}
+                            element={
+                                <RequireAuth loginPath={"/login"}>
+                                    <Home />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route element={<UnauthorizedLayout />}>
+                            <Route path={"/login"} element={<Login />} />
+                            <Route path={"/register"} element={<Register />} />
+                            <Route path={"*"} element={<NotFound />} />
+                        </Route> */
+}
