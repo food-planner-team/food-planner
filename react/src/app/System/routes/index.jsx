@@ -1,23 +1,17 @@
 import React from "react";
 import { RequireAuth } from "react-auth-kit";
-import { Route } from "react-router-dom";
-import { Home } from "../../../pages/Home";
-import { Login } from "../pages/Login";
+import { Route, Routes } from "react-router-dom";
+import { Home, Login, NotFound, Register } from "../pages";
+import { UnauthorizedLayout } from "../../common/layouts/UnauthorizedLayout";
 
 export const SystemRoutes = () => {
     return (
-        <>
-            <Route
-                path={"/"}
-                element={
-                    <RequireAuth loginPath={"/login"}>
-                        <div>
-                            <Home />
-                        </div>
-                    </RequireAuth>
-                }
-            />
-            <Route path={"/login"} element={<Login />} />
-        </>
+        <Routes>
+            <Route element={<UnauthorizedLayout />}>
+                <Route path={"/login"} element={<Login />} />
+                <Route path={"/register"} element={<Register />} />
+                <Route path={"*"} element={<NotFound />} />
+            </Route>
+        </Routes>
     );
 };

@@ -1,8 +1,14 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 export const UnauthorizedLayout = ({ children }) => {
-    return <Container>{children}</Container>;
+    return (
+        <Container>
+            {children}
+            <Outlet />
+        </Container>
+    );
 };
 
 export const animationBgElement = keyframes`
