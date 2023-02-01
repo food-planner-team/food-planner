@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Api from "../../../common/services/Api.jsx";
 import { Link, useNavigate } from "react-router-dom";
+
 import { useSignIn } from "react-auth-kit";
 import {
     ButtonPrimary,
     ButtonSecondary,
     ElementHighlight,
     FooterElement,
-    FormContainer,
     FormGroup,
     FormInput,
     GroupError,
@@ -51,70 +51,60 @@ export const Login = () => {
         setError("");
     };
     return (
-        <>
-            <FormContainer>
-                <Panel>
-                    <PanelWrapper>
-                        <PanelHeader>
-                            <HeaderTitle>Panel logowania</HeaderTitle>
-                        </PanelHeader>
-                        <PanelForm onSubmit={handleSubmit}>
-                            <label>
-                                <LabelGroup>
-                                    <GroupTitle>Email</GroupTitle>
-                                </LabelGroup>
-                                <FormInput
-                                    type="email"
-                                    name="email"
-                                    value={email}
-                                    onChange={(event) =>
-                                        setEmail(event.target.value)
-                                    }
-                                />
-                            </label>
-                            <label>
-                                <LabelGroup>
-                                    <GroupTitle>Hasło</GroupTitle>
-                                </LabelGroup>
-                                <FormInput
-                                    type="password"
-                                    name="password"
-                                    value={password}
-                                    onChange={(event) =>
-                                        setPassword(event.target.value)
-                                    }
-                                />
-                            </label>
-                            <GroupError>{error}</GroupError>
-                            <FormGroup>
-                                <ButtonSecondary
-                                    type="reset"
-                                    value="Wyczyść"
-                                    onClick={handleReset}
-                                />
-                                <ButtonPrimary type="submit">
-                                    Zaloguj
-                                </ButtonPrimary>
-                            </FormGroup>
-                        </PanelForm>
-                        <PanelFooter>
-                            {/* <FooterElement>
+        <Panel>
+            <PanelWrapper>
+                <PanelHeader>
+                    <HeaderTitle>Panel logowania</HeaderTitle>
+                </PanelHeader>
+                <PanelForm onSubmit={handleSubmit}>
+                    <label>
+                        <LabelGroup>
+                            <GroupTitle>Email</GroupTitle>
+                        </LabelGroup>
+                        <FormInput
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <LabelGroup>
+                            <GroupTitle>Hasło</GroupTitle>
+                        </LabelGroup>
+                        <FormInput
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                        />
+                    </label>
+                    <GroupError>{error}</GroupError>
+                    <FormGroup>
+                        <ButtonSecondary
+                            type="reset"
+                            value="Wyczyść"
+                            onClick={handleReset}
+                        />
+                        <ButtonPrimary type="submit">Zaloguj</ButtonPrimary>
+                    </FormGroup>
+                </PanelForm>
+                <PanelFooter>
+                    {/* <FooterElement>
                             Nie możesz się zalogować?
                             <ElementHighlight> Zresetuj hasło</ElementHighlight>
                         </FooterElement> */}
-                            {/* TODO: add reset passowrd */}
-                            <Link to="/register">
-                                <FooterElement>
-                                    Nie masz konta?
-                                    <ElementHighlight>
-                                        Założ konto
-                                    </ElementHighlight>
-                                </FooterElement>
-                            </Link>
-                        </PanelFooter>
-                    </PanelWrapper>
-                </Panel>
-            </FormContainer>
-        </>
+                    {/* TODO: add reset passowrd */}
+                    <Link to="/register">
+                        <FooterElement>
+                            Nie masz konta?
+                            <ElementHighlight>Założ konto</ElementHighlight>
+                        </FooterElement>
+                    </Link>
+                </PanelFooter>
+            </PanelWrapper>
+        </Panel>
     );
 };
