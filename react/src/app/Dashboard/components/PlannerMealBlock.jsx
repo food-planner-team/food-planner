@@ -1,36 +1,68 @@
 import React from "react";
 import styled from "styled-components";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-export const PlannerMealBlock = () => {
+export const PlannerMealBlock = ({ id }) => {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging,
+    } = useSortable({ id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    const styleGrabButton = {
+        cursor: isDragging ? "grabbing" : "grab",
+    };
+
+    const styleMealBlock = {
+        transform: isDragging ? "scale(1.03)" : "scale(1)",
+        boxShadow: isDragging
+            ? "2px 3px 12px rgba(0, 0, 0, 0.2)"
+            : "2px 3px 12px rgba(0, 0, 0, 0.06)",
+    };
+
     return (
-        <PlannerMealBlockContainer>
-            <MealBlockSettings>
-                <span className="material-symbols-outlined">
-                    drag_indicator
-                </span>
-                <span className="material-symbols-outlined">more_vert</span>
-                {/* <MealBlockToolbar>
-                    <ToolbarElement>
-                        <span className="material-symbols-outlined">
-                            search
-                        </span>
-                        Zobacz danie
-                    </ToolbarElement>
-                    <ToolbarElement>
-                        <span className="material-symbols-outlined">
-                            delete
-                        </span>
-                        Usuń
-                    </ToolbarElement>
-                </MealBlockToolbar> */}
-            </MealBlockSettings>
-            <MealBlockImage></MealBlockImage>
-            <MealBlockInformation>
-                <MealBlockTitle>
-                    Kurczak z ryżem w sosie słodkokwaśnym
-                </MealBlockTitle>
-            </MealBlockInformation>
-        </PlannerMealBlockContainer>
+        <div ref={setNodeRef} style={style}>
+            <PlannerMealBlockContainer style={styleMealBlock}>
+                <MealBlockSettings>
+                    <GrabButton
+                        className="material-symbols-outlined"
+                        {...attributes}
+                        {...listeners}
+                        style={styleGrabButton}
+                    >
+                        drag_indicator
+                    </GrabButton>
+                    <span className="material-symbols-outlined">more_vert</span>
+                    {/* <MealBlockToolbar>
+                        <ToolbarElement>
+                            <span className="material-symbols-outlined">
+                                search
+                            </span>
+                            Zobacz danie
+                        </ToolbarElement>
+                        <ToolbarElement>
+                            <span className="material-symbols-outlined">
+                                delete
+                            </span>
+                            Usuń
+                        </ToolbarElement>
+                    </MealBlockToolbar> */}
+                </MealBlockSettings>
+                <MealBlockImage></MealBlockImage>
+                <MealBlockInformation>
+                    <MealBlockTitle>{id}</MealBlockTitle>
+                </MealBlockInformation>
+            </PlannerMealBlockContainer>
+        </div>
     );
 };
 
@@ -54,6 +86,16 @@ const MealBlockSettings = styled.div`
     align-items: center;
     justify-content: space-between;
     position: relative;
+`;
+
+const GrabButton = styled.span`
+    padding: 2px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-out;
+
+    &:hover {
+        background-color: #dfdfdf;
+    }
 `;
 
 const MealBlockToolbar = styled.div`

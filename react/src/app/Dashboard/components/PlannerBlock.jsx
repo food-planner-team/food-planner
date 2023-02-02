@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+    arrayMove,
+    SortableContext,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
 import { PlannerMealBlock } from "./PlannerMealBlock";
 
 export const PlannerBlock = ({ highlighted }) => {
+    const [meals, setMeals] = useState([
+        "Kurczak w sosie słodko kwaśnym",
+        "Jajecznica",
+        "Tiramisu",
+        "Omlet",
+    ]);
+
+    const handleDragEnd = (e) => {
+        const { active, over } = e;
+
+        if (active.id !== over.id) {
+            setMeals((items) => {
+                const activeIndex = items.indexOf(active.id);
+                const overIndex = items.indexOf(over.id);
+
+                return arrayMove(items, activeIndex, overIndex);
+            });
+        }
+    };
+
     return (
         <PlannerBlockWrapper highlighted={highlighted}>
             <PlannerBlockHeader>
@@ -23,14 +50,21 @@ export const PlannerBlock = ({ highlighted }) => {
                     </PlannerStatsElementHighlighted>
                 </PlannerStatsElement>
             </PlannerBlockStats>
-            <PlannerBlockContainer>
-                <PlannerMealBlock />
-                <PlannerMealBlock />
-                <PlannerMealBlock />
-                <PlannerMealBlock />
-                <PlannerMealBlock />
-                <PlannerMealBlock />
-            </PlannerBlockContainer>
+            <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+            >
+                <PlannerBlockContainer>
+                    <SortableContext
+                        items={meals}
+                        strategy={verticalListSortingStrategy}
+                    >
+                        {meals.map((meal) => (
+                            <PlannerMealBlock key={meal} id={meal} />
+                        ))}
+                    </SortableContext>
+                </PlannerBlockContainer>
+            </DndContext>
         </PlannerBlockWrapper>
     );
 };
