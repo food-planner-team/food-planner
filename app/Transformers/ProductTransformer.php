@@ -25,9 +25,9 @@ class ProductTransformer extends TransformerAbstract
             'provider' =>$product->provider,
         ];
     }
-    public function includeImage(Recipe $recipe): Collection
+    public function includeImage(Product $product): Collection
     {
-        return $this->collection($recipe->image, new ImageTransformer);
+        return $this->collection($product->image, new ImageTransformer);
     }
 
 }

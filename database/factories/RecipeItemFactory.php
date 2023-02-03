@@ -3,12 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\Recipe;
+use App\Models\RecipeItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Product>
+ * @extends Factory<RecipeItem>
  */
-class ProductFactory extends Factory
+class RecipeItemFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +20,9 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> fake()->text(),
-            'quantity'=> fake()->numberBetween(1,15),
+            'quantity' => fake()->numberBetween(1,115),
+            'product_id' => Product::all()->random()->id,
+            'recipe_id' => Recipe::all()->random()->id,
         ];
     }
 

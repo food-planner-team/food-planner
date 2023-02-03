@@ -4,27 +4,41 @@ namespace App\Transformers;
 
 use App\Models\Recipe;
 use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
 class RecipeTransformer extends TransformerAbstract
 {
     /** @var array */
     protected array $availableIncludes = [
-        'image'
+        'image',
+        'recipeItems',
+        'recipeUser'
     ];
 
     public function transform(Recipe $recipe): array
     {
-        return [
-            'id'   => $recipe->id,
+        $data = [
+            'id' => $recipe->id,
             'name' => $recipe->name,
             'description' => $recipe->description,
             'preparation_time' => $recipe->preparation_time,
         ];
+        if ($recipe->pivot) {
+            $data['order'] = $recipe->pivot->order;
+            $data['date'] = $recipe->pivot->date;
+        }
+        return $data;
     }
 
-    public function includeImage(Recipe $recipe): Collection
+    public function includeImage(Recipe $recipe): Item
     {
-        return $this->collection($recipe->image, new ImageTransformer);
+        return $this->item($recipe->image, new ImageTransformer);
     }
+
+    public function includeRecipeItems(Recipe $recipe): Collection
+    {
+        return $this->collection($recipe->recipeItems, new RecipeItemTransformer());
+    }
+
 }
