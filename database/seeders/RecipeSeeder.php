@@ -103,11 +103,10 @@ class RecipeSeeder extends ModelSeeder
                 'description' => 'Pyszne, wilgotne, z chrupiącą skorupką! Zielone Matcha Brownie, z dodatkiem sproszkowanej zielonej herbaty matcha. Koniecznie do wypróbowania dla fanów matchy!                ',
             ],
         ];
-       
+
         $this -> useData($recipesData)
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
-
             ->seedModel(Recipe::class,function($recipe){
                 $recipe -> save();
             });

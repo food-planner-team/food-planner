@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_items', function (Blueprint $table) {
-            $table->id();
+        Schema::create('recipe_user', function (Blueprint $table) {
             $table->unsignedInteger('recipe_id');
-            $table->unsignedInteger('product_id');
-            $table->integer('quantity');
-            $table->boolean('optional')->default(0);
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->integer('order');
+            $table->date('date');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_items');
+        Schema::dropIfExists('recipe_user');
     }
 };

@@ -17,4 +17,9 @@ class Recipe extends Model
         'preparation_time',
         'image_id',
     ];
+
+    public function recipeItems()
+    {
+        return $this->hasMany(RecipeItem::class);
+    }
 }

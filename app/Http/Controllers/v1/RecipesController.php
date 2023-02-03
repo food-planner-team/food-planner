@@ -39,9 +39,11 @@ class RecipesController extends ApiController
             'preparation_time' => 'required'
         ]);
         $recipe = Recipe::create($data);
+        if ($request->has('image')){
+            dd("File");
+        }
 
         if ($recipe) {
-
             return $this->fractal
                 ->item($recipe, new RecipeTransformer())
                 ->get();
