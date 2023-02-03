@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order']);
+        return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order'])->using(RecipeUser::class);
     }
 }

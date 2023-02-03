@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedInteger('user_id');
             $table->integer('order');
             $table->date('date');
-            $table->timestamps();
         });
     }
 
