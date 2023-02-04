@@ -1,8 +1,42 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAuthHeader } from "react-auth-kit";
 import styled from "styled-components";
+import Api from "../../common/services/Api";
 import { PlannerBlock } from "./PlannerBlock";
 
 export const Planner = () => {
+    const [data, setData] = useState();
+
+    const [dateStart, setDateStart] = useState("2023-02-04");
+    const [dateEnd, setDateEnd] = useState("2023-02-06");
+
+    // const token = useAuthHeader();
+    // console.log("token: " + token);
+
+    // useEffect(async () => {
+    //     const result = await Api.get("/user/recipes", { dateStart, dateEnd });
+
+    //     setData(result.data);
+    // }, []);
+
+    // console.log(data);
+
+    // user/recipes?dateStart=2023-02-04&dateEnd=2023-02-06
+    // Api.post("/login", { email, password })
+    //         .then((response) => {
+    //             signIn({
+    //                 token: response.data.token,
+    //                 expiresIn: response.data.expiresIn || 3600,
+    //                 tokenType: "Bearer",
+    //                 authState: {},
+    //             });
+    //             navigate("/");
+    //         })
+    //         .catch((e) => {
+    //             setError("Podane dane są nieprawidłowe");
+    //         });
+
     return (
         <MainPlanner>
             <PlannerContainer>
