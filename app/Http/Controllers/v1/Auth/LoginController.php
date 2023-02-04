@@ -2,21 +2,17 @@
 namespace App\Http\Controllers\v1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
 
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(LoginRequest $request): JsonResponse
     {
-        $credentials  = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($request->validationData())){
             return new JsonResponse([
                 'token' => $request->user()->createToken("API TOKEN")->plainTextToken
             ], 200);

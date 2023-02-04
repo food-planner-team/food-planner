@@ -14,12 +14,20 @@ class Recipe extends Model
     protected $fillable = [
         'name',
         'description',
+        'preparation',
         'preparation_time',
-        'image_id',
     ];
+//    protected $casts = [
+//        'preparation' => 'array'
+//    ];
 
     public function recipeItems()
     {
         return $this->hasMany(RecipeItem::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
     }
 }
