@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('imageable_id');
             $table->string('imageable_type');
-            $table->string('name');
             $table->string('path');
             $table->string('url');
             $table->timestamps();

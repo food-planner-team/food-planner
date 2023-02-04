@@ -31,8 +31,11 @@ class RecipeTransformer extends TransformerAbstract
         return $data;
     }
 
-    public function includeImage(Recipe $recipe): Item
+    public function includeImage(Recipe $recipe)
     {
+        if(!$recipe->image){
+            return null;
+        }
         return $this->item($recipe->image, new ImageTransformer);
     }
 
