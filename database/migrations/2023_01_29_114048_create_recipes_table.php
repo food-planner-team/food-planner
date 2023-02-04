@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->text('preparation');
+            $table->text('preparation')->nullable();
             $table->integer('preparation_time');
             $table->timestamps();
         });
