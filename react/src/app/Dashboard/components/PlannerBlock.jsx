@@ -9,13 +9,37 @@ import {
 
 import { PlannerMealBlock } from "./PlannerMealBlock";
 
-export const PlannerBlock = ({ highlighted }) => {
-    const [meals, setMeals] = useState([
-        "Kurczak w sosie słodko kwaśnym",
-        "Jajecznica",
-        "Tiramisu",
-        "Omlet",
-    ]);
+export const PlannerBlock = ({ highlighted, data, date }) => {
+    const filteredData = data.filter((el) => el.date === date);
+
+    const [meals, setMeals] = useState(filteredData.map((el) => el.name));
+
+    const d = new Date(`${date}`);
+    let numberOfDay = d.getDay();
+    let day;
+
+    switch (numberOfDay) {
+        case 0:
+            day = "Niedziela";
+            break;
+        case 1:
+            day = "Poniedziałek";
+            break;
+        case 2:
+            day = "Wtorek";
+            break;
+        case 3:
+            day = "Środa";
+            break;
+        case 4:
+            day = "Czwartek";
+            break;
+        case 5:
+            day = "Piątek";
+            break;
+        case 6:
+            day = "Sobota";
+    }
 
     const handleDragEnd = (e) => {
         const { active, over } = e;
@@ -33,8 +57,8 @@ export const PlannerBlock = ({ highlighted }) => {
     return (
         <PlannerBlockWrapper highlighted={highlighted}>
             <PlannerBlockHeader>
-                <PlannerTitle>Wtorek</PlannerTitle>
-                <PlannerText>02.01.2020</PlannerText>
+                <PlannerTitle>{day}</PlannerTitle>
+                <PlannerText>{date}</PlannerText>
             </PlannerBlockHeader>
             <PlannerBlockStats>
                 <PlannerStatsElement>
@@ -46,7 +70,7 @@ export const PlannerBlock = ({ highlighted }) => {
                 <PlannerStatsElement>
                     Dania{" "}
                     <PlannerStatsElementHighlighted>
-                        4
+                        {meals.length}
                     </PlannerStatsElementHighlighted>
                 </PlannerStatsElement>
             </PlannerBlockStats>
