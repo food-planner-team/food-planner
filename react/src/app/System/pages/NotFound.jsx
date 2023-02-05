@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import notFoundSvg from "../assets/page-not-found.svg";
+// import notFoundSvg from "../assets/page-not-found.svg";
 
 export const NotFound = () => {
     return (
         <Container>
-            <StyledImg src={notFoundSvg} alt="page not found img" />
+            {/* <StyledImg src={notFoundSvg} alt="page not found img" /> */}
             <h1>Page not found</h1>
             <StyledLink to={"/"}>Powrót</StyledLink>
         </Container>

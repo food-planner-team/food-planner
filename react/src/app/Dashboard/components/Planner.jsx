@@ -28,6 +28,8 @@ export const Planner = () => {
         setUniqueDates.add(el.date);
     });
 
+    console.log(data);
+
     const uniqueDates = [...setUniqueDates];
 
     const style = {
