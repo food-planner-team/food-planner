@@ -1,52 +1,56 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useAuthHeader } from "react-auth-kit";
 import styled from "styled-components";
-import Api from "../../common/services/Api";
+import { Loader } from "../../common/components/Loader";
+import Api, { useAxios } from "../../common/services/Api";
 import { PlannerBlock } from "./PlannerBlock";
 
 export const Planner = () => {
-    const [data, setData] = useState();
-
     const [dateStart, setDateStart] = useState("2023-02-04");
     const [dateEnd, setDateEnd] = useState("2023-02-06");
 
-    // const token = useAuthHeader();
-    // console.log("token: " + token);
+    const { response, loading, error } = useAxios({
+        method: "get",
+        url: `/user/recipes?dateStart=${dateStart}&dateEnd=${dateEnd}`,
+    });
+    const [data, setData] = useState([]);
 
-    // useEffect(async () => {
-    //     const result = await Api.get("/user/recipes", { dateStart, dateEnd });
+    useEffect(() => {
+        if (response !== null) {
+            setData(response.data);
+        }
+    }, [response]);
 
-    //     setData(result.data);
-    // }, []);
+    // console.log(response);
 
-    // console.log(data);
+    const setUniqueDates = new Set();
 
-    // user/recipes?dateStart=2023-02-04&dateEnd=2023-02-06
-    // Api.post("/login", { email, password })
-    //         .then((response) => {
-    //             signIn({
-    //                 token: response.data.token,
-    //                 expiresIn: response.data.expiresIn || 3600,
-    //                 tokenType: "Bearer",
-    //                 authState: {},
-    //             });
-    //             navigate("/");
-    //         })
-    //         .catch((e) => {
-    //             setError("Podane dane są nieprawidłowe");
-    //         });
+    data.forEach((el) => {
+        setUniqueDates.add(el.date);
+    });
+
+    const uniqueDates = [...setUniqueDates];
+
+    const style = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    };
 
     return (
         <MainPlanner>
-            <PlannerContainer>
-                <PlannerBlock highlighted />
-                <PlannerBlock />
-                <PlannerBlock />
-                <PlannerBlock />
-                <PlannerBlock />
-                <PlannerBlock />
-                <PlannerBlock />
+            <PlannerContainer style={loading ? style : null}>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    uniqueDates.map((day, index) => (
+                        <PlannerBlock
+                            key={day}
+                            highlighted={index === 0 ? true : false}
+                            data={data}
+                            date={day}
+                        />
+                    ))
+                )}
             </PlannerContainer>
         </MainPlanner>
     );

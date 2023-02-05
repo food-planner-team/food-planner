@@ -28,6 +28,11 @@ export const useAxios = ({ url, method }) => {
             });
     };
 
-// Api.interceptors.request;
+    useEffect(() => {
+        fetchData();
+    }, [method, url]);
+
+    return { response, error, loading };
+};
 
 export default Api;
