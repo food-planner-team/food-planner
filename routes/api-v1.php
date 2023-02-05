@@ -20,12 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::resource('/recipes', RecipesController::class);
-    Route::resource('/user/recipes', UserRecipesController::class)->only(['index','store']);
+    Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
 
     Route::post('/logout', LogoutController::class);
 });
