@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
 import store from './plugins/store'
 import router from './plugins/router/index.js'
-import './index.css'
 import App from './App.vue'
+import './plugins/styles/helpers.scss'
+import './plugins/styles/global.scss'
 
 
 createApp(App)

@@ -1,9 +1,21 @@
 <template>
     <div class="pannel">
         <div class="panel__header">
-            <div class="header__title">Panel logowania</div>
+            <div class="header__title">Panel rejestracji</div>
         </div>
-        <form class="panel__form" @submit="login">
+        <form class="panel__form" @submit="register">
+            <label class="form__label">
+                <div class="label__group">
+                    <div class="group__title">Login</div>
+                </div>
+                <input
+                    class="form__input"
+                    name="login"
+                    type="text"
+                    v-model="user.name"
+                    required
+                />
+            </label>
             <label class="form__label">
                 <div class="label__group">
                     <div class="group__title">Email</div>
@@ -14,7 +26,6 @@
                     name="email"
                     type="email"
                     v-model="user.email"
-                    autocomplete="email"
                     required
                 />
             </label>
@@ -28,12 +39,24 @@
                     name="password"
                     type="password"
                     v-model="user.password"
-                    autocomplete="current-password"
+                    required
+                />
+            </label>
+            <label class="form__label">
+                <div class="label__group">
+                    <div class="group__title">Powtórz hasło</div>
+                </div>
+                <input
+                    class="form__input"
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    type="password"
+                    v-model="user.password_confirmation"
                     required
                 />
             </label>
             <div class="group__error" v-if="error">
-                {{ error }}
+                Podanne dane są nieprawidłowe
             </div>
             <div class="form__group">
                 <input
@@ -46,19 +69,15 @@
                     class="form__input-btn form__input-btn--primary"
                     type="submit"
                 >
-                    Zaloguj
+                    Załóż konto
                 </button>
             </div>
         </form>
         <div class="panel__footer">
-            <!-- <div class="footer__element">
-                Nie możesz się zalogować?
-                <span class="element__highlight"> Zresetuj hasło</span>
-            </div> TODO-->
-            <router-link to="/register">
+            <router-link to="/login">
                 <div class="footer__element">
-                    Nie masz konta?
-                    <span class="element__highlight"> Założ konto</span>
+                    Masz już konto?
+                    <span class="element__highlight"> Zaloguj się</span>
                 </div>
             </router-link>
         </div>
@@ -80,8 +99,10 @@ function setError(errorMessage) {
 }
 
 const user = {
+    name: "",
     email: "",
     password: "",
+    password_confirmation: "",
 };
 
 onMounted(() => {
@@ -92,9 +113,9 @@ onMounted(() => {
     }
 });
 
-const login = (ev) => {
+const register = (ev) => {
     ev.preventDefault();
-    User.login(user)
+    User.register(user)
         .then(() => {
             router.push({
                 name: "Home",
@@ -111,7 +132,7 @@ const login = (ev) => {
     box-shadow: 0px 16px 30px #7090b020;
     border-radius: 16px;
     width: 800px;
-    min-height: 400px;
+    min-height: 500px;
     margin: 0 2rem;
     padding: 2rem;
     box-sizing: border-box;
