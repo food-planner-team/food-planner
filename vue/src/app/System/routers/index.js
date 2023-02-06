@@ -2,8 +2,7 @@ import HomePage from "../pages/HomePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import RegisterPage from "../pages/RegisterPage.vue";
 import NotFound from "../pages/NotFound.vue";
-import UnauthorizedLayout from '../../common/layouts/unauthorizedLayout.vue'
-
+import UnauthorizedLayout from "../../common/layouts/UnauthorizedLayout.vue";
 
 const routes = [
     {
@@ -38,5 +37,5 @@ const routes = [
             },
         ],
     },
-]
-export default routes
+];
+export default routes;
