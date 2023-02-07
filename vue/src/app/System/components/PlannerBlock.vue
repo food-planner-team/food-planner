@@ -25,13 +25,10 @@
             >
                 <template #item="{ element, index }">
                     <div :key="element.name">
-                        <div>
-                            <!-- {{ element.name }} -->
-                            <PlannerMealBlock
-                                :meal="element"
-                                @click="removeAt(index)"
-                            />
-                        </div>
+                        <PlannerMealBlock
+                            :meal="element"
+                            @remove="removeAt(index)"
+                        />
                     </div>
                 </template>
             </draggable>
@@ -43,6 +40,10 @@ import PlannerMealBlock from "./PlannerMealBlock.vue";
 import draggable from "vuedraggable";
 import { ref } from "vue";
 
+const props = defineProps({
+    day: String,
+});
+
 const meals = ["kurczak", "tiramisu", "rosol", "pomidorowa", "schabowy"];
 
 const list = ref(
@@ -53,7 +54,7 @@ const list = ref(
 
 const dragOptions = ref({
     animation: 200,
-    group: "description",
+    group: props.day,
     disabled: false,
     ghostClass: "ghost",
 });

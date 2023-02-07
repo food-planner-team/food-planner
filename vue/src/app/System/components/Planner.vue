@@ -1,10 +1,13 @@
 <template>
     <div class="wrapper">
         <div class="planner-container">
-            <PlannerBlock :class="{ 'planner-block--highlighted': true }" />
-            <PlannerBlock />
-            <PlannerBlock />
-            <PlannerBlock />
+            <PlannerBlock
+                :class="{ 'planner-block--highlighted': true }"
+                day="monday"
+            />
+            <PlannerBlock day="tuseday" />
+            <!-- <PlannerBlock />
+            <PlannerBlock /> -->
         </div>
     </div>
 </template>

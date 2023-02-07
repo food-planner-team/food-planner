@@ -25,5 +25,9 @@ export default async (to, from, next) => {
         return next("/login");
     }
 
+    // if (userCheckSuccessful && to("/login")) {
+    //     return next("/");
+    // }
+
     return next();
 };

@@ -58,6 +58,7 @@
                                             : 'text-gray-700',
                                         'block px-4 py-2 text-sm',
                                     ]"
+                                    @click="remove"
                                 >
                                     <span className="material-symbols-outlined">
                                         delete
@@ -73,8 +74,6 @@
         <div class="meal-block__img"></div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
-            <!-- <i class="fa fa-times close" @click="remove()">remove</i> -->
-            {{ meal }}
         </div>
     </div>
 </template>
@@ -83,8 +82,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 const props = defineProps({
     meal: Object,
-    remove: Function,
 });
+
+const emit = defineEmits(["remove"]);
+
+const remove = () => {
+    emit("remove");
+};
 </script>
 <style lang="scss" scoped>
 .handle {

@@ -108,7 +108,7 @@ const user = {
 onMounted(() => {
     if (store.state.User.user.data) {
         router.push({
-            name: "Home",
+            name: "Dashboard",
         });
     }
 });
@@ -118,7 +118,7 @@ const register = (ev) => {
     User.register(user)
         .then(() => {
             router.push({
-                name: "Home",
+                name: "Dashboard",
             });
         })
         .catch(() => {
