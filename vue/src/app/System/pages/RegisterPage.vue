@@ -127,9 +127,9 @@ const register = (ev) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .pannel {
-    box-shadow: 0px 16px 30px #7090b020;
+    box-shadow: 0px 16px 30px $box-shadow;
     border-radius: 16px;
     width: 800px;
     min-height: 500px;
@@ -137,7 +137,7 @@ const register = (ev) => {
     padding: 2rem;
     box-sizing: border-box;
     backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $alpha;
 }
 
 .panel__header {
@@ -156,7 +156,7 @@ const register = (ev) => {
     position: absolute;
     width: 40%;
     height: 1px;
-    background-color: #ddd;
+    background-color: $grey-light;
     top: 50%;
     margin-left: 1.5rem;
 }
@@ -178,17 +178,17 @@ const register = (ev) => {
 
 .group__title {
     flex: 1;
-    color: #888;
+    color: $grey;
     font-weight: 400;
 }
 
 .group__error {
     flex: 1;
-    color: rgb(224, 37, 37);
+    color: $error;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 10px;
-    background-color: rgb(255, 236, 236);
+    background-color: $error-bg;
     padding: 1rem;
     border-radius: 16px;
     margin-top: 10px;
@@ -212,13 +212,7 @@ const register = (ev) => {
     padding: 0.7rem 1rem;
     border: none;
     border-radius: 16px;
-    border: 1px solid #d2d2d2;
-}
-
-.form__input--error {
-    border: 1px solid rgb(224, 37, 37);
-    color: rgb(224, 37, 37);
-    background-color: rgb(255, 236, 236);
+    border: 1px solid $grey-light;
 }
 
 .form__input-btn {
@@ -235,26 +229,26 @@ const register = (ev) => {
 }
 
 .form__input-btn--primary {
-    background-color: rgb(70, 110, 102);
-    border: 1px solid rgb(70, 110, 102);
-    color: white;
+    background-color: $primary;
+    border: 1px solid $primary;
+    color: $white;
 }
 
 .form__input-btn--primary:hover {
-    background-color: rgb(60, 82, 77);
-    border: 1px solid rgb(60, 82, 77);
+    background-color: $primary-dark;
+    border: 1px solid $primary-dark;
 }
 
 .form__input-btn--secondary {
     background-color: transparent;
-    border: 1px solid rgb(70, 110, 102);
-    color: rgb(70, 110, 102);
+    border: 1px solid $primary;
+    color: $primary;
 }
 
 .form__input-btn--secondary:hover {
-    background-color: rgb(70, 110, 102);
-    border: 1px solid rgb(70, 110, 102);
-    color: white;
+    background-color: $primary;
+    border: 1px solid $primary;
+    color: $white;
 }
 
 .panel__footer {
@@ -267,12 +261,12 @@ const register = (ev) => {
 
 .footer__element {
     font-size: 12px;
-    color: #888;
+    color: $grey;
 }
 
 .element__highlight {
     font-weight: 700;
-    color: #333;
+    color: $typography-dark;
     text-transform: uppercase;
 }
 

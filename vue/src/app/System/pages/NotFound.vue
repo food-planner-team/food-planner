@@ -1,7 +1,7 @@
 <template>
     <main class="flex flex-col justify-center items-center">
         <img
-            src="../../../assets/page-not-found.svg"
+            src="../assets/page-not-found.svg"
             alt="page not found image"
             class="w-96"
         />
@@ -12,7 +12,7 @@
 
 <script setup></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .form__input-btn {
     text-align: center;
     text-decoration: none;
@@ -26,13 +26,13 @@
     font-size: 11px;
     letter-spacing: 0.3px;
     transition: 0.45s ease;
-    background-color: rgb(70, 110, 102);
-    border: 1px solid rgb(70, 110, 102);
+    background-color: $primary;
+    border: 1px solid $primary;
     color: white;
 }
 
 .form__input-btn:hover {
-    background-color: rgb(60, 82, 77);
-    border: 1px solid rgb(60, 82, 77);
+    background-color: $primary-dark;
+    border: 1px solid $primary-dark;
 }
 </style>

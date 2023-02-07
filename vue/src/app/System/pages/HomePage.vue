@@ -1,5 +1,6 @@
 <template>
     <main class="">Home page</main>
+    <div></div>
 </template>
 
 <script setup></script>
