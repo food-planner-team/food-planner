@@ -1,72 +1,4 @@
-// import parseISO from "date-fns/parseISO";
-// import parse from "date-fns/parse";
-// import format from "date-fns/format";
 import moment from "moment";
-
-export const parseISOtoDate = (date) => parseISO(date);
-
-export const getDateInBrowsersLocaleFormat = (date) => {
-    const locale = navigator.language.split("-")[0];
-    if (locale === "pl") {
-        return format(parseISOtoDate(date), "dd/MM/yyyy");
-    } else {
-        return format(parseISOtoDate(date), "yyyy/MM/dd");
-    }
-};
-
-export const getDateAndHourInBrowsersLocaleFormat = (date) => {
-    const locale = navigator.language.split("-")[0];
-    if (locale === "pl") {
-        return format(parseISOtoDate(date), "dd/MM/yyyy, HH:mm:ss");
-    } else {
-        return format(parseISOtoDate(date), "yyyy/MM/dd, HH:mm:ss");
-    }
-};
-
-/**
- * Adjusted to standard backend format, e.g. 2021-01-21 10:53:44
- */
-export const getLocalDateAndTime = (dateString) => {
-    const locale = navigator.language.split("-")[0];
-
-    const parsedDate = parse(
-        dateString + " +00",
-        "yyyy-MM-dd HH:mm:ss x",
-        new Date()
-    );
-
-    if (locale === "pl") {
-        return format(parsedDate, "dd/MM/yyyy, HH:mm:ss");
-    } else {
-        return format(parsedDate, "yyyy/MM/dd, HH:mm:ss");
-    }
-};
-
-export const getLocalTime = (dateString) => {
-    const parsedDate = parse(
-        dateString + " +00",
-        "yyyy-MM-dd HH:mm:ss x",
-        new Date()
-    );
-
-    return format(parsedDate, "HH:mm:ss");
-};
-
-export const getLocalDate = (dateString) => {
-    const locale = navigator.language.split("-")[0];
-
-    const parsedDate = parse(
-        dateString + " +00",
-        "yyyy-MM-dd HH:mm:ss x",
-        new Date()
-    );
-
-    if (locale === "pl") {
-        return format(parsedDate, "dd/MM/yyyy");
-    } else {
-        return format(parsedDate, "yyyy/MM/dd");
-    }
-};
 
 export const getThisWeekDates = () => {
     const weekDates = [];
@@ -79,13 +11,48 @@ export const getThisWeekDates = () => {
 };
 
 export const getFirstDayOfWeek = () => {
-    const thisWeekDates = getThisWeekDates();
-
-    return thisWeekDates[0];
+    return getThisWeekDates()[0];
 };
 
 export const getLastDayOfWeek = () => {
-    const thisWeekDates = getThisWeekDates();
+    return getThisWeekDates().at(-1);
+};
 
-    return thisWeekDates[thisWeekDates.length - 1];
+export const getCurrentDay = () => {
+    return moment().format("YYYY-MM-DD");
+};
+
+// export const getCurrentDayName = (date) => {
+//     return moment(date).format("dddd");
+// };
+
+export const getCurrentDayName = (date) => {
+    const d = new Date(`${date}`);
+    let numberOfDay = d.getDay();
+    let day;
+
+    switch (numberOfDay) {
+        case 0:
+            day = "Niedziela";
+            break;
+        case 1:
+            day = "Poniedziałek";
+            break;
+        case 2:
+            day = "Wtorek";
+            break;
+        case 3:
+            day = "Środa";
+            break;
+        case 4:
+            day = "Czwartek";
+            break;
+        case 5:
+            day = "Piątek";
+            break;
+        case 6:
+            day = "Sobota";
+    }
+
+    return day;
 };

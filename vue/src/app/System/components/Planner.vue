@@ -10,7 +10,9 @@
                 v-for="item in days"
                 v-model:recipes="recipes[item]"
                 :date="item"
-                :class="{ 'planner-block--highlighted': item === days[0] }"
+                :class="{
+                    'planner-block--highlighted': item === getCurrentDay(),
+                }"
             />
         </div>
     </div>
@@ -23,6 +25,7 @@ import {
     getThisWeekDates,
     getFirstDayOfWeek,
     getLastDayOfWeek,
+    getCurrentDay,
 } from "../../common/utils/datesHelpers";
 
 const days = getThisWeekDates();
@@ -39,12 +42,15 @@ onMounted(() => {
     Recipe.fetchUserRecipes({
         dateStart: `${getFirstDayOfWeek()}`,
         dateEnd: `${getLastDayOfWeek()}`,
-    }).then((res) => {
-        res.forEach((e) => {
-            recipes.value[e.date].push(e);
+    })
+        .then((res) => {
+            res.forEach((e) => {
+                recipes.value[e.date].push(e);
+            });
+        })
+        .finally(() => {
+            loader.value = false;
         });
-        loader.value = false;
-    });
 });
 </script>
 <style lang="scss" scoped>

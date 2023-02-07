@@ -1,7 +1,7 @@
 <template>
     <div class="planner-block" highlighted="{highlighted}">
         <div class="block-header">
-            <div class="block-header__title">{day}</div>
+            <div class="block-header__title">{{ getCurrentDayName(date) }}</div>
             <div class="block-header__text">{{ date }}</div>
         </div>
         <div class="block-stats">
@@ -39,6 +39,7 @@
 import PlannerMealBlock from "./PlannerMealBlock.vue";
 import draggable from "vuedraggable";
 import { ref, watch } from "vue";
+import { getCurrentDayName } from "../../common/utils/datesHelpers";
 // DODAĆ watchera który bd śledził recipes (opcja deep) i na każdą zmianę wysyłał request do api zapisujący.
 // Prze wysłaniem należy zmapować w każdym dniu posiłki i ustawić order od nowa
 const props = defineProps({
