@@ -16,7 +16,7 @@
         </div>
         <div class="block-items-container">
             <draggable
-                item-key="name"
+                item-key="order"
                 :list="props.recipes"
                 v-bind="dragOptions"
                 @start="drag = true"
@@ -32,16 +32,18 @@
                     </div>
                 </template>
             </draggable>
+            <AddMeal v-if="!props.recipes.length" :date="date" />
         </div>
     </div>
 </template>
 <script setup>
 import PlannerMealBlock from "./PlannerMealBlock.vue";
+import AddMeal from "./AddMeal.vue";
+import Recipe from "../../Recipe/models/Recipe";
 import draggable from "vuedraggable";
 import { ref, watch } from "vue";
 import { getCurrentDayName } from "../../common/utils/datesHelpers";
-// DODAĆ watchera który bd śledził recipes (opcja deep) i na każdą zmianę wysyłał request do api zapisujący.
-// Prze wysłaniem należy zmapować w każdym dniu posiłki i ustawić order od nowa
+
 const props = defineProps({
     date: String,
     recipes: {
@@ -51,7 +53,13 @@ const props = defineProps({
     },
 });
 
-console.log(props.date);
+watch(props.recipes, () => {
+    const recipesData = props.recipes.map((e, index) => {
+        return { recipe_id: e.id, order: index };
+    });
+
+    Recipe.saveUserRecipes(props.date, recipesData);
+});
 
 const dragOptions = ref({
     animation: 200,
