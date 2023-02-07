@@ -66,6 +66,20 @@ class User {
             return response;
         });
     }
+
+    static async recipes(dateStart, dateEnd) {
+        const data = await Api.get(
+            `/user/recipes?dateStart=${dateStart}&dateEnd=${dateEnd}`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                throw error;
+            });
+
+        return data;
+    }
 }
 
 export default User;
