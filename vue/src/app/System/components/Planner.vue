@@ -1,11 +1,6 @@
 <template>
     <div class="wrapper">
         <div class="planner-container" v-if="!loader">
-            <!-- <PlannerBlock
-                :class="{ 'planner-block--highlighted': true }"
-                day="monday"
-            />
-            <PlannerBlock day="tuseday" /> -->
             <PlannerBlock
                 v-for="item in days"
                 v-model:recipes="recipes[item]"
