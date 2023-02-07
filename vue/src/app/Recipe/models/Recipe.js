@@ -22,7 +22,9 @@ class Recipe {
     }
 
     static async fetchUserRecipes(include) {
-        const response = await Api.get('/user/recipes', include)
+        const response = await Api.get('/user/recipes', {
+            params: include
+        })
         return convertToArrayOfModels(Recipe, response.data.data)
     }
 }

@@ -17,7 +17,7 @@
         <div class="block-items-container">
             <draggable
                 item-key="name"
-                :list="list"
+                :list="props.recipes"
                 v-bind="dragOptions"
                 @start="drag = true"
                 @end="drag = false"
@@ -38,19 +38,17 @@
 <script setup>
 import PlannerMealBlock from "./PlannerMealBlock.vue";
 import draggable from "vuedraggable";
-import { ref } from "vue";
+import {ref, watch} from "vue";
 
 const props = defineProps({
     day: String,
+    recipes: {
+        type: Array,
+        default: [],
+        required: true
+    }
 });
 
-const meals = ["kurczak", "tiramisu", "rosol", "pomidorowa", "schabowy"];
-
-const list = ref(
-    meals.map((name, index) => {
-        return { name, order: index + 1 };
-    })
-);
 
 const dragOptions = ref({
     animation: 200,
@@ -61,8 +59,8 @@ const dragOptions = ref({
 
 const drag = ref(false);
 
-const removeAt = (idx) => {
-    list.value.splice(idx, 1);
+const removeAt = (id) => {
+    props.recipes.splice(id,1)
 };
 </script>
 <style lang="scss" scoped>
