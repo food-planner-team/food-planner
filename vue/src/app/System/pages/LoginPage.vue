@@ -55,7 +55,7 @@
                 Nie możesz się zalogować?
                 <span class="element__highlight"> Zresetuj hasło</span>
             </div> TODO-->
-            <router-link to="/register">
+            <router-link to="/rejestrowanie">
                 <div class="footer__element">
                     Nie masz konta?
                     <span class="element__highlight"> Założ konto</span>
@@ -66,13 +66,11 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 import User from "../models/User.js";
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import {ref} from "vue";
 
 const router = useRouter();
-const store = useStore();
 const error = ref("");
 
 function setError(errorMessage) {
@@ -84,25 +82,13 @@ const user = {
     password: "",
 };
 
-onMounted(() => {
-    if (store.state.User.user.data) {
-        router.push({
-            name: "Dashboard",
-        });
-    }
-});
-
 const login = (ev) => {
     ev.preventDefault();
-    User.login(user)
-        .then(() => {
-            router.push({
-                name: "Dashboard",
-            });
-        })
-        .catch(() => {
-            setError("Podane dane są nieprawidłowe!");
-        });
+    User.login(user).then(() => {
+        router.push({name: "Dashboard",});
+    }).catch(() => {
+        setError("Podane dane są nieprawidłowe!");
+    });
 };
 </script>
 

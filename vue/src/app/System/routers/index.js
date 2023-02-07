@@ -35,13 +35,13 @@ const routes = [
         component: UnauthorizedLayout,
         children: [
             {
-                path: "/login",
+                path: "/logowanie",
                 name: "Login",
                 meta: { requiresAuth: false },
                 component: LoginPage,
             },
             {
-                path: "/register",
+                path: "/rejestrowanie",
                 name: "Register",
                 meta: { requiresAuth: false },
                 component: RegisterPage,

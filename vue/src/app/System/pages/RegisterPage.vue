@@ -74,7 +74,7 @@
             </div>
         </form>
         <div class="panel__footer">
-            <router-link to="/login">
+            <router-link to="/logowanie">
                 <div class="footer__element">
                     Masz już konto?
                     <span class="element__highlight"> Zaloguj się</span>
@@ -85,13 +85,11 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 import User from "../models/User.js";
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import {ref} from "vue";
 
 const router = useRouter();
-const store = useStore();
 const error = ref("");
 
 function setError(errorMessage) {
@@ -105,25 +103,13 @@ const user = {
     password_confirmation: "",
 };
 
-onMounted(() => {
-    if (store.state.User.user.data) {
-        router.push({
-            name: "Dashboard",
-        });
-    }
-});
-
 const register = (ev) => {
     ev.preventDefault();
-    User.register(user)
-        .then(() => {
-            router.push({
-                name: "Dashboard",
-            });
-        })
-        .catch(() => {
-            setError("Podane dane są nieprawidłowe!");
-        });
+    User.register(user).then(() => {
+        router.push({name: "Dashboard",});
+    }).catch(() => {
+        setError("Podane dane są nieprawidłowe!");
+    });
 };
 </script>
 

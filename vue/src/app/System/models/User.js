@@ -28,7 +28,7 @@ class User {
     }
 
     static async login(user) {
-        return await Api.post("/login", user)
+        return await Api.post("/logowanie", user)
             .then((response) => {
                 const token = _get(response, "data.token");
                 sessionStorage.setItem("TOKEN", token);
@@ -43,7 +43,7 @@ class User {
     }
 
     static async register(user) {
-        return await Api.post("/register", user)
+        return await Api.post("/rejestrowanie", user)
             .then((response) => {
                 const token = _get(response, "data.token");
                 sessionStorage.setItem("TOKEN", token);

@@ -22,12 +22,12 @@ export default async (to, from, next) => {
     const userCheckSuccessful = await userIsAvailable(to.meta.requiresAuth);
 
     if (!userCheckSuccessful) {
-        return next("/login");
+        return next("/logowanie");
     }
 
-    // if (userCheckSuccessful && to("/login")) {
-    //     return next("/");
-    // }
+    if (userCheckSuccessful && (to("/logowanie") || to('/register'))) {
+        return next("/");
+    }
 
     return next();
 };

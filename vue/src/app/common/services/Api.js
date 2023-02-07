@@ -23,7 +23,7 @@ Api.interceptors.request.use(
     (error) => {
         if (error.response.status === 401) {
             sessionStorage.removeItem("TOKEN");
-            location.replace("/login");
+            location.replace("/logowanie");
             // router.push({name: 'Login'})
         } else if (error.response.status === 404) {
             // router.push({name: 'NotFound'})
