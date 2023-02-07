@@ -6,36 +6,46 @@
                 day="monday"
             />
             <PlannerBlock day="tuseday" /> -->
-            <PlannerBlock  v-for="item in days" v-model:recipes="recipes[item]" />
+            <PlannerBlock
+                v-for="item in days"
+                v-model:recipes="recipes[item]"
+                :date="item"
+                :class="{ 'planner-block--highlighted': item === days[0] }"
+            />
         </div>
     </div>
 </template>
 <script setup>
 import PlannerBlock from "./PlannerBlock.vue";
 import Recipe from "../../Recipe/models/Recipe";
-import {reactive, onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import {
+    getThisWeekDates,
+    getFirstDayOfWeek,
+    getLastDayOfWeek,
+} from "../../common/utils/datesHelpers";
 
-const recipes = ref({
-    "2023-02-06": [],
-    "2023-02-07": [],
-    "2023-02-08": []
+const days = getThisWeekDates();
+const daysWithRecipes = {};
+const loader = ref(true);
+
+days.forEach((e) => {
+    daysWithRecipes[e] = [];
 });
-const loader = ref(true)
-const days = ["2023-02-06", "2023-02-07","2023-02-08"];
+
+const recipes = ref(daysWithRecipes);
+
 onMounted(() => {
     Recipe.fetchUserRecipes({
-        dateStart: "2023-02-06",
-        dateEnd: "2023-02-08",
+        dateStart: `${getFirstDayOfWeek()}`,
+        dateEnd: `${getLastDayOfWeek()}`,
     }).then((res) => {
         res.forEach((e) => {
-            recipes.value[e.date].push(e)
+            recipes.value[e.date].push(e);
         });
-        loader.value = false
+        loader.value = false;
     });
 });
-// DODAĆ watchera który bd śledził recipes (opcja deep) i na każdą zmianę wysyłał request do api zapisujący.
-// Prze wysłaniem należy zmapować w każdym dniu posiłki i ustawić order od nowa
-
 </script>
 <style lang="scss" scoped>
 .wrapper {

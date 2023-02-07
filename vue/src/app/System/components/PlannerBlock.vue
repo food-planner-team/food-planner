@@ -2,7 +2,7 @@
     <div class="planner-block" highlighted="{highlighted}">
         <div class="block-header">
             <div class="block-header__title">{day}</div>
-            <div class="block-header__text">{date}</div>
+            <div class="block-header__text">{{ date }}</div>
         </div>
         <div class="block-stats">
             <div class="block-stats__element">
@@ -38,21 +38,23 @@
 <script setup>
 import PlannerMealBlock from "./PlannerMealBlock.vue";
 import draggable from "vuedraggable";
-import {ref, watch} from "vue";
-
+import { ref, watch } from "vue";
+// DODAĆ watchera który bd śledził recipes (opcja deep) i na każdą zmianę wysyłał request do api zapisujący.
+// Prze wysłaniem należy zmapować w każdym dniu posiłki i ustawić order od nowa
 const props = defineProps({
-    day: String,
+    date: String,
     recipes: {
         type: Array,
         default: [],
-        required: true
-    }
+        required: true,
+    },
 });
 
+console.log(props.date);
 
 const dragOptions = ref({
     animation: 200,
-    group: props.day,
+    group: props.date,
     disabled: false,
     ghostClass: "ghost",
 });
@@ -60,7 +62,7 @@ const dragOptions = ref({
 const drag = ref(false);
 
 const removeAt = (id) => {
-    props.recipes.splice(id,1)
+    props.recipes.splice(id, 1);
 };
 </script>
 <style lang="scss" scoped>
