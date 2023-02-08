@@ -5,7 +5,7 @@
             Dodaj danie do dnia
         </p>
     </div>
-    <TransitionRoot appear :show="isOpen" as="template">
+    <TransitionRoot appear :show="isOpenModal" as="template">
         <Dialog as="div" @close="closeModal" class="relative z-10">
             <TransitionChild
                 as="template"
@@ -102,6 +102,7 @@
                                     <div class="pr-4">
                                         <button
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 w-[200px] py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                            @click="addMeal(item)"
                                         >
                                             Wybierz danie
                                         </button>
@@ -109,12 +110,12 @@
                                 </div>
                             </div>
                             <div
-                                v-if="!filteredRecipes.length && !loader"
+                                v-if="!filteredRecipes.length && !isLoading"
                                 class="m-4"
                             >
                                 Brak pasujących przepisów
                             </div>
-                            <Loader v-if="loader" class="top-[30%]" />
+                            <Loader v-if="isLoading" class="top-[30%]" />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -141,19 +142,24 @@ const props = defineProps({
 });
 const allRecipes = ref([]);
 const searchValue = ref("");
-const isOpen = ref(false);
-const loader = ref(true);
+const isOpenModal = ref(false);
+const isLoading = ref(true);
 
 function closeModal() {
-    isOpen.value = false;
+    isOpenModal.value = false;
     searchValue.value = "";
 }
 function openModal() {
-    isOpen.value = true;
+    isOpenModal.value = true;
+}
+    const emit = defineEmits(['update'])
+function addMeal(v){
+    emit('update', v)
+    closeModal()
 }
 
-watch(isOpen, () => {
-    if (!isOpen.value) return;
+watch(isOpenModal, () => {
+    if (!isOpenModal.value) return;
 
     Recipe.getRecipes()
         .then((res) => {
@@ -161,7 +167,7 @@ watch(isOpen, () => {
             console.log(allRecipes.value);
         })
         .finally(() => {
-            loader.value = false;
+            isLoading.value = false;
         });
 });
 

@@ -33,8 +33,8 @@
                     </div>
                 </template>
             </draggable>
-            <Loader v-if="loader" />
-            <AddMeal :date="date" v-if="!loader" />
+            <Loader v-if="loader"/>
+            <AddMeal :date="date" v-if="!loader" @update="addMeal"/>
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@ import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
 import Recipe from "../../Recipe/models/Recipe";
 import draggable from "vuedraggable";
-import { ref, watch } from "vue";
+import {ref, watch} from "vue";
 import {
     getCurrentDayName,
     getLocaleDate,
@@ -62,7 +62,7 @@ const props = defineProps({
 
 watch(props.recipes, () => {
     const recipesData = props.recipes.map((e, index) => {
-        return { recipe_id: e.id, order: index };
+        return {recipe_id: e.id, order: index};
     });
 
     Recipe.saveUserRecipes(props.date, recipesData);
@@ -80,6 +80,9 @@ const drag = ref(false);
 const removeAt = (id) => {
     props.recipes.splice(id, 1);
 };
+const addMeal = (item) => {
+    props.recipes.push(item)
+}
 </script>
 <style lang="scss" scoped>
 .ghost {
@@ -87,6 +90,7 @@ const removeAt = (id) => {
     background: $grey-light;
     border-radius: 8px;
 }
+
 .planner-block {
     height: 100%;
     min-width: 355px;
