@@ -4,7 +4,6 @@
             <div class="block-header__title">
                 {{ getLocaleDate(date) }}
             </div>
-            <!-- <div class="block-header__text">{{ date }}</div> -->
         </div>
         <div class="block-stats">
             <div class="block-stats__element">
@@ -35,7 +34,7 @@
                 </template>
             </draggable>
             <Loader v-if="loader" />
-            <AddMeal :date="date" v-if="!loader" :all-recipes="allRecipes" />
+            <AddMeal :date="date" v-if="!loader" />
         </div>
     </div>
 </template>
@@ -59,14 +58,7 @@ const props = defineProps({
         required: true,
     },
     loader: Boolean,
-    allRecipes: {
-        type: Array,
-        default: [],
-        required: true,
-    },
 });
-
-// console.log(props.allRecipes);
 
 watch(props.recipes, () => {
     const recipesData = props.recipes.map((e, index) => {

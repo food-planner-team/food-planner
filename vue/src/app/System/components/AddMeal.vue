@@ -55,9 +55,7 @@
                             <div class="ml-4">
                                 Wybierz danie:
                                 <span class="font-medium text-grey">
-                                    <!-- {{ getCurrentDayName(date) }} -->
                                     {{ getLocaleDate(date) }}
-                                    <!-- ({{ date }}) -->
                                 </span>
                             </div>
                             <div class="m-4 flex flex-col">
@@ -110,9 +108,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-else class="m-4">
+                            <div
+                                v-if="!filteredRecipes.length && !loader"
+                                class="m-4"
+                            >
                                 Brak pasujących przepisów
                             </div>
+                            <Loader v-if="loader" class="top-[30%]" />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -122,7 +124,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import {
     TransitionRoot,
     TransitionChild,
@@ -130,45 +132,50 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
-import {
-    getCurrentDayName,
-    getLocaleDate,
-} from "../../common/utils/datesHelpers";
+import { getLocaleDate } from "../../common/utils/datesHelpers";
 import Recipe from "../../Recipe/models/Recipe";
+import Loader from "../../common/components/Loader.vue";
 
+const props = defineProps({
+    date: String,
+});
+const allRecipes = ref([]);
+const searchValue = ref("");
 const isOpen = ref(false);
+const loader = ref(true);
 
 function closeModal() {
     isOpen.value = false;
+    searchValue.value = "";
 }
 function openModal() {
     isOpen.value = true;
 }
 
-const searchValue = ref("");
+watch(isOpen, () => {
+    if (!isOpen.value) return;
+
+    Recipe.getRecipes()
+        .then((res) => {
+            allRecipes.value = res;
+            console.log(allRecipes.value);
+        })
+        .finally(() => {
+            loader.value = false;
+        });
+});
 
 const filteredRecipes = computed(() => {
     if (searchValue.value.trim().length > 0) {
-        return props.allRecipes.filter((recipe) =>
+        return allRecipes.value.filter((recipe) =>
             recipe.name
                 .toLowerCase()
                 .includes(searchValue.value.trim().toLocaleLowerCase())
         );
     }
 
-    return props.allRecipes;
+    return allRecipes.value;
 });
-
-const props = defineProps({
-    date: String,
-    allRecipes: {
-        type: Array,
-        default: [],
-        required: true,
-    },
-});
-
-// console.log(props.allRecipes);
 </script>
 
 <style lang="scss" scoped>

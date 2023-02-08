@@ -9,7 +9,6 @@
                     'planner-block--highlighted': item === getCurrentDay(),
                 }"
                 :loader="loader"
-                :all-recipes="allRecipes"
             />
         </div>
     </div>
@@ -34,7 +33,6 @@ days.forEach((e) => {
 });
 
 const recipes = ref(daysWithRecipes);
-const allRecipes = ref([]);
 
 onMounted(() => {
     Recipe.fetchUserRecipes({
@@ -49,10 +47,6 @@ onMounted(() => {
         .finally(() => {
             loader.value = false;
         });
-
-    Recipe.getRecipes().then((res) => {
-        allRecipes.value = res;
-    });
 });
 </script>
 <style lang="scss" scoped>
