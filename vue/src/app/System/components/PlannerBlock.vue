@@ -1,17 +1,19 @@
 <template>
     <div class="planner-block" highlighted="{highlighted}">
         <div class="block-header">
-            <div class="block-header__title">{{ getCurrentDayName(date) }}</div>
-            <div class="block-header__text">{{ date }}</div>
+            <div class="block-header__title">
+                {{ getLocaleDate(date) }}
+            </div>
+            <!-- <div class="block-header__text">{{ date }}</div> -->
         </div>
         <div class="block-stats">
             <div class="block-stats__element">
                 {{ "Kalorie " }}
-                <span class="element__highlighted"> 1234 </span>
+                <span class="element__highlighted"> TODO </span>
             </div>
             <div class="block-stats__element">
                 {{ "Dania " }}
-                <span class="element__highlighted"> 4 </span>
+                <span class="element__highlighted"> {{ recipes.length }} </span>
             </div>
         </div>
         <div class="block-items-container">
@@ -32,7 +34,8 @@
                     </div>
                 </template>
             </draggable>
-            <AddMeal v-if="!props.recipes.length" :date="date" />
+            <Loader v-if="loader" />
+            <AddMeal :date="date" v-if="!loader" :all-recipes="allRecipes" />
         </div>
     </div>
 </template>
@@ -42,7 +45,11 @@ import AddMeal from "./AddMeal.vue";
 import Recipe from "../../Recipe/models/Recipe";
 import draggable from "vuedraggable";
 import { ref, watch } from "vue";
-import { getCurrentDayName } from "../../common/utils/datesHelpers";
+import {
+    getCurrentDayName,
+    getLocaleDate,
+} from "../../common/utils/datesHelpers";
+import Loader from "../../common/components/Loader.vue";
 
 const props = defineProps({
     date: String,
@@ -51,7 +58,15 @@ const props = defineProps({
         default: [],
         required: true,
     },
+    loader: Boolean,
+    allRecipes: {
+        type: Array,
+        default: [],
+        required: true,
+    },
 });
+
+// console.log(props.allRecipes);
 
 watch(props.recipes, () => {
     const recipesData = props.recipes.map((e, index) => {
@@ -118,6 +133,10 @@ const removeAt = (id) => {
     &__title {
         font-size: 18px;
         font-weight: 800;
+    }
+
+    &__title::first-letter {
+        text-transform: uppercase;
     }
 
     &__text {

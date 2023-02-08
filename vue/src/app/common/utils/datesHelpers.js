@@ -34,3 +34,15 @@ export const getCurrentDayName = (date) => {
     ];
     return days[moment(date).day()];
 };
+
+export const getLocaleDate = (date) => {
+    const event = new Date(date);
+    const options = {
+        weekday: "long",
+        // year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
+
+    return event.toLocaleDateString("pl-PL", options);
+};

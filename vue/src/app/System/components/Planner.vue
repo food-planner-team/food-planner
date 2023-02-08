@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="planner-container" v-if="!loader">
+        <div class="planner-container">
             <PlannerBlock
                 v-for="item in days"
                 v-model:recipes="recipes[item]"
@@ -8,6 +8,8 @@
                 :class="{
                     'planner-block--highlighted': item === getCurrentDay(),
                 }"
+                :loader="loader"
+                :all-recipes="allRecipes"
             />
         </div>
     </div>
@@ -32,6 +34,7 @@ days.forEach((e) => {
 });
 
 const recipes = ref(daysWithRecipes);
+const allRecipes = ref([]);
 
 onMounted(() => {
     Recipe.fetchUserRecipes({
@@ -46,6 +49,10 @@ onMounted(() => {
         .finally(() => {
             loader.value = false;
         });
+
+    Recipe.getRecipes().then((res) => {
+        allRecipes.value = res;
+    });
 });
 </script>
 <style lang="scss" scoped>
