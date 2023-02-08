@@ -71,7 +71,9 @@
                 </transition>
             </Menu>
         </div>
-        <div class="meal-block__img"></div>
+        <div class="meal-block__img">
+            <img src="https://unsplash.it/200/200" alt="" />
+        </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
         </div>
@@ -132,6 +134,7 @@ const remove = () => {
         aspect-ratio: 1/1;
         background-color: $typography;
         border-radius: 6px;
+        overflow: hidden;
     }
 
     &__info {

@@ -35,6 +35,11 @@ class Recipe {
         });
         return convertToArrayOfModels(Recipe, response.data.data);
     }
+
+    static async getRecipes() {
+        const response = await Api.get("/recipes");
+        return convertToArrayOfModels(Recipe, response.data.data);
+    }
 }
 
 export default Recipe;
