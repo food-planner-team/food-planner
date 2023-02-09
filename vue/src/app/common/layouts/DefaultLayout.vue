@@ -1,7 +1,11 @@
 <template>
     <div class="wrapper">
         <HeaderNav />
-        <router-view />
+        <router-view v-slot="{ Component }">
+            <transition name="default" mode="out-in">
+                <component :is="Component" />
+            </transition>
+        </router-view>
         <Footer />
     </div>
 </template>
@@ -12,6 +16,16 @@ import Footer from "../components/Footer.vue";
 </script>
 
 <style lang="scss" scoped>
+.default-enter-active,
+.default-leave-active {
+    transition: 600ms ease all;
+}
+
+.default-enter-from,
+.default-leave-to {
+    opacity: 0;
+}
+
 .wrapper {
     width: 100%;
     min-height: 100vh;

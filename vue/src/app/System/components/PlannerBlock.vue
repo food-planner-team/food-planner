@@ -33,7 +33,7 @@
                     </div>
                 </template>
             </draggable>
-            <Loader v-if="loader" />
+            <Loader v-if="loader" class="top-[35%]" />
             <AddMeal :date="date" v-if="!loader" @update="addMeal" />
         </div>
     </div>
