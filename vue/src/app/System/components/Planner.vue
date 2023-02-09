@@ -9,6 +9,7 @@
                     'planner-block--highlighted': item === getCurrentDay(),
                 }"
                 :loader="loader"
+                ref="plannerBlocks"
             />
         </div>
     </div>
@@ -33,6 +34,7 @@ days.forEach((e) => {
 });
 
 const recipes = ref(daysWithRecipes);
+const plannerBlocks = ref([]);
 
 onMounted(() => {
     Recipe.fetchUserRecipes({
@@ -47,6 +49,17 @@ onMounted(() => {
         .finally(() => {
             loader.value = false;
         });
+
+    const elementHighlighted = document.querySelector(
+        ".planner-block--highlighted"
+    );
+
+    const elementPlannerContainer =
+        document.querySelector(".planner-container");
+
+    const { x: xCord } = elementHighlighted.getBoundingClientRect();
+
+    elementPlannerContainer.scrollTo(xCord - 100, 0);
 });
 </script>
 <style lang="scss" scoped>
