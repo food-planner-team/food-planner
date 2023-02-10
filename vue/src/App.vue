@@ -1,9 +1,19 @@
 <template>
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+            <component :is="Component" />
+        </transition>
+    </router-view>
 </template>
 <script></script>
-<style lang="scss">
-/* @import "plugins/styles/helpers.scss"; */
-/* @use "plugins/styles/helpers.scss"; */
-/* @forward "plugins/styles/helpers.scss"; */
+<style>
+.page-enter-active,
+.page-leave-active {
+    transition: 600ms ease all;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+}
 </style>

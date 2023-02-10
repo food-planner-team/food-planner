@@ -115,7 +115,10 @@
                             >
                                 Brak pasujących przepisów
                             </div>
-                            <Loader v-if="isLoading" class="top-[30%]" />
+                            <Loader
+                                v-if="isLoading"
+                                class="top-[30%] left-[11%]"
+                            />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -152,10 +155,10 @@ function closeModal() {
 function openModal() {
     isOpenModal.value = true;
 }
-    const emit = defineEmits(['update'])
-function addMeal(v){
-    emit('update', v)
-    closeModal()
+const emit = defineEmits(["update"]);
+function addMeal(v) {
+    emit("update", v);
+    closeModal();
 }
 
 watch(isOpenModal, () => {
