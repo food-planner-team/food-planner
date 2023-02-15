@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Factories\ImageFactory;
 use App\Http\Requests\StoreRecipeRequest;
-use App\Models\Image;
 use App\Models\Recipe;
 use App\Transformers\RecipeTransformer;
-use Illuminate\Support\Facades\Storage;
-use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -39,15 +37,8 @@ class RecipesController extends ApiController
     {
         $recipe = Recipe::create($request->validationData());
         if ($request->has('image')){
-            $id = Uuid::uuid4()->toString();
-            $path = Storage::disk('public')->putFile('images/recipes/'.$id,$request->file('image'));
-            Image::create([
-                'id' => $id,
-                'imageable_id' => $recipe->id,
-                'imageable_type' => Recipe::class,
-                'path' =>  $path,
-                'url' => Storage::disk('public')->url($path)
-            ]);
+            $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
+            $image->create();
         }
 
         if ($recipe) {
