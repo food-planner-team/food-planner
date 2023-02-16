@@ -82,7 +82,7 @@ const store = createStore({
   mutations: {
     setToken(state, token) {
       state.user.token = token
-      sessionStorage.setItem("TOKEN", token)
+      localStorage.setItem("TOKEN", token)
     },
     setUser(state, user) {
       state.user.data = user
@@ -99,7 +99,7 @@ const store = createStore({
     logout(state) {
       state.user.data = null
       state.user.token = null
-      sessionStorage.removeItem("TOKEN")
+      localStorage.removeItem("TOKEN")
     },
     notify(state, { message, type }) {
       state.notification.message = message

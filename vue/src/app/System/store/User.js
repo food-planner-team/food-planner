@@ -2,7 +2,7 @@ const getDefaultState = () => {
     return {
         user: {
             data: null,
-            token: sessionStorage.getItem("TOKEN"),
+            token: localStorage.getItem("TOKEN"),
         },
     };
 };
