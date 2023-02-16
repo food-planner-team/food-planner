@@ -1,79 +1,117 @@
 <template>
     <header class="header">
-        <div class="logo-name">LOGONAME</div>
+        <router-link :to="{ name: 'Dashboard' }">
+            <div class="logo-name">
+                <img :src="logo" alt="logo" />
+                <p>Food Planner</p>
+            </div>
+        </router-link>
         <div class="header-nav">
-            <div class="nav-element">
-                <span className="material-symbols-outlined">article</span>
-                Plannery
-                <!-- <div class="nav-element-dropdown">
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Dodaj produkt
-                    </div>
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Dodaj przepis
-                    </div>
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Planner tygodniowy
-                    </div>
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Lorem ipsum
-                    </div>
-                </div> -->
-            </div>
-            <div class="nav-element">
-                <span className="material-symbols-outlined">fastfood</span>
-                Potrawy
-            </div>
-            <div class="nav-element">
-                <span className="material-symbols-outlined">
-                    supervisor_account
-                </span>
-                Użytkownicy
-            </div>
-            <div class="nav-element">
-                <span className="material-symbols-outlined">settings</span>
-                Ustawienia
-                <!-- <div class="nav-element-dropdown">
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Ustawienia platformy
-                    </div>
-                    <div class="dropdown-element">
-                        <span className="material-symbols-outlined">
-                            add_circle
-                        </span>
-                        Lorem ipsum
-                    </div>
-                </div> -->
+            <div class="nav-element" v-for="link in links" :key="link.name">
+                <template v-if="link.children.length">
+                    <Dropdown
+                        :name="link.name"
+                        :icon="link.icon"
+                        :links="link.children"
+                        :style="style"
+                    />
+                </template>
+                <template v-else>
+                    <span className="material-symbols-outlined">{{
+                        link.icon
+                    }}</span>
+                    <router-link :to="{ name: link.pathName }">
+                        <p class="capitalize">{{ link.name }}</p>
+                    </router-link>
+                </template>
             </div>
         </div>
         <div class="header-profile">
             <div class="profile-block">
-                <div class="profile-avatar"></div>
+                <div class="profile-avatar">
+                    <img src="https://unsplash.it/200/200" alt="" />
+                </div>
                 <div class="profile-info">
                     <div class="profile-name">Witaj, Adam Kowalski!</div>
-                    <div class="profile-role">Administrator</div>
                 </div>
-                <span className="material-symbols-outlined"> expand_more </span>
+                <Dropdown icon="expand_more" :links="userLinks" />
             </div>
         </div>
     </header>
 </template>
-<script></script>
+<script setup>
+import { ref } from "vue";
+import logo from "../assets/logo.svg";
+import Dropdown from "./Dropdown.vue";
+
+const style = "left: 0";
+
+const links = ref([
+    {
+        name: "planner",
+        pathName: "Test",
+        icon: "article",
+        children: [],
+    },
+    {
+        name: "przepisy",
+        pathName: "",
+        icon: "fastfood",
+        children: [
+            {
+                name: "wszystkie przepisy",
+                pathName: "Dashboard",
+                icon: "list_alt",
+            },
+            {
+                name: "moje przepisy",
+                pathName: "",
+                icon: "favorite",
+            },
+            {
+                name: "dodaj przepis",
+                pathName: "",
+                icon: "add_circle",
+            },
+        ],
+    },
+    {
+        name: "produkty",
+        pathName: "",
+        icon: "nutrition",
+        children: [
+            {
+                name: "wszystkie produkty",
+                pathName: "",
+                icon: "list_alt",
+            },
+            {
+                name: "moje produkty",
+                pathName: "",
+                icon: "favorite",
+            },
+            {
+                name: "dodaj produkt",
+                pathName: "",
+                icon: "add_circle",
+            },
+        ],
+    },
+]);
+
+const userLinks = ref([
+    {
+        name: "ustawienia",
+        pathName: "",
+        icon: "settings",
+    },
+    {
+        name: "wyloguj",
+        pathName: "",
+        icon: "logout",
+    },
+]);
+</script>
 <style lang="scss" scoped>
 .header {
     background-color: $alpha;
@@ -93,6 +131,8 @@
     display: flex;
     align-items: center;
     color: $primary-dark;
+    gap: 10px;
+    margin-right: 40px;
 }
 
 .header-nav {
@@ -156,6 +196,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .profile-info {
@@ -168,10 +209,5 @@
     font-size: 15px;
     font-weight: 700;
     color: $black;
-}
-
-.profile-role {
-    font-size: 12px;
-    color: $grey;
 }
 </style>
