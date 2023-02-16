@@ -46,3 +46,18 @@ export const getLocaleDate = (date) => {
 
     return event.toLocaleDateString("pl-PL", options);
 };
+
+export const getDatesBetweenDays = (dateStart, dateEnd) => {
+    const listDate = [];
+
+    const dateMove = new Date(dateStart);
+    let strDate = dateStart;
+
+    while (strDate < dateEnd) {
+        strDate = dateMove.toISOString().slice(0, 10);
+        listDate.push(strDate);
+        dateMove.setDate(dateMove.getDate() + 1);
+    }
+
+    return listDate;
+};

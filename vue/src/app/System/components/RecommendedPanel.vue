@@ -18,6 +18,9 @@
 
 .card {
     height: 100%;
+    background-image: url("https://unsplash.it/650/650");
+    background-position: center;
+    background-size: cover;
     background-color: $grey;
     border-radius: 16px;
     flex: 1;

@@ -17,39 +17,33 @@
 <script setup>
 import PlannerBlock from "./PlannerBlock.vue";
 import Recipe from "../../Recipe/models/Recipe";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import {
-    getThisWeekDates,
     getFirstDayOfWeek,
     getLastDayOfWeek,
     getCurrentDay,
+    getDatesBetweenDays,
 } from "../../common/utils/datesHelpers";
 
-const days = getThisWeekDates();
-const daysWithRecipes = {};
-const loader = ref(true);
-
-days.forEach((e) => {
-    daysWithRecipes[e] = [];
+const props = defineProps({
+    dateStart: {
+        type: String,
+        default: "",
+    },
+    dateEnd: {
+        type: String,
+        default: "",
+    },
 });
 
-const recipes = ref(daysWithRecipes);
+const dateStart = computed(() => props.dateStart || getFirstDayOfWeek());
+const dateEnd = computed(() => props.dateEnd || getLastDayOfWeek());
+const days = ref(getDatesBetweenDays(dateStart.value, dateEnd.value));
+const loader = ref(true);
+const recipes = ref({});
 const plannerBlocks = ref([]);
 
 onMounted(() => {
-    Recipe.fetchUserRecipes({
-        dateStart: `${getFirstDayOfWeek()}`,
-        dateEnd: `${getLastDayOfWeek()}`,
-    })
-        .then((res) => {
-            res.forEach((e) => {
-                recipes.value[e.date].push(e);
-            });
-        })
-        .finally(() => {
-            loader.value = false;
-        });
-
     const elementHighlighted = document.querySelector(
         ".planner-block--highlighted"
     );
@@ -61,6 +55,32 @@ onMounted(() => {
 
     elementPlannerContainer.scrollTo(xCord - 100, 0);
 });
+
+watch(
+    [dateStart, dateEnd],
+    () => {
+        days.value = getDatesBetweenDays(dateStart.value, dateEnd.value);
+
+        days.value.forEach((e) => {
+            recipes.value[e] = [];
+        });
+
+        loader.value = true;
+        Recipe.fetchUserRecipes({
+            dateStart: `${dateStart.value}`,
+            dateEnd: `${dateEnd.value}`,
+        })
+            .then((res) => {
+                res.forEach((e) => {
+                    recipes.value[e.date].push(e);
+                });
+            })
+            .finally(() => {
+                loader.value = false;
+            });
+    },
+    { immediate: true }
+);
 </script>
 <style lang="scss" scoped>
 .wrapper {

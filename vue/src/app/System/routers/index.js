@@ -5,6 +5,7 @@ import RegisterPage from "../pages/RegisterPage.vue";
 import NotFound from "../pages/NotFound.vue";
 import UnauthorizedLayout from "../../common/layouts/UnauthorizedLayout.vue";
 import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
+import Creator from "../pages/Creator.vue";
 import Test from "../components/Test.vue";
 
 const routes = [
@@ -25,6 +26,12 @@ const routes = [
                 name: "Dashboard",
                 meta: { requiresAuth: true },
                 component: Dashboard,
+            },
+            {
+                path: "/kreator",
+                name: "Creator",
+                meta: { requiresAuth: true },
+                component: Creator,
             },
         ],
     },

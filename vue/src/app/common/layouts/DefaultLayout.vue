@@ -6,13 +6,13 @@
                 <component :is="Component" />
             </transition>
         </router-view>
-        <Footer />
+        <!-- <Footer /> -->
     </div>
 </template>
 
 <script setup>
 import HeaderNav from "../components/HeaderNav.vue";
-import Footer from "../components/Footer.vue";
+// import Footer from "../components/Footer.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -29,9 +29,9 @@ import Footer from "../components/Footer.vue";
 .wrapper {
     width: 100%;
     min-height: 100vh;
-    padding: 3rem;
+    padding: 2rem;
     display: grid;
-    grid-template-rows: 80px 1fr 40px;
+    grid-template-rows: 80px 1fr;
     gap: 1.5rem;
     position: relative;
     overflow: hidden;
