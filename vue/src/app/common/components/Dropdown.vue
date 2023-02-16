@@ -83,13 +83,9 @@ const props = defineProps({
 const logout = () => {
     User.logout()
         .then(() => {
-            sessionStorage.removeItem("TOKEN");
+            router.push({name: 'Login'})
         })
-        .catch(() => {})
-        .finally(() => {
-            router.push({ name: "Test" });
-        });
-};
+ł};
 </script>
 
 <style lang="scss">

@@ -16,20 +16,19 @@ const Api = axios.create({
 // Api.defaults.withCredentials = true
 Api.interceptors.request.use(
     (config) => {
-        const token = sessionStorage.getItem("TOKEN");
+        const token = localStorage.getItem("TOKEN");
         config.headers.Authorization = `Bearer ${token}`;
         return config;
     },
     (error) => {
-        if (error.response.status === 401) {
-            sessionStorage.removeItem("TOKEN");
-            location.replace("/logowanie");
-            // router.push({name: 'Login'})
-        } else if (error.response.status === 404) {
-            // router.push({name: 'NotFound'})
-        }
-        return error;
+    if (error.response.status === 401) {
+    localStorage.removeItem("TOKEN");
+    location.replace("/logowanie");
+    } else if (error.response.status === 404) {
     }
-);
+    return error;
+    }
+
+)
 
 export default Api;

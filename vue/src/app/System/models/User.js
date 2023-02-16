@@ -31,11 +31,12 @@ class User {
         return await Api.post("/login", user)
             .then((response) => {
                 const token = _get(response, "data.token");
-                sessionStorage.setItem("TOKEN", token);
+                localStorage.setItem("TOKEN", token);
                 store.commit("Notification/notify", {
                     message: "Zalogowano",
                     type: "success",
                 });
+                return response
             })
             .catch((error) => {
                 throw error;
@@ -46,11 +47,12 @@ class User {
         return await Api.post("/register", user)
             .then((response) => {
                 const token = _get(response, "data.token");
-                sessionStorage.setItem("TOKEN", token);
+                localStorage.setItem("TOKEN", token);
                 store.commit("Notification/notify", {
                     message: "Zarejestrowano",
                     type: "success",
                 });
+                return response
             })
             .catch((error) => {
                 throw error;
@@ -63,6 +65,8 @@ class User {
             //     message: "Wylogowano",
             //     type: "success"
             // })
+            store.commit("User/setUser", null);
+            localStorage.removeItem("TOKEN");
             return response;
         });
     }
