@@ -4,72 +4,11 @@
             <span class="setting__span-btn material-symbols-outlined handle">
                 drag_indicator
             </span>
-            <Menu as="div" class="relative inline-block text-left">
-                <div>
-                    <MenuButton>
-                        <span
-                            class="setting__span-btn material-symbols-outlined"
-                        >
-                            more_vert
-                        </span>
-                    </MenuButton>
-                </div>
-
-                <transition
-                    enter-active-class="transition ease-out duration-100"
-                    enter-from-class="transform opacity-0 scale-95"
-                    enter-to-class="transform opacity-100 scale-100"
-                    leave-active-class="transition ease-in duration-75"
-                    leave-from-class="transform opacity-100 scale-100"
-                    leave-to-class="transform opacity-0 scale-95"
-                >
-                    <MenuItems
-                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    >
-                        <div class="py-1">
-                            <MenuItem
-                                v-slot="{ active }"
-                                class="flex items-center gap-2 cursor-pointer"
-                            >
-                                <a
-                                    href="#"
-                                    :class="[
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    ]"
-                                >
-                                    <span className="material-symbols-outlined">
-                                        search
-                                    </span>
-                                    Zobacz danie
-                                </a>
-                            </MenuItem>
-                            <MenuItem
-                                v-slot="{ active }"
-                                class="flex items-center gap-2 cursor-pointer"
-                            >
-                                <a
-                                    href="#"
-                                    :class="[
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    ]"
-                                    @click="remove"
-                                >
-                                    <span className="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                    Usuń
-                                </a>
-                            </MenuItem>
-                        </div>
-                    </MenuItems>
-                </transition>
-            </Menu>
+            <Dropdown
+                icon="more_vert"
+                :links="links"
+                class="setting__span-btn"
+            />
         </div>
         <div class="meal-block__img">
             <img src="https://unsplash.it/200/200" alt="" />
@@ -80,7 +19,8 @@
     </div>
 </template>
 <script setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { ref } from "vue";
+import Dropdown from "../../common/components/Dropdown.vue";
 
 const props = defineProps({
     meal: Object,
@@ -91,6 +31,21 @@ const emit = defineEmits(["remove"]);
 const remove = () => {
     emit("remove");
 };
+
+const links = ref([
+    {
+        name: "zobacz danie",
+        pathName: "",
+        icon: "search",
+        action: "",
+    },
+    {
+        name: "usuń",
+        pathName: "",
+        icon: "delete",
+        action: () => remove(),
+    },
+]);
 </script>
 <style lang="scss" scoped>
 .handle {
