@@ -43,6 +43,9 @@
 import { ref } from "vue";
 import logo from "../assets/logo.svg";
 import Dropdown from "./Dropdown.vue";
+import { useRouter } from "vue-router";
+import User from "../../System/models/User";
+const router = useRouter();
 
 const style = "left: 0";
 
@@ -51,27 +54,32 @@ const links = ref([
         name: "kreator",
         pathName: "Creator",
         icon: "article",
+        action: "",
         children: [],
     },
     {
         name: "przepisy",
         pathName: "",
         icon: "fastfood",
+        action: "",
         children: [
             {
                 name: "wszystkie przepisy",
                 pathName: "Dashboard",
                 icon: "list_alt",
+                action: "",
             },
             {
                 name: "moje przepisy",
                 pathName: "",
                 icon: "favorite",
+                action: "",
             },
             {
                 name: "dodaj przepis",
                 pathName: "",
                 icon: "add_circle",
+                action: "",
             },
         ],
     },
@@ -79,36 +87,48 @@ const links = ref([
         name: "produkty",
         pathName: "",
         icon: "nutrition",
+        action: "",
         children: [
             {
                 name: "wszystkie produkty",
                 pathName: "",
                 icon: "list_alt",
+                action: "",
             },
             {
                 name: "moje produkty",
                 pathName: "",
                 icon: "favorite",
+                action: "",
             },
             {
                 name: "dodaj produkt",
                 pathName: "",
                 icon: "add_circle",
+                action: "",
             },
         ],
     },
 ]);
+
+const logout = () => {
+    User.logout().then(() => {
+        router.push({ name: "Login" });
+    });
+};
 
 const userLinks = ref([
     {
         name: "ustawienia",
         pathName: "",
         icon: "settings",
+        action: "",
     },
     {
         name: "wyloguj",
         pathName: "",
         icon: "logout",
+        action: () => logout(),
     },
 ]);
 </script>

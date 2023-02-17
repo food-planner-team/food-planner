@@ -167,7 +167,6 @@ watch(isOpenModal, () => {
     Recipe.getRecipes()
         .then((res) => {
             allRecipes.value = res;
-            console.log(allRecipes.value);
         })
         .finally(() => {
             isLoading.value = false;
