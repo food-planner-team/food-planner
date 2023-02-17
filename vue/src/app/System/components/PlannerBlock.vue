@@ -171,7 +171,7 @@ const addMeal = (item) => {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    height: 400px;
+    height: 510px;
     padding-right: 1rem;
     padding-bottom: 2rem;
     overflow: auto;

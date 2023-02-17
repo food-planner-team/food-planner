@@ -48,8 +48,8 @@ const style = "left: 0";
 
 const links = ref([
     {
-        name: "planner",
-        pathName: "Test",
+        name: "kreator",
+        pathName: "Creator",
         icon: "article",
         children: [],
     },
