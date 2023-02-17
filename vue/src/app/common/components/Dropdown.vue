@@ -29,8 +29,10 @@
                         :key="link.name"
                     >
                         <router-link :to="{ name: link.pathName }">
+                            <!-- @click="link.name === 'wyloguj' && logout()" -->
+                            <!-- {{ `action ${link.action}` }} -->
                             <a
-                                @click="link.name === 'wyloguj' && logout()"
+                                @click="link.action"
                                 href="#"
                                 class="flex flex-1 items-center gap-3"
                                 :class="[
@@ -57,9 +59,6 @@
 
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { useRouter } from "vue-router";
-import User from "../../System/models/User";
-const router = useRouter();
 
 const props = defineProps({
     name: {
@@ -79,13 +78,6 @@ const props = defineProps({
     },
     style: String,
 });
-
-const logout = () => {
-    User.logout()
-        .then(() => {
-            router.push({name: 'Login'})
-        })
-ł};
 </script>
 
 <style lang="scss">
