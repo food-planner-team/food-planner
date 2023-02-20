@@ -50,7 +50,7 @@ const links = ref([
 .meal-block {
     display: grid;
     grid-template-columns: 25% 70%;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr;
     gap: 0.85rem 1rem;
     grid-template-areas:
         "meal-settings meal-settings"
@@ -59,8 +59,8 @@ const links = ref([
     padding: 1rem;
     padding-top: 0.8rem;
     box-shadow: 2px 3px 12px $alpha-dark;
-    /* background-color: red; */
     cursor: grab;
+    margin-bottom: 1rem;
 
     &__settings {
         grid-area: meal-settings;
@@ -92,7 +92,6 @@ const links = ref([
     &__info {
         grid-area: meal-information;
         display: flex;
-        /* flex-direction: column; */
         align-items: center;
         justify-content: space-between;
         gap: 0.5rem;

@@ -162,7 +162,7 @@ watch(isOpenModal, () => {
     if (!isOpenModal.value) return;
 
     Recipe.getRecipes({
-        include: 'image'
+        include: "image",
     })
         .then((res) => {
             allRecipes.value = res;
@@ -188,13 +188,13 @@ const filteredRecipes = computed(() => {
 <style lang="scss" scoped>
 .meal-block {
     display: flex;
-    /* height: 130px; */
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     padding: 1rem;
     padding-top: 0.8rem;
     box-shadow: 2px 3px 12px $alpha-dark;
+    height: 110px;
 
     &__element {
         display: flex;
