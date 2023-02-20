@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 
 class RecipeSeeder extends ModelSeeder
 {
@@ -20,105 +21,94 @@ class RecipeSeeder extends ModelSeeder
     public function run()
     {
         $recipesData = [
+
+            [
+                'name' => 'Owsianka pieczona',
+                'description' => 'Owsianka pieczona',
+                'preparation' => 'Banana rozgniatamy i bardzo dokładnie mieszamy z płatkami owsianym w naczyniu żaroodpornym. Dodajemy pokrojoną w kosteczkę gruszkę i resztę dodatków wedle uznania. Mleko zagotowujemy i zalewamy nim wcześniej przygotowaną masę. Całość wkładamy do piekarnika rozgrzanego do 180 stopni/termoobieg na 15-20 min. Wierzch można posypać świeżymi owocami i orzechami. Smacznego',
+                'image' => 'pieczona-owsianka.jpg'
+            ],
+            [
+                'name' => 'Zupa ogórkowa',
+                'description' => 'Zupa ogórkowa',
+                'preparation' => 'Cebule kroimy w kostkę i podsmażamy na maśle w garnku docelowym. Do garnka dodajemy wodę, warzywa starte na tarce, pierś z kurczaka pokrojona na 1cm kostkę, ziemniaki pokrojone na kawałki oraz przyprawy. Gotujemy pod przykryciem 20 minut. Następnie dodajemy ogórki kiszone starte na tarce oraz śmietanę i gotujemy przez 15 minut.  Przepis na około 8 porcji. Smacznego ',
+                'image' => 'ogorkowa.png'
+            ],
             [
                 'name' => 'Kurczak z ryżem',
-                'description' => 'Potrawa Kurczaka z ryżem',
+                'description' => 'Kurczak z ryżem',
+                'preparation' => 'Cebulę podsmażamy na oleju, dodajemy kurczaka pokrojonego na 1cm kostkę. Gdy kurczak będzie zarumieniony, dodajemy na patelnię warzywa chińskie. Gdy warzywa zmiękną, dodajemy przecier pomidorowy oraz doprawiamy do smaku przyprawami. W między czasie gotujemy ryż w osolonej wodzie. Przepis na około  4 porcje.  Smacznego',
+                'image' => 'kurzczak_z_ryzem.jpg'
             ],
             [
-                'name' => 'WRAP ŚNIADANIOWY Z TORTILLI',
-                'description' => 'Popularny w internecie przepis na śniadaniowy wrap z tortilli z awokado, boczkiem, omletem i tartym serem. TikTok Breakfast Tortilla',
+                'name' => 'Makaron z pomidorkami koktajlowymi',
+                'description' => 'Makaron z pomidorkami koktajlowymi',
+                'preparation' => 'Do naczynia żaroodpornego wsypujemy pomidorki koktajlowe, czosnek, oliwę i przyprawy wszystko dokładnie ze sobą mieszamy. Na środku naczynia robimy miejsce na kostkę sera i tam ją umieszczamy. Naczynie wkładamy do piekarnika nagrzanego do 180 stopni/termoobieg na 30 minut. W miedzy czasie gotujemy makaron z solą i olejem. Po 30 minutach wyciągamy naczynie z piekarnika widelcem rozgniatamy pomidorki z serem i dokładnie mieszamy do powstania konsystencji sosu. Dodajemy makaron wcześniej ugotowany i mieszamy wszystko razem. Przepis na około 6 porcji. Smacznego',
+                'image' => 'makaron_z_pomidorkami_koktajlowymi.jpg'
+            ],
+
+            [
+                'name' => 'Naleśniki ',
+                'description' => 'Naleśniki',
+                'preparation' => 'Wszystkie składniki wsypujemy do miski i łączymy za pomocą miksera lub rózgi kuchennej. Ciasto po zmiksowaniu najlepiej odstawić do lodówki na około 30 min aby zgęstniało, jednak nie jest to konieczne. Naleśniki smażymy na oleju i konsumujemy z wybranymi dodatkami. Przepis na około 15 sztuk naleśników. Smacznego ',
+                'image' => 'Nalesniki.jpg'
+            ],
+
+            [
+                'name' => 'Tortille z kurczakiem',
+                'description' => 'Tortille z kurczakiem',
+                'preparation' => 'Kurczaka pokrojonego w kostkę doprawiamy przyprawami oraz olejem i odstawiamy na 30 min do lodówki. W między czasie kroimy warzywa świeże, konserwowe oraz sałatę i łączymy ze sobą w misce, można doprawić solą i pieprzem jednak należy pamiętać, że wtedy warzywa puszczą sok co utrudni zawijanie tortilli. Kurczaka przekładamy na patelnie i smażymy do momentu zarumienienia. Tortille nacinamy od środka tak aby łatwo można było złożyć ją w trójkąt. Na 1/3 wykładamy kurczaka i na 1/3 warzywa pozostałym kawałkiem posmarowanym wybranymi sosami zabezpieczamy kurczaka aby wszystko się dobrze trzymało. Tak złożone trójkąty najlepiej włożyć do tostera z nakładką przeznaczoną do mięsa i podgrzać/ można też zapiec w piekarniku. Przepis na około 5 porcji. Smacznego',
+                'image' => 'tortille_z_kurczakiem.jpg'
+            ],
+
+            [
+                'name' => 'Szakszuka',
+                'description' => 'Szakszuka',
+                'preparation' => 'Na patelnie dajemy pomidorki z puszki podsmażamy z vegetą, czosnkiem i oregano do momentu odparowania wody. Robimy 4 miejsca na jajka, wbijmy jajka na patelnie doprawiamy je solą i pod przykryciem smażymy  około 2 min. W miedzy czasie bagietkę kroimy na kawałki i podpiekamy w piekarniku na chrupiąco. Przepis na dwie porcje. Smacznego ',
+                'image' => 'Szakszuka.jpg'
+            ],
+
+            [
+                'name' => 'Omlet na słodko',
+                'description' => 'Omlet na słodko',
+                'preparation' => 'Banana rozgniatamy widelcem i mieszamy z resztą składników również za pomocą widelca. Masę dzielimy na pół. Na patelni rozgrzanej z połową oleju smażymy pierwszy omlet, z drugą  połową robimy dokładnie to samo. Omlet smarujemy dodatkami według uznania. Smacznego',
+                'image' => 'omlet_na_slodko.jpeg'
             ],
             [
-                'name' => 'MONKEY BREAD - MAŁPI CHLEBEK',
-                'description' => 'Słodkie, klejące i mocno cynamonowe mini drożdżowe kulki do odrywania, popularne w USA, pieczone w formie na babkę, często z dodatkiem orzechów pekan. Można polać polewą karmelową lub lukrem.',
+                'name' => 'Gołąbki be zawijania ',
+                'description' => 'Gołąbki be zawijania',
+                'preparation' => 'Cebulę kroje w kostkę i na patelni z olejem przesmażam aż się zeszkli. Do miski dodaje wszystkie pozostałe składniki na kotleciki wraz z przesmażoną już cebula. Dokładnie mieszam. Z tak przygotowanego mięsa formuję kotleciki, które obtaczam w bułce tartej. Tak przygotowane kotleciki robię na parze lub przesmażam na oleju, po to aby nie rozpadły mi się w pieczeniu. W miedzy czasie przygotowuję sos. Wszystkie składniki poza śmietaną wrzucam do garnka zagotowuję. Gotuję 5 minut i dodaję śmietankę. Przesmażone lub zrobione na parze kotleciki wkładam do naczynia żaroodpornego i zalewam sosem. Naczynie wkładam do piekarnika nagrzanego do 180 stopni/termoobieg na 45 min. Przepis na około 15 kotlecików. Smacznego',
+                'image' => 'golabki_bez_zawijania.jpg'
+
             ],
             [
-                'name' => 'SAŁATKA KRABOWA - Z PALUSZKAMI KRABOWYMI SURIMI',
-                'description' => 'Popularna sałatka krabowa z paluszkami krabowymi, z dodatkiem jajek, ogórka, ryżu oraz kukurydzy. Można dodać rzodkiewkę (ale niekoniecznie) oraz czerwoną cebulę.',
+                'name' => 'Kotleciki ze szpinakiem',
+                'description' => 'Kotleciki ze szpinakiem',
+                'preparation' => 'Kaszę gotuje z solą i pozostawiam do wystudzenia. Na patelni przesmażam mrożony szpinak z czosnkiem do momentu odparowania wody i pozostawiam do wystudzenia. Wszystkie składniki mieszam ze sobą i formuję kotleciki. Następnie obtaczam je w bułce tartej i smażę na oleju. Smacznego',
+                'image' => 'golabki_bez_zawijania.jpg'
             ],
             [
-                'name' => 'BURRITO BOWL Z MIELONYM INDYKIEM',
-                'description' => 'Burrito Bowl - meksykańska miska smaku! To miseczka wypełniona składnikami na burrito: ryżem (najzdrowiej pełnoziarnistym - jak na zdjęciu), chudym mielonym mięsem, awokado, kukurydzą i fasolą. Do tego jogurt naturalny lub śmietana. Same najlepsze składniki, a wszystko już bez tortilli i ciężkich sosów, a zatem jeszcze bardziej fit ;-)',
-            ],
-            [
-                'name' => 'RICE BOWL Z ŁOSOSIEM I SALSĄ MANGO',
-                'description' => 'Danie z pieczonego w sezamie łososia, podawane w miseczce z dodatkiem ryżu oraz z salsą (surówką) z mango, ogórka i czerwonej cebuli.                ',
-            ],
-            [
-                'name' => 'CIASTO MARLENKA',
-                'description' => 'Ciasto Marlenka to pyszne miodowe ciasto (rodzaj miodownika) przekładane masą kajmakową. Idealne na Święta ale również na inne rodzinne okoliczności, gdyż jest dość efektowne, wysokie i podzielne. Można je zrobić z wyprzedzeniem 2 - 3 dniowym, gdyż blaty z czasem miękną i "dojrzewają", choć bardzo dobre jest również już na drugi dzień ;)',
-            ],
-            [
-                'name' => 'SAŁATKA JARZYNOWA',
-                'description' => 'Tradycyjna polska sałatka jarzynowa z majonezem, z ugotowanych w mundurkach jarzyn: marchewki, pietruszki i ziemniaków, z dodatkiem ugotowanych na twardo jajek, ogórka kiszonego, zielonego groszku i cebuli. Idealna na każde święta, uroczystości i spotkanie rodzinne.                ',
-            ],
-            [
-                'name' => 'CARPACCIO Z BURAKA',
-                'description' => 'Jak przygotować? Cienko pokrojone obrane (upieczone lub ugotowane) buraczki układamy na zakładkę na półmisku. Dodajemy rukolę, orzechy, ser i polewamy winegretem. Klasyczna wersja carpaccio zawiera płatki parmezanu, ale jeśli jesteście fanami sera koziego (roladka pleśniowa, nie twarogowa), to również można go tutaj wykorzystać.',
-            ],
-            [
-                'name' => 'CIASTO PORZECZKOWIEC',
-                'description' => 'Ciasto czekoladowe przełożone masą twarogową i dżemem porzeczkowym, przykryte bitą śmietaną',
-            ],
-            [
-                'name' => 'POLĘDWICZKA Z ŻURAWINĄ',
-                'description' => 'Niezawodny przepis na pyszne i proste do zrobienia danie z polędwiczki wieprzowej z dodatkiem żurawiny i puree z ziemniaków. W podany sposób można przygotować jednocześnie również więcej porcji mięsa np. na świąteczny obiad.',
-            ],
-            [
-                'name' => 'ŚLEDZIE W OCCIE',
-                'description' => 'Na Wigilię ale nie tylko! To podstawowy przepis jak zrobić śledzie wigilijne z cebulką.',
-            ],
-            [
-                'name' => 'KOPYTKA ZAPIEKANE Z DYNIĄ, CHORIZO I CIECIERZYCĄ',
-                'description' => 'Pyszna zapiekanka z kopytek lub włoskich kluseczek gnocchi z sosem pomidorowym i mozzarellą, z dodatkiem podsmażanego chorizo, ciecierzycy i dyni.                ',
-            ],
-            [
-                'name' => 'TARTA Z JABŁKAMI',
-                'description' => 'Tarta z jabłkami, udekorowana bitą śmietaną i owocami (można wykorzystać dowolne dostępne owoce, np. borówki, granata, figi, maliny, itp.)',
-            ],
-            [
-                'name' => 'WŁOSKIE PIEROŻKI W SOSIE POMIDOROWYM',
-                'description' => 'Do przepisu można wykorzystać dowolne gotowe ravioli, tortellini lub cappelletti ze sklepu (np. z ricottą i szpinakiem, z szynką, z grzybami, z chorizo i kurczakiem itp.)                ',
-            ],
-            [
-                'name' => 'RAMEN Z ŁOSOSIEM',
-                'description' => 'Szybki ramen domowy z pieczonym łososiem, szpinakiem i makaronem.',
-            ],
-            [
-                'name' => 'MAKARON RYŻOWY Z KREWETKAMI',
-                'description' => 'Makaron ryżowy smażony po azjatycku z krewetkami, warzywami, jajkiem i kiełkami fasoli mung.',
-            ],
-            [
-                'name' => 'POLĘDWICZKA Z RYŻEM I SALSĄ MANGO',
-                'description' => 'Rice Bowl z karmelizowaną polędwiczką wieprzową i pikantną salsą mango z ogórkiem i czerwoną cebulą.',
-            ],
-            [
-                'name' => 'TARTA ZE ŚLIWKAMI                ',
-                'description' => 'Inspirowane amerykańskim Plum Pie, ciasto kruche z nadzieniem śliwkowym ze świeżych śliwek z cukrem i cynamonem.                ',
-            ],
-            [
-                'name' => 'SAŁATKA Z ARBUZEM I AWOKADO',
-                'description' => 'Pyszna i orzeźwiająca sałatka z arbuzem i awokado, z czerwoną cebulą, ogórkiem, fetą i zielonym jabłkiem.',
-            ],
-            [
-                'name' => 'TORTILLE Z CUKINII',
-                'description' => 'Tortille z tartej cukinii pieczone w piekarniku, po upieczeniu zwijane z dodatkiem jajecznicy i wędzonego łososia. Można podawać również z innymi dodatkami jak np. szynka, tarty ser, gorgonzola itp.                ',
-            ],
-            [
-                'name' => 'MATCHA BROWNIE                ',
-                'description' => 'Pyszne, wilgotne, z chrupiącą skorupką! Zielone Matcha Brownie, z dodatkiem sproszkowanej zielonej herbaty matcha. Koniecznie do wypróbowania dla fanów matchy!                ',
+                'name' => 'Barszczyk czerwony zabielany',
+                'description' => 'Barszczyk czerwony zabielany',
+                'preparation' => 'Obrane buraki kroje w plasterki i zalewam wodą, gotuję na wolnym ogniu do momentu aż buraki będą miękkie. Mąkę mieszam z 1/4 szklanki wody do uzyskania gładkiej masy bez grudek. Dodaję do gotujących się buraków wraz z barszczem. Gotuję przez 7 min i dodaję przyprawy. W miedzy czasie gotuję ziemniaki z solą (łyżka) i na patelni przesmażam kawałki słoninki (bardzo cieniutkie) z cebulką pokrojoną w kosteczkę. Dzielę na pół przesmażoną cebulkę połowę dodaję do barszczyku a połowę do odcedzonych ziemniaków. Ziemniaki z cebulką ubijam z odrobiną mleka. Podaję barszczyk z ziemniaczkami. Smacznego ' .
+                    'Uwaga NIE WOLNO solić buraków wcześniej gdyż stracą kolor.',
+                'image' => 'barszcz-czerwony-zabielany.jpg'
             ],
         ];
-        $files = glob(__DIR__.'/data/seed/images/*{png}', GLOB_BRACE);
         $this->useData($recipesData)
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
-            ->seedModel(Recipe::class, function ($recipe) use ($files) {
+            ->seedModel(Recipe::class, function ($recipe) {
+                $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
+                unset($recipe->image);
                 $recipe->save();
-                $path = Arr::random($files);
-                $file =  new UploadedFile( $path, $recipe->id, 'image/png',null,false,true);
-                $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
-                $image->create();
+                if (file_exists($path)) {
+                    $file = new UploadedFile($path, $recipe->id, mime_content_type($path), null, false, true);
+                    $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
+                    $image->create();
+                };
+
+
             });
     }
 }
