@@ -1,20 +1,15 @@
 <template>
     <div class="meal-block">
-        <div class="meal-block__settings">
-            <span class="setting__span-btn material-symbols-outlined handle">
-                drag_indicator
-            </span>
-            <Dropdown
-                icon="more_vert"
-                :links="links"
-                class="setting__span-btn"
-            />
-        </div>
         <div class="meal-block__img">
             <img :src="meal?.image?.url" alt="" />
         </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
+            <Dropdown
+                icon="more_vert"
+                :links="links"
+                class="setting__span-btn"
+            />
         </div>
     </div>
 </template>
@@ -64,6 +59,8 @@ const links = ref([
     padding: 1rem;
     padding-top: 0.8rem;
     box-shadow: 2px 3px 12px $alpha-dark;
+    /* background-color: red; */
+    cursor: grab;
 
     &__settings {
         grid-area: meal-settings;
@@ -71,15 +68,15 @@ const links = ref([
         align-items: center;
         justify-content: space-between;
         position: relative;
+    }
 
-        .setting__span-btn {
-            padding: 3px 0;
-            border-radius: 6px;
-            transition: background-color 0.2s ease-out;
+    .setting__span-btn {
+        padding: 3px 0;
+        border-radius: 6px;
+        transition: background-color 0.2s ease-out;
 
-            &:hover {
-                background-color: $white-accent;
-            }
+        &:hover {
+            background-color: $white-accent;
         }
     }
 
@@ -95,8 +92,9 @@ const links = ref([
     &__info {
         grid-area: meal-information;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        /* flex-direction: column; */
+        align-items: center;
+        justify-content: space-between;
         gap: 0.5rem;
 
         .info__title {

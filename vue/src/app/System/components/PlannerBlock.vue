@@ -22,7 +22,6 @@
                 v-bind="dragOptions"
                 @start="drag = true"
                 @end="drag = false"
-                handle=".handle"
             >
                 <template #item="{ element, index }">
                     <div :key="element.name">
@@ -178,7 +177,7 @@ const addMeal = (item) => {
     overflow: auto;
 
     @media (min-width: 2500px) {
-        height: 55rem;
+        height: 54rem;
     }
 }
 </style>
