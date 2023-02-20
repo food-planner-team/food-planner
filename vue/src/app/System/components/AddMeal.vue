@@ -86,10 +86,7 @@
                                     <div
                                         class="bg-primary w-28 h-20 rounded-md overflow-hidden"
                                     >
-                                        <img
-                                            src="https://unsplash.it/200/200"
-                                            alt=""
-                                        />
+                                        <img :src="item?.image?.url" alt="" />
                                     </div>
                                     <div class="w-7/12">
                                         <h3 class="font-bold">
@@ -162,9 +159,12 @@ function addMeal(v) {
 }
 
 watch(isOpenModal, () => {
+    console.log(isOpenModal.value);
     if (!isOpenModal.value) return;
 
-    Recipe.getRecipes()
+    Recipe.getRecipes({
+        include: 'image'
+    })
         .then((res) => {
             allRecipes.value = res;
         })

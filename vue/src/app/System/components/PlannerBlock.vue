@@ -59,14 +59,13 @@ const props = defineProps({
     },
     loader: Boolean,
 });
-
-watch(props.recipes, () => {
+const saveUserRecipes = () => {
     const recipesData = props.recipes.map((e, index) => {
         return { recipe_id: e.id, order: index };
     });
 
     Recipe.saveUserRecipes(props.date, recipesData);
-});
+};
 
 const dragOptions = ref({
     animation: 200,
@@ -79,9 +78,11 @@ const drag = ref(false);
 
 const removeAt = (id) => {
     props.recipes.splice(id, 1);
+    saveUserRecipes();
 };
 const addMeal = (item) => {
     props.recipes.push(item);
+    saveUserRecipes();
 };
 </script>
 <style lang="scss" scoped>

@@ -11,7 +11,7 @@
             />
         </div>
         <div class="meal-block__img">
-            <img src="https://unsplash.it/200/200" alt="" />
+            <img :src="meal?.image?.url" alt="" />
         </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>

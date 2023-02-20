@@ -2,6 +2,8 @@ import Joi from "joi";
 import validateData from "../../common/utils/validateData.js";
 import Api from "../../common/services/Api.js";
 import convertToArrayOfModels from "../../common/utils/convertToArrayOfModels.js";
+import _get from "lodash/get";
+import Image from "../../System/models/Image.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
@@ -19,6 +21,10 @@ class Recipe {
         this.description = data.description;
         this.order = data.order;
         this.date = data.date;
+        const image = _get(data, "image.data");
+        if (image) {
+            this.image = new Image(image)
+        }
     }
 
     static async fetchUserRecipes(include) {
@@ -36,8 +42,10 @@ class Recipe {
         return convertToArrayOfModels(Recipe, response.data.data);
     }
 
-    static async getRecipes() {
-        const response = await Api.get("/recipes");
+    static async getRecipes(params) {
+        const response = await Api.get("/recipes", {
+            params: params
+        });
         return convertToArrayOfModels(Recipe, response.data.data);
     }
 }

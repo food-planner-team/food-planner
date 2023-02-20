@@ -67,6 +67,7 @@ watch(
 
         loader.value = true;
         Recipe.fetchUserRecipes({
+            include: "image",
             dateStart: `${dateStart.value}`,
             dateEnd: `${dateEnd.value}`,
         })
