@@ -116,7 +116,6 @@ class RecipeSeeder extends ModelSeeder
             ->seedModel(Recipe::class, function ($recipe) use ($files) {
                 $recipe->save();
                 $path = Arr::random($files);
-
                 $file =  new UploadedFile( $path, $recipe->id, 'image/png',null,false,true);
                 $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
                 $image->create();

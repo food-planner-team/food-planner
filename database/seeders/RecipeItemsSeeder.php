@@ -19,7 +19,7 @@ class RecipeItemsSeeder extends ModelSeeder
         $recipes = Recipe::all()->pluck('id');
 
         $this->setHeader("Seeding recipes")
-            ->setAmount(10)
+            ->setAmount(1000)
             ->seedModel(RecipeItem::class, function ($recipeItem) use ($recipes, $products) {
                 $recipeItem->product_id = $products->random();
                 $recipeItem->recipe_id = $recipes->random();
