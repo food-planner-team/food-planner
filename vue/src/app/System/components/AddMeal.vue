@@ -159,7 +159,6 @@ function addMeal(v) {
 }
 
 watch(isOpenModal, () => {
-    console.log(isOpenModal.value);
     if (!isOpenModal.value) return;
 
     Recipe.getRecipes({
