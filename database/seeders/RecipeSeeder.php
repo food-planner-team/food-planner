@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use App\Factories\ImageFactory;
 use App\Models\Image;
 use App\Models\Recipe;
-use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -109,27 +110,15 @@ class RecipeSeeder extends ModelSeeder
             ],
         ];
         $files = glob(__DIR__.'/data/seed/images/*{png}', GLOB_BRACE);
-        $files = [];
         $this->useData($recipesData)
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
             ->seedModel(Recipe::class, function ($recipe) use ($files) {
                 $recipe->save();
-//                file_get_contents('')
-//                    $file = Storage::get($filePath);
-//                    $file = file_get_contents(Arr::random($files));
-//                $fileData = Storage::getVisibility(Arr::random($files));
-//                    dd($fileData);
-//                    $file = new File(Arr::random($files));
-//                $path = Arr::random($files);
-//                if (file_exists($path)) {
-//                    $file = file_get_contents($path);
-//                    $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
-//                    $image->create();
-//
-//                }
-//                    dd($file);
-//                dd($file);
+                $path = Arr::random($files);
+                $file =  new UploadedFile( $path, $recipe->id, 'image/png',null,false,true);
+                $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
+                $image->create();
             });
     }
 }

@@ -4,7 +4,6 @@ namespace App\Factories;
 
 
 use App\Models\Image;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 
