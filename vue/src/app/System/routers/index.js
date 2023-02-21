@@ -1,12 +1,9 @@
-import HomePage from "../pages/HomePage.vue";
-import Dashboard from "../pages/Dashboard.vue";
+import PlannerPage from "../pages/PlannerPage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import RegisterPage from "../pages/RegisterPage.vue";
 import NotFound from "../pages/NotFound.vue";
 import UnauthorizedLayout from "../../common/layouts/UnauthorizedLayout.vue";
 import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
-import Creator from "../pages/Creator.vue";
-import Test from "../components/Test.vue";
 
 const routes = [
     {
@@ -16,22 +13,10 @@ const routes = [
         component: DefaultLayout,
         children: [
             {
-                path: "/test",
-                name: "Test",
-                meta: { requiresAuth: true },
-                component: Test,
-            },
-            {
                 path: "/",
-                name: "Dashboard",
+                name: "Planner",
                 meta: { requiresAuth: true },
-                component: Dashboard,
-            },
-            {
-                path: "/kreator",
-                name: "Creator",
-                meta: { requiresAuth: true },
-                component: Creator,
+                component: PlannerPage,
             },
         ],
     },

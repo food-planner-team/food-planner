@@ -32,7 +32,7 @@ import HeaderNav from "../components/HeaderNav.vue";
     padding: 2rem;
     display: grid;
     grid-template-rows: 80px 1fr;
-    gap: 1.5rem;
+    gap: 1.3rem;
     position: relative;
     overflow: hidden;
 
