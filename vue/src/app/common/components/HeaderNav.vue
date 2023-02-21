@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <router-link :to="{ name: 'Dashboard' }">
+        <router-link :to="{ name: 'Planner' }">
             <div class="logo-name">
                 <img :src="logo" alt="logo" />
                 <p>Food Planner</p>
@@ -17,10 +17,13 @@
                     />
                 </template>
                 <template v-else>
-                    <span className="material-symbols-outlined">{{
-                        link.icon
-                    }}</span>
-                    <router-link :to="{ name: link.pathName }">
+                    <router-link
+                        :to="{ name: link.pathName }"
+                        class="flex items-center gap-2"
+                    >
+                        <span className="material-symbols-outlined">{{
+                            link.icon
+                        }}</span>
                         <p class="capitalize">{{ link.name }}</p>
                     </router-link>
                 </template>
@@ -51,21 +54,21 @@ const style = "left: 0";
 
 const links = ref([
     {
-        name: "kreator",
-        pathName: "Creator",
-        icon: "article",
+        name: "Planner",
+        pathName: "Planner",
+        icon: "event_note",
         action: "",
         children: [],
     },
     {
         name: "przepisy",
         pathName: "",
-        icon: "fastfood",
+        icon: "menu_book",
         action: "",
         children: [
             {
                 name: "wszystkie przepisy",
-                pathName: "Dashboard",
+                pathName: "Planner",
                 icon: "list_alt",
                 action: "",
             },
@@ -86,7 +89,7 @@ const links = ref([
     {
         name: "produkty",
         pathName: "",
-        icon: "nutrition",
+        icon: "fastfood",
         action: "",
         children: [
             {

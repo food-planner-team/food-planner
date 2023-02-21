@@ -66,9 +66,9 @@
 </template>
 
 <script setup>
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import User from "../models/User.js";
-import {ref} from "vue";
+import { ref } from "vue";
 
 const router = useRouter();
 const error = ref("");
@@ -84,11 +84,13 @@ const user = {
 
 const login = (ev) => {
     ev.preventDefault();
-    User.login(user).then(() => {
-        router.push({name: "Dashboard",});
-    }).catch(() => {
-        setError("Podane dane są nieprawidłowe!");
-    });
+    User.login(user)
+        .then(() => {
+            router.push({ name: "Planner" });
+        })
+        .catch(() => {
+            setError("Podane dane są nieprawidłowe!");
+        });
 };
 </script>
 

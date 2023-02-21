@@ -152,7 +152,6 @@ const addMeal = (item) => {
         font-size: 10px;
         font-weight: 600;
         border-radius: 24px;
-        /* margin-bottom: 1.5rem; */
         letter-spacing: 0.3px;
         background-color: $primary-dark;
         color: $white;
@@ -171,14 +170,13 @@ const addMeal = (item) => {
 .block-items-container {
     display: flex;
     flex-direction: column;
-    /* gap: 1.5rem; */
-    height: 510px;
+    height: 420px;
     padding-right: 1rem;
     padding-bottom: 2rem;
     overflow: auto;
 
     @media (min-width: 2500px) {
-        height: 54rem;
+        height: 48rem;
     }
 }
 </style>
