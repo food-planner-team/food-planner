@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Imports\ProductImport;
 use App\Models\Product;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductSeeder extends ModelSeeder
 {
@@ -66,14 +68,14 @@ class ProductSeeder extends ModelSeeder
             ['name' => 'Makaron', 'quantity' => '500', 'quantity_type' => 'g','external_id'=>'','provider'=>'Auchan','parent_id'=>'15'],
         ];
 
-        $allProducts = array_merge($mainProductData,$productData);
-
-        $this->setHeader("Seeding Products")
-            ->setAmount(count($allProducts))
-            ->useData($allProducts)
-            ->seedModel(Product::class, function ($product) {
-                $product->save();
-            });
-
+//        $allProducts = array_merge($mainProductData,$productData);
+//
+//        $this->setHeader("Seeding Product")
+//            ->setAmount(count($allProducts))
+//            ->useData($allProducts)
+//            ->seedModel(Product::class, function ($product) {
+//                $product->save();
+//            });
+        Excel::import(new ProductImport,__DIR__.'\data\seed\products-small.csv');
     }
 }
