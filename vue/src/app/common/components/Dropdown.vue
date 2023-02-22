@@ -22,15 +22,15 @@
                 :style="props.style"
             >
                 <div class="py-1">
-                    <MenuItem
-                        v-slot="{ active }"
-                        class="flex items-center gap-2 cursor-pointer"
+                    <router-link
                         v-for="link in props.links"
                         :key="link.name"
+                        :to="{ name: link.pathName }"
                     >
-                        <router-link :to="{ name: link.pathName }">
-                            <!-- @click="link.name === 'wyloguj' && logout()" -->
-                            <!-- {{ `action ${link.action}` }} -->
+                        <MenuItem
+                            v-slot="{ active }"
+                            class="flex items-center gap-2 cursor-pointer"
+                        >
                             <a
                                 @click="link.action"
                                 href="#"
@@ -49,8 +49,8 @@
                                     {{ link.name }}
                                 </p>
                             </a>
-                        </router-link>
-                    </MenuItem>
+                        </MenuItem>
+                    </router-link>
                 </div>
             </MenuItems>
         </transition>
