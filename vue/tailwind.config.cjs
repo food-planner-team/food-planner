@@ -33,6 +33,9 @@ module.exports = {
                 black: "rgb(0, 0, 0)",
                 "error-bg": "rgb(255, 236, 236)",
             },
+            screens: {
+                "3xl": "2500px",
+            },
         },
     },
     plugins: [
