@@ -2,7 +2,7 @@
     <div
         class="h-56 w-[29rem] rounded-lg flex items-center gap-5 p-5 shadow-md"
     >
-        <div class="bg-slate-400 w-[180px] h-[180px] rounded-md">
+        <div class="w-[180px] h-[180px] rounded-md ml-1">
             <img
                 src="https://ecomplmvpprodwebblob0.blob.core.windows.net/zakupymvp/cache/product_medium/product/21770905/01.jpg.webp"
                 alt=""
