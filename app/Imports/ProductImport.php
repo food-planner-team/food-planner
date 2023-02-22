@@ -25,9 +25,6 @@ class ProductImport implements ToModel,  SkipsEmptyRows, WithHeadingRow
             'provider' => 'Auchan',
             'quantity_type' => $row['packageinfo_packageunit'],
             'quantity' => $row['packageinfo_packagesize'],
-//            'item_volume' => $row['item_volume_info'],
-//            'main_image' => $row['Media_MainImage'],
-//            'list_image' => $row['Media_ListImage'],
         ]);
         $product->save();
         $product->image()->create([
