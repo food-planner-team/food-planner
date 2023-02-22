@@ -15,7 +15,7 @@ class RecipeItemsSeeder extends ModelSeeder
      */
     public function run()
     {
-        $products = Product::all()->pluck('id');
+        $products = Product::get()->pluck('id');
         $recipes = Recipe::all()->pluck('id');
 
         $this->setHeader("Seeding recipes")

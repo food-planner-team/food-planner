@@ -20,14 +20,17 @@ class ProductTransformer extends TransformerAbstract
         return [
             'id'   =>$product->id,
             'name' =>$product->name,
-            'quantity' =>$product->quantity,
-            'quantity_type' =>$product->quantityType,
+            'brand_name' =>$product->brand_name,
+            'sku' =>$product->sku,
+            'external_id' =>$product->external_id,
             'provider' =>$product->provider,
+            'quantity' =>$product->quantity,
+            'quantity_type' =>$product->quantity_type,
         ];
     }
-    public function includeImage(Product $product): Collection
+    public function includeImage(Product $product)
     {
-        return $this->collection($product->image, new ImageTransformer);
+        return $this->item($product->image, new ImageTransformer);
     }
 
 }

@@ -17,12 +17,11 @@ return new class extends Migration
             $table->uuid('id');
             $table->unsignedInteger('imageable_id');
             $table->string('imageable_type');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->string('url');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

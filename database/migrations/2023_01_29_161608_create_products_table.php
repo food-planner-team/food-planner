@@ -17,13 +17,17 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('parent_id')->nullable();
             $table->string('name');
-            $table->integer('quantity');
-            $table->enum('quantity_type',['ml','g','szt']);
+            $table->string('brand_name')->nullable();
+            $table->string('category_name')->nullable();
+            $table->string('sku')->nullable();
+            $table->double('quantity');
+            $table->string('quantity_type');
             $table->unsignedInteger('image_id')->nullable();
             $table->string('external_id')->nullable();
             $table->string('provider')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
