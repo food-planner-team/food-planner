@@ -133,8 +133,8 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
-import { getLocaleDate } from "../../common/utils/datesHelpers";
-import Recipe from "../../Recipe/models/Recipe";
+import { getLocaleDate } from "../../common/utils/datesHelpers.js";
+import Recipe from "../models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
 
 const props = defineProps({

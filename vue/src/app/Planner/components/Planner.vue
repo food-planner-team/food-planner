@@ -16,14 +16,14 @@
 </template>
 <script setup>
 import PlannerBlock from "./PlannerBlock.vue";
-import Recipe from "../../Recipe/models/Recipe";
+import Recipe from "../models/Recipe.js";
 import { onMounted, ref, computed, watch } from "vue";
 import {
     getFirstDayOfWeek,
     getLastDayOfWeek,
     getCurrentDay,
     getDatesBetweenDays,
-} from "../../common/utils/datesHelpers";
+} from "../../common/utils/datesHelpers.js";
 
 const props = defineProps({
     dateStart: {

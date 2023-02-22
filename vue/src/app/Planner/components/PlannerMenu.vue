@@ -29,7 +29,7 @@ import { onMounted } from "vue";
 import {
     getFirstDayOfWeek,
     getLastDayOfWeek,
-} from "../../common/utils/datesHelpers";
+} from "../../common/utils/datesHelpers.js";
 
 const emit = defineEmits(["update:dateStart", "update:dateEnd"]);
 
