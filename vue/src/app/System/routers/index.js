@@ -1,4 +1,5 @@
 import PlannerPage from "../pages/PlannerPage.vue";
+import AddProductPage from "../pages/AddProductPage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import RegisterPage from "../pages/RegisterPage.vue";
 import NotFound from "../pages/NotFound.vue";
@@ -17,6 +18,12 @@ const routes = [
                 name: "Planner",
                 meta: { requiresAuth: true },
                 component: PlannerPage,
+            },
+            {
+                path: "/dodaj-produkt",
+                name: "AddProduct",
+                meta: { requiresAuth: true },
+                component: AddProductPage,
             },
         ],
     },

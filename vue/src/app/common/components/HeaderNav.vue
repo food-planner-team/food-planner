@@ -106,7 +106,7 @@ const links = ref([
             },
             {
                 name: "dodaj produkt",
-                pathName: "",
+                pathName: "AddProduct",
                 icon: "add_circle",
                 action: "",
             },
