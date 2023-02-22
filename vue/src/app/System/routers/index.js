@@ -1,5 +1,4 @@
-import PlannerPage from "../pages/PlannerPage.vue";
-import AddProductPage from "../pages/AddProductPage.vue";
+import PlannerPage from "../../Planner/pages/PlannerPage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import RegisterPage from "../pages/RegisterPage.vue";
 import NotFound from "../pages/NotFound.vue";
@@ -9,27 +8,6 @@ import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 const routes = [
     {
         path: "/",
-        name: "DefaultLayout",
-        meta: { requiresAuth: true },
-        component: DefaultLayout,
-        children: [
-            {
-                path: "/",
-                name: "Planner",
-                meta: { requiresAuth: true },
-                component: PlannerPage,
-            },
-            {
-                path: "/dodaj-produkt",
-                name: "AddProduct",
-                meta: { requiresAuth: true },
-                component: AddProductPage,
-            },
-        ],
-    },
-    {
-        path: "/",
-        name: "UnauthorizedLayouts",
         meta: { requiresAuth: false },
         component: UnauthorizedLayout,
         children: [

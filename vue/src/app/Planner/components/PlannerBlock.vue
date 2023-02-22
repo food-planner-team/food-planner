@@ -40,13 +40,13 @@
 <script setup>
 import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
-import Recipe from "../../Recipe/models/Recipe";
+import Recipe from "../models/Recipe.js";
 import draggable from "vuedraggable";
 import { ref, watch } from "vue";
 import {
     getCurrentDayName,
     getLocaleDate,
-} from "../../common/utils/datesHelpers";
+} from "../../common/utils/datesHelpers.js";
 import Loader from "../../common/components/Loader.vue";
 
 const props = defineProps({
