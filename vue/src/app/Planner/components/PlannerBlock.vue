@@ -22,6 +22,7 @@
                 v-bind="dragOptions"
                 @start="drag = true"
                 @end="drag = false"
+                @change="saveUserRecipes"
             >
                 <template #item="{ element, index }">
                     <div :key="element.name">
@@ -68,7 +69,7 @@ const saveUserRecipes = () => {
 
 const dragOptions = ref({
     animation: 200,
-    group: props.date,
+    group: "meals",
     disabled: false,
     ghostClass: "ghost",
 });
