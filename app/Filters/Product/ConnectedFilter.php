@@ -12,8 +12,8 @@ class ConnectedFilter
      */
     public static function handle($query, $isConnected)
     {
-        if($isConnected){
-        return $query->where('parent_id', '!=',null);
+        if ($isConnected) {
+            return $query->where('parent_id', '!=', null);
         }
         return $query->where('parent_id', null);
     }
