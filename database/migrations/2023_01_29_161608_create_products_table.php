@@ -25,6 +25,8 @@ return new class extends Migration
             $table->unsignedInteger('image_id')->nullable();
             $table->string('external_id')->nullable();
             $table->string('provider')->nullable();
+            $table->boolean('is_main')->default(0);
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
         });
 
