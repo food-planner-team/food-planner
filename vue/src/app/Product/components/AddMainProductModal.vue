@@ -183,12 +183,8 @@ function openModal() {
 }
 
 const createMainProduct = () => {
-    if (!props.productName) {
-        return;
-    }
-
-    if (!quantityType.value) {
-        alert("Wybierz miarę!");
+    if (!quantityType.value || !props.productName) {
+        alert("Uzupełnij miarę i nazwę produktu!");
         return;
     }
 

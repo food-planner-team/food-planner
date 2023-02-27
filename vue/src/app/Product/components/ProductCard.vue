@@ -11,7 +11,14 @@
             "
         >
             <img
+                v-if="props?.product?.image?.url"
                 :src="`${props?.product?.image?.url}.webp`"
+                alt=""
+                class="rounded-md"
+            />
+            <img
+                v-else
+                src="../assets/No-Image-Placeholder.png"
                 alt=""
                 class="rounded-md"
             />
