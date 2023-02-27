@@ -22,6 +22,7 @@ class ProductImport implements ToModel,  SkipsEmptyRows, WithHeadingRow
             'name' => $row['name'],
             'sku' => $row['sku'],
             'external_id' => $row['product_id'],
+            'price' => $row['price'],
             'provider' => 'Auchan',
             'quantity_type' => $row['packageinfo_packageunit'],
             'quantity' => $row['packageinfo_packagesize'],
