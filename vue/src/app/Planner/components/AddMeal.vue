@@ -33,7 +33,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col"
                         >
                             <div
                                 class="m-4 flex justify-between items-center mr-7"
@@ -112,10 +112,7 @@
                             >
                                 Brak pasujących przepisów
                             </div>
-                            <Loader
-                                v-if="isLoading"
-                                class="top-[30%] left-[11%]"
-                            />
+                            <Loader v-if="isLoading" class="self-center" />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -186,6 +183,12 @@ const filteredRecipes = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+/* .loader {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} */
 .meal-block {
     display: flex;
     align-items: center;

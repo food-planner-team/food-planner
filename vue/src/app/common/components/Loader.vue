@@ -9,7 +9,7 @@
 <script></script>
 <style lang="scss" scoped>
 .lds-ellipsis {
-    margin-left: 35%;
+    /* margin-left: 35%; */
     display: inline-block;
     position: relative;
     width: 80px;
