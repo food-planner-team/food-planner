@@ -17,9 +17,7 @@ class Recipe extends Model
         'preparation',
         'preparation_time',
     ];
-//    protected $casts = [
-//        'preparation' => 'array'
-//    ];
+
 
     public function recipeItems()
     {

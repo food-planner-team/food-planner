@@ -29,8 +29,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::resource('/recipes', RecipesController::class);
-    Route::resource('/products', ProductsController::class)->only(['index','store']);
-    Route::resource('/main-products', MainProductsController::class)->only(['index','store']);
+    Route::resource('/products', ProductsController::class)->only(['index']);
+    Route::resource('/main-products', MainProductsController::class);
     Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
 
     Route::post('/logout', LogoutController::class);
