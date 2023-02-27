@@ -12,7 +12,7 @@ class ProductTransformer extends TransformerAbstract
 {
     /** @var array */
     protected array $availableIncludes = [
-        'image'
+        'image',
     ];
 
     public function transform(Product $product): array
@@ -24,12 +24,15 @@ class ProductTransformer extends TransformerAbstract
             'sku' =>$product->sku,
             'external_id' =>$product->external_id,
             'provider' =>$product->provider,
+            'price' =>$product->price,
+            'order' =>$product->order,
             'quantity' =>$product->quantity,
             'quantity_type' =>$product->quantity_type,
         ];
     }
     public function includeImage(Product $product)
     {
+        if(!$product->image) return $this->null();
         return $this->item($product->image, new ImageTransformer);
     }
 

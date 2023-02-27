@@ -6,6 +6,7 @@ use App\Support\Traits\Filterable;
 use App\Support\Traits\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Product extends Model
@@ -13,7 +14,8 @@ class Product extends Model
     use HasFactory, Filterable, Searchable;
 
     protected $fillable = [
-        'parent_id',
+        'main_product_id',
+        'order',
         'name',
         'quantity',
         'quantity_type',

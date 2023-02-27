@@ -15,18 +15,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('main_product_id')->nullable();
             $table->string('name');
-            $table->string('brand_name')->nullable();
-            $table->string('category_name')->nullable();
+            $table->string('brand_name');
+            $table->string('category_name');
             $table->string('sku')->nullable();
+            $table->double('price');
             $table->double('quantity');
             $table->string('quantity_type');
-            $table->unsignedInteger('image_id')->nullable();
-            $table->string('external_id')->nullable();
-            $table->string('provider')->nullable();
-            $table->boolean('is_main')->default(0);
-            $table->boolean('is_default')->default(0);
+            $table->string('external_id');
+            $table->string('provider');
+            $table->smallInteger('order')->nullable();
             $table->timestamps();
         });
 

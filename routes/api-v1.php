@@ -3,7 +3,8 @@
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\LogoutController;
 use App\Http\Controllers\v1\Auth\RegisterController;
-use App\Http\Controllers\v1\ProductController;
+use App\Http\Controllers\v1\MainProductsController;
+use App\Http\Controllers\v1\ProductsController;
 use App\Http\Controllers\v1\RecipesController;
 use App\Http\Controllers\v1\UserRecipesController;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::resource('/recipes', RecipesController::class);
-    Route::resource('/products', ProductController::class)->only(['index']);
+    Route::resource('/products', ProductsController::class)->only(['index','store']);
+    Route::resource('/main-products', MainProductsController::class)->only(['index','store']);
     Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
 
     Route::post('/logout', LogoutController::class);
