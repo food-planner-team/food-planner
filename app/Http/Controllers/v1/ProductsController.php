@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\StoreMainProductRequest;
 use App\Models\Product;
 use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
@@ -30,26 +30,12 @@ class ProductsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProductRequest $request
+     * @param StoreMainProductRequest $request
      * @return Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        $product = Product::create($request->validationData());
-        $products = Product::whereIn('id',array_pluck($request->get('products'),'id'));
-        $products->update([
-            'parent_id' => $product->id
-        ]);
-        $products->first()->update([
-            'is_default' => 1
-        ]);
-        if ($product) {
-            return $this->fractal
-                ->item($product, new ProductTransformer())
-                ->get();
-        }
-
-        return $this->respondUnprocessable();
+         //
     }
 
     /**

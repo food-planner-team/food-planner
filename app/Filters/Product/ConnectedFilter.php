@@ -13,8 +13,8 @@ class ConnectedFilter
     public static function handle($query, $isConnected)
     {
         if ($isConnected) {
-            return $query->where('parent_id', '!=', null);
+            return $query->where('main_product_id', '!=', null);
         }
-        return $query->where('parent_id', null);
+        return $query->where('main_product_id', null);
     }
 }

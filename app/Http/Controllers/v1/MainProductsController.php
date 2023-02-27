@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\StoreMainProductRequest;
 use App\Models\MainProduct;
 use App\Models\Product;
 use App\Transformers\MainProductTransformer;
@@ -32,10 +32,10 @@ class MainProductsController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProductRequest $request
+     * @param StoreMainProductRequest $request
      * @return Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreMainProductRequest $request)
     {
         $mainProduct = MainProduct::create($request->validationData());
         $data = $request->get('products');
