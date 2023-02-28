@@ -23,8 +23,9 @@
                     Szukaj
                 </button>
                 <AddMainProductModal
-                    :products="chosenProducts"
-                    :product-name="searchValue"
+                    :chosen-products="chosenProducts"
+                    v-model:product-name="searchValue"
+                    v-model:products="products"
                 />
             </div>
             <div

@@ -59,7 +59,7 @@
 
                             <draggable
                                 item-key="order"
-                                :list="props.products"
+                                :list="props.chosenProducts"
                                 v-bind="dragOptions"
                                 @start="drag = true"
                                 @end="drag = false"
@@ -149,7 +149,7 @@ import {
 import MainProduct from "../models/MainProduct";
 
 const props = defineProps({
-    products: {
+    chosenProducts: {
         type: Array,
         default: [],
         required: true,
@@ -157,6 +157,11 @@ const props = defineProps({
     productName: {
         type: String,
         default: "",
+        required: true,
+    },
+    products: {
+        type: Array,
+        default: [],
         required: true,
     },
 });
@@ -167,6 +172,8 @@ const dragOptions = ref({
     disabled: false,
     ghostClass: "ghost",
 });
+
+const emit = defineEmits(["update:products", "update:product-name"]);
 
 const quantityType = ref("");
 
@@ -190,7 +197,7 @@ const createMainProduct = () => {
 
     isOpenModal.value = false;
 
-    const productsData = props.products.map((e, index) => {
+    const productsData = props.chosenProducts.map((e, index) => {
         return { id: e.id, order: index };
     });
 
@@ -199,6 +206,9 @@ const createMainProduct = () => {
         quantity_type: quantityType.value,
         products: productsData,
     });
+
+    emit("update:products", []);
+    emit("update:product-name", "");
 };
 </script>
 
