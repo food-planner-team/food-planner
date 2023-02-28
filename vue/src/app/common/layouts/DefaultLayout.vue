@@ -1,20 +1,16 @@
 <template>
     <div class="wrapper">
         <HeaderNav />
-        <!-- <Suspense> -->
         <router-view v-slot="{ Component }">
             <transition name="default" mode="out-in">
                 <component :is="Component" />
             </transition>
         </router-view>
-        <!-- </Suspense> -->
-        <!-- <Footer /> -->
     </div>
 </template>
 
 <script setup>
 import HeaderNav from "../components/HeaderNav.vue";
-// import Footer from "../components/Footer.vue";
 </script>
 
 <style lang="scss" scoped>

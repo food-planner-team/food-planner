@@ -17,12 +17,6 @@
                 class="rounded-md"
             />
             <img
-                v-else-if="props.product?.defaultProduct?.image?.url"
-                :src="`${props.product?.defaultProduct?.image?.url}.webp`"
-                alt=""
-                class="rounded-md"
-            />
-            <img
                 v-else
                 src="../assets/No-Image-Placeholder.png"
                 alt=""
@@ -79,11 +73,6 @@
 
 <script setup>
 import { computed } from "vue";
-import Dropdown from "../../common/components/Dropdown.vue";
-import { useStore } from "vuex";
-
-const store = useStore();
-const user = computed(() => store.getters["User/getUser"]);
 
 const props = defineProps({
     product: {
@@ -96,14 +85,7 @@ const props = defineProps({
         default: null,
         required: false,
     },
-    links: {
-        type: Array,
-        default: [],
-        required: false,
-    },
 });
-
-// rozdziel to na dwa
 
 const chosenProductsId = computed(
     () => props.chosenProducts?.map((e) => e.id) || []

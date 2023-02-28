@@ -11,13 +11,7 @@
             "
         >
             <img
-                v-if="props?.product?.image?.url"
-                :src="`${props?.product?.image?.url}.webp`"
-                alt=""
-                class="rounded-md"
-            />
-            <img
-                v-else-if="props.product?.defaultProduct?.image?.url"
+                v-if="props.product?.defaultProduct?.image?.url"
                 :src="`${props.product?.defaultProduct?.image?.url}.webp`"
                 alt=""
                 class="rounded-md"
