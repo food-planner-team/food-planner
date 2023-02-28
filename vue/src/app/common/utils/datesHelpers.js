@@ -1,21 +1,23 @@
 import moment from "moment";
 
-export const getThisWeekDates = () => {
-    const weekDates = [];
+export const getCurrentWeek = () => {
+    const currentDate = moment();
+    const weekStart = currentDate.clone().startOf("isoWeek");
+    const days = [];
 
-    for (var i = 1; i <= 7; i++) {
-        weekDates.push(moment().day(i));
+    for (let i = 0; i <= 6; i++) {
+        days.push(moment(weekStart).add(i, "days").format("YYYY-MM-DD"));
     }
 
-    return weekDates.map((e) => e.format("YYYY-MM-DD"));
+    return days;
 };
 
 export const getFirstDayOfWeek = () => {
-    return getThisWeekDates()[0];
+    return getCurrentWeek()[0];
 };
 
 export const getLastDayOfWeek = () => {
-    return getThisWeekDates().at(-1);
+    return getCurrentWeek().at(-1);
 };
 
 export const getCurrentDay = () => {
