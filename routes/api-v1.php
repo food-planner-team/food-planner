@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\LogoutController;
 use App\Http\Controllers\v1\Auth\RegisterController;
+use App\Http\Controllers\v1\GenerateRecipesPlanController;
 use App\Http\Controllers\v1\MainProductsController;
 use App\Http\Controllers\v1\ProductsController;
 use App\Http\Controllers\v1\RecipesController;
@@ -31,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/recipes', RecipesController::class);
     Route::resource('/products', ProductsController::class)->only(['index']);
     Route::resource('/main-products', MainProductsController::class);
+    Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
     Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
 
     Route::post('/logout', LogoutController::class);
