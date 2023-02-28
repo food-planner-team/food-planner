@@ -19,10 +19,10 @@ class ProductsController extends ApiController
     public function index(Request $request)
     {
         $limit = Arr::get($request->all(), 'limit', 15);
-        $recipes = Product::filter()->paginate($limit);
+        $products = Product::filter()->paginate($limit);
 
         return $this->fractal
-            ->paginate($recipes, new ProductTransformer())
+            ->paginate($products, new ProductTransformer())
             ->get();
     }
 }
