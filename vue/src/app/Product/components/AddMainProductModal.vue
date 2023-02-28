@@ -1,7 +1,7 @@
 <template>
     <button
         class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        @click="openModal"
+        @click="props.chosenProducts.length && openModal()"
     >
         Zatwierdź produkt
     </button>

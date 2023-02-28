@@ -6,13 +6,11 @@
                 <component :is="Component" />
             </transition>
         </router-view>
-        <!-- <Footer /> -->
     </div>
 </template>
 
 <script setup>
 import HeaderNav from "../components/HeaderNav.vue";
-// import Footer from "../components/Footer.vue";
 </script>
 
 <style lang="scss" scoped>
