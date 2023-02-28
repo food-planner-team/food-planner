@@ -94,7 +94,7 @@ const links = ref([
         children: [
             {
                 name: "wszystkie produkty",
-                pathName: "",
+                pathName: "MainProductList",
                 icon: "list_alt",
                 action: "",
             },

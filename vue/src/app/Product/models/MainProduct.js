@@ -33,7 +33,10 @@ class MainProduct {
             params: params,
         });
 
-        return convertToArrayOfModels(MainProduct, response.data.data);
+        return {
+            products: convertToArrayOfModels(MainProduct, response.data.data),
+            meta: response.data.meta,
+        };
     }
 
     static async createMainProduct(params, data) {

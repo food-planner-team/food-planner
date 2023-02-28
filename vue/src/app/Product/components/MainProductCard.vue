@@ -30,17 +30,24 @@
             />
         </div>
         <div class="flex flex-col justify-between flex-1 gap-2 p-1 h-full">
-            <h1
-                class="font-bold text-sm"
-                :style="
-                    chosenProductsId.includes(props.product.id)
-                        ? { opacity: 0.5 }
-                        : { opacity: 1 }
-                "
-            >
-                {{ props.product.name }}
-            </h1>
-
+            <div class="flex justify-between">
+                <h1
+                    class="font-bold text-sm"
+                    :style="
+                        chosenProductsId.includes(props.product.id)
+                            ? { opacity: 0.5 }
+                            : { opacity: 1 }
+                    "
+                >
+                    {{ props.product.name }}
+                </h1>
+                <Dropdown
+                    v-if="user.admin"
+                    icon="more_vert"
+                    class="setting__span-btn self-start"
+                    :links="links"
+                />
+            </div>
             <div
                 class="text-sm"
                 :style="
@@ -60,25 +67,18 @@
                 <p>Cena: 5.55 zł - TODO</p>
             </div>
             <button
-                v-if="!chosenProductsId.includes(props.product.id)"
-                class="rounded-md border border-transparent bg-primary-dark px-12 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                @click="$emit('chooseProduct', props.product.id)"
+                class="rounded-md border border-transparent bg-primary-dark py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                style="opacity: 0.5"
+                disabled="true"
             >
-                Wybierz
-            </button>
-            <button
-                v-else
-                class="rounded-md border border-transparent bg-primary-dark px-12 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                @click="$emit('removeProduct', props.product.id)"
-            >
-                Usuń
+                Wybierz kolejność
             </button>
         </div>
     </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import Dropdown from "../../common/components/Dropdown.vue";
 import { useStore } from "vuex";
 
@@ -96,14 +96,28 @@ const props = defineProps({
         default: null,
         required: false,
     },
-    links: {
-        type: Array,
-        default: [],
-        required: false,
-    },
 });
 
-// rozdziel to na dwa
+const links = ref([
+    {
+        name: "pokaż",
+        pathName: "",
+        icon: "search",
+        action: "",
+    },
+    {
+        name: "edytuj",
+        pathName: "",
+        icon: "edit",
+        action: "",
+    },
+    {
+        name: "usuń",
+        pathName: "",
+        icon: "delete",
+        action: "",
+    },
+]);
 
 const chosenProductsId = computed(
     () => props.chosenProducts?.map((e) => e.id) || []

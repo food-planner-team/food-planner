@@ -1,12 +1,10 @@
 <template>
     <main class="main">
         <div class="wrapper">
-            <h1 class="font-bold text-2xl m-5 pl-3">
-                Dodawanie nowego produktu
-            </h1>
+            <h1 class="font-bold text-2xl m-5 pl-3">Lista produktów</h1>
             <div class="m-5 pl-3">
                 <p class="pb-2 text-sm text-gray-500">
-                    <label for="search">NAZWA PRODUKTU</label>
+                    <label for="search">WYSZUKAJ PRODUKT</label>
                 </p>
                 <input
                     type="search"
@@ -14,68 +12,52 @@
                     class="rounded-lg w-[29rem]"
                     placeholder="Wyszukaj"
                     v-model="searchValue"
-                    @keyup.enter="searchValue.length && getProducts()"
+                    @keyup.enter="getProducts()"
                 />
                 <button
                     class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    @click="searchValue.length && getProducts()"
+                    @click="getProducts()"
                 >
                     Szukaj
                 </button>
-                <AddMainProductModal
-                    :chosen-products="chosenProducts"
-                    v-model:product-name="searchValue"
-                    v-model:products="products"
-                />
             </div>
             <div
                 class="m-5 p-7 pl-3 pt-8 flex flex-wrap gap-16 justify-between h-[550px] 3xl:h-[57rem] overflow-y-scroll relative"
                 ref="scrollComponent"
             >
                 <template v-if="!isLoading">
-                    <ProductCard
+                    <MainProductCard
                         v-for="product in products"
                         :key="product.id"
                         :product="product"
-                        :chosen-products="chosenProducts"
-                        @choose-product="handleChooseProduct"
-                        @remove-product="handleRemoveProduct"
                     />
                 </template>
                 <Loader v-else class="self-center mx-auto" />
-                <p v-if="!searchValue" class="self-center mx-auto">
-                    Wpisz nazwę i wyszukaj produkt!
-                </p>
             </div>
         </div>
     </main>
 </template>
 <script setup>
-import { ref } from "vue";
-import AddMainProductModal from "../components/AddMainProductModal.vue";
-import ProductCard from "../components/ProductCard.vue";
-import Product from "../models/Product.js";
+import { ref, onMounted } from "vue";
+import MainProductCard from "../components/MainProductCard.vue";
 import Loader from "../../common/components/Loader.vue";
+import MainProduct from "../models/MainProduct";
 import { useInfiniteScroll } from "@vueuse/core";
 
 const searchValue = ref("");
 const products = ref([]);
-const chosenProducts = ref([]);
 const isLoading = ref(false);
 
 const page = ref(1);
 const scrollComponent = ref(null);
 
 const getProducts = () => {
-    chosenProducts.value = [];
     isLoading.value = true;
     page.value = 1;
 
-    Product.getProducts({
-        include: "image",
+    MainProduct.getMainProducts({
+        include: "defaultProduct.image",
         search: searchValue.value,
-        connected: 0,
-        limit: 20,
         page: page.value,
     })
         .then((res) => {
@@ -87,12 +69,14 @@ const getProducts = () => {
         });
 };
 
+onMounted(() => {
+    getProducts();
+});
+
 const getProductsOnScroll = () => {
-    Product.getProducts({
-        include: "image",
+    MainProduct.getMainProducts({
+        include: "defaultProduct.image",
         search: searchValue.value,
-        connected: 0,
-        limit: 20,
         page: page.value,
     }).then((res) => {
         if (page > res.meta.pagination.total_pages) return;
@@ -109,14 +93,6 @@ useInfiniteScroll(
     },
     { distance: 300 }
 );
-
-const handleChooseProduct = (id) => {
-    chosenProducts.value.push(...products.value.filter((e) => e.id === id));
-};
-
-const handleRemoveProduct = (id) => {
-    chosenProducts.value = chosenProducts.value.filter((e) => e.id !== id);
-};
 </script>
 <style lang="scss" scoped>
 .main {

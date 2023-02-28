@@ -38,7 +38,10 @@ class Product {
             params: params,
         });
 
-        return convertToArrayOfModels(Product, response.data.data);
+        return {
+            products: convertToArrayOfModels(Product, response.data.data),
+            meta: response.data.meta,
+        };
     }
 }
 
