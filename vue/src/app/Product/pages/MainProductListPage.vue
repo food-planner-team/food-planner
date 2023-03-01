@@ -79,7 +79,7 @@ const getProductsOnScroll = () => {
         search: searchValue.value,
         page: page.value,
     }).then((res) => {
-        if (page > res.meta.pagination.total_pages) return;
+        if (page.value > res.meta.pagination.total_pages) return;
 
         products.value.push(...res.products);
         page.value++;
