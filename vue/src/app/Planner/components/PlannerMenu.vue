@@ -35,8 +35,6 @@ import {
 } from "../../common/utils/datesHelpers.js";
 import Pdf from "../../System/models/Pdf";
 
-import FileDownload from "js-file-download";
-
 const emit = defineEmits(["update:dateStart", "update:dateEnd"]);
 
 const props = defineProps({
@@ -78,18 +76,12 @@ onMounted(() => {
 
 const generatePdf = () => {
     Pdf.generatePdf(dateStart.value, dateEnd.value).then((res) => {
-        // console.log(res);
-        // console.log(res.data);
-        // console.log(URL.createObjectURL(res.data));
-        // const url = window.URL.createObjectURL(new Blob([res.data]));
-        // console.log(url);
-        // const link = document.createElement("a");
-        // link.href = url;
-        // link.setAttribute("download", "file.pdf");
-        // document.body.appendChild(link);
-        // link.click();
-
-        FileDownload(res.data, "file.pdf");
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "planner.pdf");
+        document.body.appendChild(link);
+        link.click();
     });
 };
 </script>
