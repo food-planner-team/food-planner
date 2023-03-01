@@ -19,7 +19,7 @@ class Pdf {
         )
             .then((response) => {
                 console.log(response);
-                return response;
+                return response.data;
             })
             .catch((error) => {
                 throw error;
