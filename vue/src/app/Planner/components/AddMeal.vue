@@ -66,9 +66,11 @@
                                         class="rounded-md w-3/4"
                                         placeholder="Wyszukaj"
                                         v-model="searchValue"
+                                        @keyup.enter="getRecipes()"
                                     />
                                     <button
                                         class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        @click="getRecipes()"
                                     >
                                         Szukaj
                                     </button>
@@ -76,11 +78,12 @@
                             </div>
                             <div
                                 class="m-4 h-[420px] rounded-sm overflow-auto mr-0"
-                                v-if="filteredRecipes.length"
+                                v-if="recipes.length"
+                                ref="scrollComponent"
                             >
                                 <div
                                     class="flex gap-5 h-20 items-center justify-between my-7"
-                                    v-for="(item, index) in filteredRecipes"
+                                    v-for="(item, index) in recipes"
                                     :key="index"
                                 >
                                     <div
@@ -107,7 +110,7 @@
                                 </div>
                             </div>
                             <div
-                                v-if="!filteredRecipes.length && !isLoading"
+                                v-if="!recipes.length && !isLoading"
                                 class="m-4"
                             >
                                 Brak pasujących przepisów
@@ -122,7 +125,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import {
     TransitionRoot,
     TransitionChild,
@@ -133,11 +136,12 @@ import {
 import { getLocaleDate } from "../../common/utils/datesHelpers.js";
 import Recipe from "../models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
+import { useInfiniteScroll } from "@vueuse/core";
 
 const props = defineProps({
     date: String,
 });
-const allRecipes = ref([]);
+const recipes = ref([]);
 const searchValue = ref("");
 const isOpenModal = ref(false);
 const isLoading = ref(true);
@@ -146,49 +150,74 @@ function closeModal() {
     isOpenModal.value = false;
     searchValue.value = "";
 }
+
 function openModal() {
     isOpenModal.value = true;
 }
+
 const emit = defineEmits(["update"]);
+
 function addMeal(v) {
     emit("update", v);
     closeModal();
 }
 
-watch(isOpenModal, () => {
-    if (!isOpenModal.value) return;
+const page = ref(1);
+const scrollComponent = ref(null);
+
+const getRecipes = () => {
+    recipes.value = [];
+    isLoading.value = true;
+    page.value = 1;
 
     Recipe.getRecipes({
         include: "image",
+        search: searchValue.value,
+        page: page.value,
+        limit: 4,
     })
         .then((res) => {
-            allRecipes.value = res;
+            recipes.value = res.recipes;
+            page.value++;
         })
         .finally(() => {
             isLoading.value = false;
         });
+};
+
+watch(isOpenModal, () => {
+    if (!isOpenModal.value) return;
+
+    getRecipes();
 });
 
-const filteredRecipes = computed(() => {
-    if (searchValue.value.trim().length > 0) {
-        return allRecipes.value.filter((recipe) =>
-            recipe.name
-                .toLowerCase()
-                .includes(searchValue.value.trim().toLocaleLowerCase())
-        );
-    }
+const getRecipesOnScroll = () => {
+    Recipe.getRecipes({
+        include: "image",
+        search: searchValue.value,
+        page: page.value,
+        limit: 4,
+    }).then((res) => {
+        if (page.value > res.meta.pagination.total_pages) return;
 
-    return allRecipes.value;
-});
+        console.log(res.meta.pagination.total_pages);
+        console.log(page.value);
+
+        recipes.value.push(...res.recipes);
+        page.value++;
+    });
+};
+
+useInfiniteScroll(
+    scrollComponent,
+    () => {
+        getRecipesOnScroll();
+    },
+    { distance: 300 }
+);
 </script>
 
 <style lang="scss" scoped>
-/* .loader {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} */
 .meal-block {
     display: flex;
     align-items: center;

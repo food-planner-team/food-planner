@@ -23,7 +23,7 @@ class Recipe {
         this.date = data.date;
         const image = _get(data, "image.data");
         if (image) {
-            this.image = new Image(image)
+            this.image = new Image(image);
         }
     }
 
@@ -44,9 +44,13 @@ class Recipe {
 
     static async getRecipes(params) {
         const response = await Api.get("/recipes", {
-            params: params
+            params: params,
         });
-        return convertToArrayOfModels(Recipe, response.data.data);
+
+        return {
+            recipes: convertToArrayOfModels(Recipe, response.data.data),
+            meta: response.data.meta,
+        };
     }
 }
 
