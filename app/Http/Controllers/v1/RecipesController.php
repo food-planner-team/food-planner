@@ -40,6 +40,13 @@ class RecipesController extends ApiController
             $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'local');
             $image->create();
         }
+        if ($request->has('products')){
+//            dd($request->get('products'));
+
+            $recipe->recipeItems()->createMany($request->get('products'));
+//            $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'local');
+//            $image->create();
+        }
 
         if ($recipe) {
             return $this->fractal

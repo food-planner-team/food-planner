@@ -16,7 +16,9 @@ class StoreRecipeRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'preparation_time' => 'required|int'
+            'preparation_time' => 'required|int',
+            'products.*.quantity' => 'required',
+            'products.*.product_id' => 'required',
         ];
     }
 }

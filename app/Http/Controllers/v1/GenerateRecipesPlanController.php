@@ -39,7 +39,6 @@ class GenerateRecipesPlanController extends ApiController
         view()->share('header', $dateStartName . " - " . $dateSEndName);
         view()->share('recipes', $recipes);
         $pdf = PDF::loadView('recipesPlan', $recipes);
-//        $pdf->setPaper('A4', 'landscape');
         return $pdf->download('pdf_file.pdf');
     }
 }
