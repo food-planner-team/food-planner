@@ -38,7 +38,7 @@ import Pdf from "../../System/models/Pdf";
 const emit = defineEmits(["update:dateStart", "update:dateEnd"]);
 
 const props = defineProps({
-    dateStart: {z
+    dateStart: {
         type: String,
         default: "",
     },

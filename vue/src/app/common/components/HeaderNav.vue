@@ -80,7 +80,7 @@ const links = ref([
             },
             {
                 name: "dodaj przepis",
-                pathName: "",
+                pathName: "AddRecipe",
                 icon: "add_circle",
                 action: "",
             },
