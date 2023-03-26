@@ -167,10 +167,6 @@ function openModal() {
 
 const emit = defineEmits(["addProduct"]);
 
-// function addProduct(product) {
-//     emit("addProduct", product);
-// }
-
 const page = ref(1);
 const scrollComponent = ref(null);
 

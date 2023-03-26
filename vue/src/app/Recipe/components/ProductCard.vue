@@ -29,6 +29,8 @@
                             : 'bg-gray-200'
                     "
                     class="relative inline-flex h-6 w-11 items-center rounded-full"
+                    data-te-toggle="tooltip"
+                    title="Czy produkt jest wymagany w przepisie?"
                 >
                     <span class="sr-only">Enable notifications</span>
                     <span
@@ -58,6 +60,8 @@
                         id="quantity"
                         placeholder="Podaj miarę"
                         class="border border-gray-300 rounded-md p-1 pl-2"
+                        :class="props.error.error ? 'bg-red-100' : ''"
+                        @keypress="$emit('removeError', props.product.id)"
                     />
                 </div>
             </div>
@@ -81,9 +85,13 @@ const props = defineProps({
         default: {},
         required: true,
     },
+    error: {
+        type: Object,
+        default: {},
+    },
 });
 
-const emit = defineEmits(["updateProduct", "removeProduct"]);
+const emit = defineEmits(["updateProduct", "removeProduct", "removeError"]);
 
 watch(props.product, () => {
     emit("updateProduct", props.product);
