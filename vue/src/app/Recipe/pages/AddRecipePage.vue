@@ -26,7 +26,8 @@
                                 id="name"
                                 placeholder="Nazwa przepisu"
                                 v-model="name"
-                                required
+                                :class="errors.name ? 'bg-red-100 ' : ''"
+                                @keypress="errors.name = false"
                             />
                         </div>
                         <div class="flex flex-col">
@@ -39,6 +40,8 @@
                                 id="description"
                                 placeholder="Krótki opis"
                                 v-model="description"
+                                :class="errors.description ? 'bg-red-100 ' : ''"
+                                @keypress="errors.description = false"
                             />
                         </div>
 
@@ -49,7 +52,8 @@
                                 type="file"
                                 id="image"
                                 v-on:change="onFileChange"
-                                required
+                                ref="imageInput"
+                                :class="errors.image ? 'bg-red-100 ' : ''"
                             />
                         </div>
                         <div class="flex flex-1 gap-5">
@@ -65,11 +69,12 @@
                                 >
                                 <input
                                     class="border border-gray-300 rounded-md p-2"
-                                    type="text"
+                                    type="number"
                                     id="time"
                                     placeholder="Czas"
                                     v-model="time"
-                                    required
+                                    @keypress="errors.time = false"
+                                    :class="errors.time ? 'bg-red-100 ' : ''"
                                 />
                             </div>
                             <div class="flex flex-col w-full">
@@ -86,11 +91,12 @@
 
                                 <input
                                     class="border border-gray-300 rounded-md p-2"
-                                    type="text"
+                                    type="number"
                                     id="kcal"
                                     placeholder="Kaloryczność"
                                     v-model="kcal"
-                                    required
+                                    @keypress="errors.kcal = false"
+                                    :class="errors.kcal ? 'bg-red-100 ' : ''"
                                 />
                             </div>
                         </div>
@@ -104,7 +110,8 @@
                                 id="preparation"
                                 placeholder="Opis przygotowania"
                                 v-model="preparation"
-                                required
+                                @keypress="errors.preparation = false"
+                                :class="errors.preparation ? 'bg-red-100 ' : ''"
                             ></textarea>
                         </div>
                     </div>
@@ -128,6 +135,13 @@
                                     :product="product"
                                     @remove-product="removeProduct"
                                     @update-product="updateProduct"
+                                    @remove-error="removeError"
+                                    :error="
+                                        errors.quantities.find(
+                                            (quantity) =>
+                                                quantity.id === product.id
+                                        )
+                                    "
                                 />
                             </template>
                         </template>
@@ -135,7 +149,13 @@
                             <div
                                 class="flex flex-col gap-5 self-center mx-auto"
                             >
-                                <span class="text-gray-500">
+                                <span
+                                    :class="
+                                        errors.products
+                                            ? 'text-red-500'
+                                            : 'text-gray-500'
+                                    "
+                                >
                                     Brak produktów
                                 </span>
                             </div>
@@ -155,7 +175,7 @@
     </main>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import ProductCard from "../../Recipe/components/ProductCard.vue";
 import AddProductModal from "../components/AddProductModal.vue";
 import Recipe from "../../Planner/models/Recipe";
@@ -170,9 +190,20 @@ const preparation = ref("");
 const time = ref("");
 const kcal = ref("");
 const description = ref("");
+const imageInput = ref(null);
+const errors = reactive({
+    name: false,
+    image: false,
+    preparation: false,
+    time: false,
+    kcal: false,
+    description: false,
+    quantities: [],
+});
 
 const onFileChange = (e) => {
     image.value = e.target.files || e.dataTransfer.files;
+    errors.image = false;
 };
 
 const addProduct = (product) => {
@@ -188,6 +219,15 @@ const addProduct = (product) => {
     }
 
     products.value.push({ ...product, optional: false, quantity: null });
+    errors.products = false;
+    store.commit("Toast/addToast", {
+        message: "Dodano produkt do przepisu",
+        type: "success",
+    });
+
+    errors.quantities = products.value.map((p) => {
+        return { id: p.id, error: false };
+    });
 };
 
 const removeProduct = (productId) => {
@@ -202,16 +242,54 @@ const updateProduct = (product) => {
     products.value[index] = product;
 };
 
+const removeError = (productsId) => {
+    errors.quantities = errors.quantities.map((quantity) => {
+        if (quantity.id === productsId) {
+            quantity.error = false;
+        }
+        return quantity;
+    });
+};
+
 const createRecipe = () => {
+    if (
+        !products.value.length ||
+        !name.value ||
+        !image.value ||
+        !preparation.value ||
+        !time.value ||
+        !kcal.value ||
+        !description.value ||
+        products.value.filter((p) => p.quantity).length !==
+            products.value.length
+    ) {
+        store.commit("Toast/addToast", {
+            message: "Nie wszystkie pola zostały wypełnione",
+            type: "warning",
+        });
+
+        errors.name = name.value ? false : true;
+        errors.image = image.value ? false : true;
+        errors.preparation = preparation.value ? false : true;
+        errors.time = time.value ? false : true;
+        errors.kcal = kcal.value ? false : true;
+        errors.description = description.value ? false : true;
+        errors.products = products.value.length ? false : true;
+
+        errors.quantities = products.value.map((p) => {
+            return { id: p.id, error: p.quantity ? false : true };
+        });
+
+        return;
+    }
+
     const formdata = new FormData();
-    console.log(image.value)
     formdata.append("name", name.value);
     formdata.append("description", description.value);
     formdata.append("preparation", preparation.value);
     formdata.append("preparation_time", time.value);
     formdata.append("kcal", kcal.value);
     formdata.append("image", image.value[0]);
-    // formdata.append("products", products.value);
     formdata.append(
         "products",
         JSON.stringify(
@@ -224,9 +302,28 @@ const createRecipe = () => {
             })
         )
     );
-    Recipe.createRecipe(formdata);
+    Recipe.createRecipe(formdata)
+        .then(() => {
+            store.commit("Toast/addToast", {
+                message: "Przepis został dodany",
+                type: "success",
+            });
 
-    //how to send image axios on post
+            products.value = [];
+            name.value = "";
+            image.value = null;
+            preparation.value = "";
+            time.value = "";
+            kcal.value = "";
+            description.value = "";
+            imageInput.value.value = "";
+        })
+        .catch((err) => {
+            store.commit("Toast/addToast", {
+                message: "Coś poszło nie tak",
+                type: "warning",
+            });
+        });
 };
 </script>
 <style lang="scss" scoped>
