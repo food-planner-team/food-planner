@@ -22,31 +22,48 @@
                     {{ props.product.name }}
                 </h1>
                 <Switch
-                    v-model="enabled"
-                    :class="enabled ? 'bg-primary-dark' : 'bg-gray-200'"
+                    v-model="props.product.optional"
+                    :class="
+                        !props.product.optional
+                            ? 'bg-primary-dark'
+                            : 'bg-gray-200'
+                    "
                     class="relative inline-flex h-6 w-11 items-center rounded-full"
                 >
                     <span class="sr-only">Enable notifications</span>
                     <span
-                        :class="enabled ? 'translate-x-6' : 'translate-x-1'"
+                        :class="
+                            !props.product.optional
+                                ? 'translate-x-6'
+                                : 'translate-x-1'
+                        "
                         class="inline-block h-4 w-4 transform rounded-full bg-white transition"
                     />
                 </Switch>
             </div>
             <div class="text-sm">
-                <p>
-                    Miara:
-                    <!-- {{
-                        props.product.quantity ||
-                        props.product.defaultProduct.quantity
-                    }}
-                    {{ props.product.quantity_type }} -->
-                </p>
-                <p>Cena: 5.55 zł - TODO</p>
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="quantity"
+                        class="block text-sm font-medium text-gray-700"
+                    >
+                        Miara w ({{
+                            convertQuantity(props.product.quantity_type)
+                        }}):
+                    </label>
+                    <input
+                        v-model="props.product.quantity"
+                        type="number"
+                        name="quantity"
+                        id="quantity"
+                        placeholder="Podaj miarę"
+                        class="border border-gray-300 rounded-md p-1 pl-2"
+                    />
+                </div>
             </div>
             <button
                 class="rounded-md border border-transparent bg-primary-dark px-12 py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                @click="$emit('remove-product', props.product.id)"
+                @click="$emit('removeProduct', props.product.id)"
             >
                 Usuń
             </button>
@@ -55,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 
 const props = defineProps({
@@ -66,7 +83,21 @@ const props = defineProps({
     },
 });
 
-const enabled = ref(true);
+const emit = defineEmits(["updateProduct", "removeProduct"]);
+
+watch(props.product, () => {
+    emit("updateProduct", props.product);
+});
+
+const convertQuantity = (quantity) => {
+    if (quantity.toLowerCase() === "kg") {
+        return "g";
+    } else if (quantity.toLowerCase() === "l") {
+        return "ml";
+    } else {
+        return quantity;
+    }
+};
 </script>
 
 <style lang="scss" scoped>

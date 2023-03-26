@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper">
         <HeaderNav />
+        <Teleport to="body">
+            <ToastList />
+        </Teleport>
         <router-view v-slot="{ Component }">
             <transition name="default" mode="out-in">
                 <component :is="Component" />
@@ -11,6 +14,7 @@
 
 <script setup>
 import HeaderNav from "../components/HeaderNav.vue";
+import ToastList from "../components/ToastList.vue";
 </script>
 
 <style lang="scss" scoped>

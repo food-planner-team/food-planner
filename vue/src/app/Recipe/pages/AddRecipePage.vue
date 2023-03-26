@@ -25,15 +25,17 @@
                                 type="text"
                                 id="name"
                                 placeholder="Nazwa przepisu"
+                                v-model="name"
                             />
                         </div>
 
                         <div class="flex flex-col">
-                            <label class="mb-2" for="formFile">Zdjęcie</label>
+                            <label class="mb-2" for="image">Zdjęcie</label>
                             <input
-                                class="relative rounded-md block w-full min-w-0 flex-auto border border-gray-300 py-2 px-3 file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] file:hover:cursor-pointer outline-none focus:outline-blue-600 outline-offset-1"
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-blue-600 outline-offset-1"
                                 type="file"
-                                id="formFile"
+                                id="image"
+                                v-on:change="onFileChange"
                             />
                         </div>
                         <div class="flex flex-1 gap-5">
@@ -52,6 +54,7 @@
                                     type="text"
                                     id="time"
                                     placeholder="Czas"
+                                    v-model="time"
                                 />
                             </div>
                             <div class="flex flex-col w-full">
@@ -71,6 +74,7 @@
                                     type="text"
                                     id="kcal"
                                     placeholder="Kaloryczność"
+                                    v-model="kcal"
                                 />
                             </div>
                         </div>
@@ -83,6 +87,7 @@
                                 style="resize: none"
                                 id="description"
                                 placeholder="Opis przepisu"
+                                v-model="description"
                             ></textarea>
                         </div>
                     </div>
@@ -99,12 +104,13 @@
                     >
                         <template v-if="products.length">
                             <template
-                                v-for="(product, index) in products"
+                                v-for="product in products"
                                 :key="product.id"
                             >
                                 <ProductCard
+                                    :product="product"
                                     @remove-product="removeProduct"
-                                    v-model:product="products[index]"
+                                    @update-product="updateProduct"
                                 />
                             </template>
                         </template>
@@ -123,6 +129,7 @@
             <div class="mx-5 flex justify-end">
                 <button
                     class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    @click="createRecipe"
                 >
                     Dodaj przepis
                 </button>
@@ -134,27 +141,58 @@
 import { ref } from "vue";
 import ProductCard from "../../Recipe/components/ProductCard.vue";
 import AddProductModal from "../components/AddProductModal.vue";
+import Recipe from "../../Planner/models/Recipe";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const products = ref([]);
+const name = ref("");
+const image = ref(null);
+const description = ref("");
+const time = ref("");
+const kcal = ref("");
+
+const onFileChange = (e) => {
+    image.value = e.target.files || e.dataTransfer.files;
+};
 
 const addProduct = (product) => {
     const productExists = products.value.find(
         (p) => p.name.toLowerCase() === product.name.toLowerCase()
     );
     if (productExists) {
-        alert("Produkt już jest dodany do listy");
+        store.commit("Toast/addToast", {
+            message: "Ten produkt znajduje się już w przepisie",
+            type: "warning",
+        });
         return;
     }
 
-    products.value.push({ ...product, optional: false, quantaity: 1 });
-    // products.value.push(product);
-    console.log(products.value);
+    products.value.push({ ...product, optional: false, quantity: null });
 };
 
 const removeProduct = (productId) => {
     products.value = products.value.filter(
         (product) => product.id !== productId
     );
+};
+
+const updateProduct = (product) => {
+    const index = products.value.findIndex((p) => p.id === product.id);
+
+    products.value[index] = product;
+};
+
+const createRecipe = () => {
+    Recipe.createRecipe("", {
+        name: name.value,
+        description: description.value,
+        preparation_time: time.value,
+        kcal: kcal.value,
+        image: image.value,
+        products: products.value,
+    });
 };
 </script>
 <style lang="scss" scoped>

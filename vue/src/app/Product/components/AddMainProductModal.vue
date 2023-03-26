@@ -1,7 +1,7 @@
 <template>
     <button
         class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        @click="props.chosenProducts.length && openModal()"
+        @click="openModal()"
     >
         Zatwierdź produkt
     </button>
@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref } from "vue";
 import draggable from "vuedraggable";
 import {
     TransitionRoot,
@@ -147,6 +147,9 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import MainProduct from "../models/MainProduct";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const props = defineProps({
     chosenProducts: {
@@ -186,12 +189,23 @@ function closeModal() {
 }
 
 function openModal() {
+    if (props.chosenProducts.length === 0) {
+        store.commit("Toast/addToast", {
+            message: "Wybierz produkty!",
+            type: "warning",
+        });
+        return;
+    }
+
     isOpenModal.value = true;
 }
 
 const createMainProduct = () => {
     if (!quantityType.value || !props.productName) {
-        alert("Uzupełnij miarę i nazwę produktu!");
+        store.commit("Toast/addToast", {
+            message: "Uzupełnij miarę i nazwę produktu!",
+            type: "warning",
+        });
         return;
     }
 

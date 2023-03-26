@@ -22,7 +22,7 @@
                 </button>
             </div>
             <div
-                class="m-5 p-7 pl-3 pt-8 flex flex-wrap gap-16 justify-between h-[550px] 3xl:h-[57rem] overflow-y-scroll relative"
+                class="h-[550px] 3xl:h-[57rem] overflow-y-scroll relative grid grid-cols-4 gap-14 justify-items-center pb-5 3xl:grid-cols-5"
                 ref="scrollComponent"
             >
                 <template v-if="!isLoading">
@@ -32,7 +32,10 @@
                         :product="product"
                     />
                 </template>
-                <Loader v-else class="self-center mx-auto" />
+                <Loader
+                    v-else
+                    class="m-auto col-start-2 col-span-3 3xl:col-start-3 3xl:col-span-1"
+                />
             </div>
         </div>
     </main>

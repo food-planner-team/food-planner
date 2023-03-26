@@ -68,7 +68,7 @@ const links = ref([
         children: [
             {
                 name: "wszystkie przepisy",
-                pathName: "Planner",
+                pathName: "",
                 icon: "list_alt",
                 action: "",
             },

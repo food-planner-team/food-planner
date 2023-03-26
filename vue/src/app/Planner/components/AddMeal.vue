@@ -115,7 +115,7 @@
                             >
                                 Brak pasujących przepisów
                             </div>
-                            <Loader v-if="isLoading" class="self-center" />
+                            <Loader v-if="isLoading" class="m-auto" />
                         </DialogPanel>
                     </TransitionChild>
                 </div>

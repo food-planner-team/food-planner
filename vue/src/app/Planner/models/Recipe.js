@@ -42,6 +42,15 @@ class Recipe {
         return convertToArrayOfModels(Recipe, response.data.data);
     }
 
+    static async createRecipe(params, data) {
+        const response = await Api.post("/recipes", {
+            params: params,
+            ...data,
+        });
+
+        return new Recipe(response.data.data);
+    }
+
     static async getRecipes(params) {
         const response = await Api.get("/recipes", {
             params: params,

@@ -72,12 +72,12 @@
                                 </div>
                             </div>
                             <div
-                                class="m-4 h-[420px] rounded-sm overflow-auto mr-0"
+                                class="m-4 h-[420px] rounded-sm overflow-auto mr-0 p-1"
                                 v-if="products.length"
                                 ref="scrollComponent"
                             >
                                 <div
-                                    class="h-36 rounded-lg flex items-center gap-5 p-5"
+                                    class="h-36 rounded-lg flex items-center gap-5 p-5 mb-2 shadow-md"
                                     v-for="(product, index) in products"
                                     :key="index"
                                 >
@@ -95,7 +95,7 @@
                                         />
                                     </div>
                                     <div
-                                        class="flex flex-col justify-between flex-1 gap-2 p-1 h-full"
+                                        class="flex flex-col justify-center flex-1 gap-2 p-1 h-full"
                                     >
                                         <h1 class="font-bold text-xl">
                                             {{ product.name }}
@@ -111,7 +111,9 @@
                                     <div class="pr-4">
                                         <button
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            @click="addProduct(product)"
+                                            @click="
+                                                $emit('addProduct', product)
+                                            "
                                         >
                                             Wybierz produkt
                                         </button>
@@ -124,7 +126,7 @@
                             >
                                 Brak pasujących produktów
                             </div>
-                            <Loader v-if="isLoading" class="self-center" />
+                            <Loader v-if="isLoading" class="m-auto" />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -165,9 +167,9 @@ function openModal() {
 
 const emit = defineEmits(["addProduct"]);
 
-function addProduct(product) {
-    emit("addProduct", product);
-}
+// function addProduct(product) {
+//     emit("addProduct", product);
+// }
 
 const page = ref(1);
 const scrollComponent = ref(null);
