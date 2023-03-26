@@ -204,12 +204,13 @@ const updateProduct = (product) => {
 
 const createRecipe = () => {
     const formdata = new FormData();
+    console.log(image.value)
     formdata.append("name", name.value);
     formdata.append("description", description.value);
     formdata.append("preparation", preparation.value);
     formdata.append("preparation_time", time.value);
     formdata.append("kcal", kcal.value);
-    formdata.append("image", image.value);
+    formdata.append("image", image.value[0]);
     // formdata.append("products", products.value);
     formdata.append(
         "products",

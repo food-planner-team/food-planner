@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Factories\ImageFactory;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Models\Recipe;
+use App\Transformers\ImageTransformer;
 use App\Transformers\RecipeTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -41,7 +42,8 @@ class RecipesController extends ApiController
             $image->create();
         }
         if ($request->has('products')){
-            $recipe->recipeItems()->createMany($request->get('products'));
+            $products = array_map(fn($f) => (array)$f,json_decode($request->get('products')));
+            $recipe->recipeItems()->createMany($products);
         }
 
         if ($recipe) {
