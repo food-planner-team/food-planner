@@ -26,6 +26,19 @@
                                 id="name"
                                 placeholder="Nazwa przepisu"
                                 v-model="name"
+                                required
+                            />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="mb-2" for="description"
+                                >Krótki opis</label
+                            >
+                            <input
+                                class="border border-gray-300 rounded-md p-2"
+                                type="text"
+                                id="description"
+                                placeholder="Krótki opis"
+                                v-model="description"
                             />
                         </div>
 
@@ -36,6 +49,7 @@
                                 type="file"
                                 id="image"
                                 v-on:change="onFileChange"
+                                required
                             />
                         </div>
                         <div class="flex flex-1 gap-5">
@@ -55,6 +69,7 @@
                                     id="time"
                                     placeholder="Czas"
                                     v-model="time"
+                                    required
                                 />
                             </div>
                             <div class="flex flex-col w-full">
@@ -75,19 +90,21 @@
                                     id="kcal"
                                     placeholder="Kaloryczność"
                                     v-model="kcal"
+                                    required
                                 />
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <label class="mb-2" for="description"
-                                >Opis przepisu</label
+                            <label class="mb-2" for="preparation"
+                                >Opis przygotowania</label
                             >
                             <textarea
-                                class="border border-gray-300 rounded-md p-2 min-h-[200px]"
+                                class="border border-gray-300 rounded-md p-2 min-h-[115px]"
                                 style="resize: none"
-                                id="description"
-                                placeholder="Opis przepisu"
-                                v-model="description"
+                                id="preparation"
+                                placeholder="Opis przygotowania"
+                                v-model="preparation"
+                                required
                             ></textarea>
                         </div>
                     </div>
@@ -149,9 +166,10 @@ const store = useStore();
 const products = ref([]);
 const name = ref("");
 const image = ref(null);
-const description = ref("");
+const preparation = ref("");
 const time = ref("");
 const kcal = ref("");
+const description = ref("");
 
 const onFileChange = (e) => {
     image.value = e.target.files || e.dataTransfer.files;
@@ -185,14 +203,29 @@ const updateProduct = (product) => {
 };
 
 const createRecipe = () => {
-    Recipe.createRecipe("", {
-        name: name.value,
-        description: description.value,
-        preparation_time: time.value,
-        kcal: kcal.value,
-        image: image.value,
-        products: products.value,
-    });
+    const formdata = new FormData();
+    formdata.append("name", name.value);
+    formdata.append("description", description.value);
+    formdata.append("preparation", preparation.value);
+    formdata.append("preparation_time", time.value);
+    formdata.append("kcal", kcal.value);
+    formdata.append("image", image.value);
+    // formdata.append("products", products.value);
+    formdata.append(
+        "products",
+        JSON.stringify(
+            products.value.map((product) => {
+                return {
+                    product_id: product.id,
+                    quantity: product.quantity,
+                    optional: product.optional,
+                };
+            })
+        )
+    );
+    Recipe.createRecipe(formdata);
+
+    //how to send image axios on post
 };
 </script>
 <style lang="scss" scoped>

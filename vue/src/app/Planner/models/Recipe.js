@@ -42,10 +42,9 @@ class Recipe {
         return convertToArrayOfModels(Recipe, response.data.data);
     }
 
-    static async createRecipe(params, data) {
-        const response = await Api.post("/recipes", {
-            params: params,
-            ...data,
+    static async createRecipe(data) {
+        const response = await Api.post("/recipes", data, {
+            headers: { "Content-Type": "multipart/form-data" },
         });
 
         return new Recipe(response.data.data);
