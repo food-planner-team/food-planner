@@ -34,9 +34,9 @@ class Product {
     }
 
     static async getProducts(params) {
-        const response = (await Api.get("/products", {
+        const response = await Api.get("/products", {
             params: params,
-        })).headers('multipart/formdata');
+        });
 
         return {
             products: convertToArrayOfModels(Product, response.data.data),

@@ -105,7 +105,7 @@
                                 >Opis przygotowania</label
                             >
                             <textarea
-                                class="border border-gray-300 rounded-md p-2 min-h-[115px]"
+                                class="border border-gray-300 rounded-md p-2 min-h-[145px]"
                                 style="resize: none"
                                 id="preparation"
                                 placeholder="Opis przygotowania"
@@ -124,7 +124,7 @@
                         <AddProductModal @add-product="addProduct" />
                     </div>
                     <div
-                        class="flex flex-wrap gap-9 overflow-y-scroll h-[500px] 3xl:h-[53rem] p-2"
+                        class="flex flex-wrap gap-9 overflow-y-scroll h-[530px] 3xl:h-[55rem] p-2"
                     >
                         <template v-if="products.length">
                             <template
@@ -161,15 +161,15 @@
                             </div>
                         </template>
                     </div>
+                    <div class="mt-2 flex justify-end fixed bottom-3 right-12">
+                        <button
+                            class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            @click="createRecipe"
+                        >
+                            Dodaj przepis
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="mx-5 flex justify-end">
-                <button
-                    class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    @click="createRecipe"
-                >
-                    Dodaj przepis
-                </button>
             </div>
         </div>
     </main>

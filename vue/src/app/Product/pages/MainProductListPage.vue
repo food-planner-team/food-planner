@@ -34,7 +34,7 @@
                 </template>
                 <Loader
                     v-else
-                    class="m-auto col-start-2 col-span-3 3xl:col-start-3 3xl:col-span-1"
+                    class="m-auto col-start-2 col-span-2 3xl:col-start-3 3xl:col-span-1"
                 />
             </div>
         </div>
