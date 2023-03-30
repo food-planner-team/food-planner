@@ -32,10 +32,10 @@
         <div class="header-profile">
             <div class="profile-block">
                 <div class="profile-avatar">
-                    <img src="https://unsplash.it/200/200" alt="" />
+                    <img src="../assets/user.png" alt="user's avatar" />
                 </div>
                 <div class="profile-info">
-                    <div class="profile-name">Witaj, Adam Kowalski!</div>
+                    <div class="profile-name">Witaj, {{ user.name }}!</div>
                 </div>
                 <Dropdown icon="expand_more" :links="userLinks" />
             </div>
@@ -43,11 +43,16 @@
     </header>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import logo from "../assets/logo.svg";
 import Dropdown from "./Dropdown.vue";
 import { useRouter } from "vue-router";
 import User from "../../System/models/User";
+import { useStore } from "vuex";
+
+const store = useStore();
+const user = computed(() => store.getters["User/getUser"]);
+
 const router = useRouter();
 
 const style = "left: 0";

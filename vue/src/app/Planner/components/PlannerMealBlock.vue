@@ -1,7 +1,7 @@
 <template>
     <div class="meal-block">
         <div class="meal-block__img">
-            <img :src="meal?.image?.url" alt="" />
+            <img :src="meal?.image?.url" :alt="meal.name" class="rounded-md" />
         </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
@@ -84,7 +84,10 @@ const links = ref([
         grid-area: meal-image;
         width: 100%;
         aspect-ratio: 1/1;
-        background-color: $typography;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         border-radius: 6px;
         overflow: hidden;
     }

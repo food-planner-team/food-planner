@@ -78,7 +78,7 @@
                                             >
                                                 <img
                                                     :src="`${element.image?.url}.webp`"
-                                                    alt=""
+                                                    :alt="element.name"
                                                     class="rounded-md"
                                                 />
                                             </div>

@@ -90,7 +90,7 @@
                                                     ?.url
                                             "
                                             :src="`${product.defaultProduct?.image?.url}.webp`"
-                                            alt=""
+                                            :alt="product.name"
                                             class="rounded-md"
                                         />
                                     </div>

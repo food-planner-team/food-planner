@@ -6,13 +6,13 @@
             <img
                 v-if="props.product?.defaultProduct?.image?.url"
                 :src="`${props.product?.defaultProduct?.image?.url}.webp`"
-                alt=""
+                :alt="props.product.name"
                 class="rounded-md"
             />
             <img
                 v-else
-                src="../../Product/assets/No-Image-Placeholder.png"
-                alt=""
+                src="../../common/assets/no-image.jpg"
+                alt="no image placeholder"
                 class="rounded-md"
             />
         </div>

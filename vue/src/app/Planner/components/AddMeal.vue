@@ -87,9 +87,20 @@
                                     :key="index"
                                 >
                                     <div
-                                        class="bg-primary w-28 h-20 rounded-md overflow-hidden"
+                                        class="flex justify-center items-center w-28 h-20 rounded-md overflow-hidden"
                                     >
-                                        <img :src="item?.image?.url" alt="" />
+                                        <img
+                                            v-if="item?.image?.url"
+                                            :src="item?.image?.url"
+                                            :alt="item.name"
+                                            class="rounded-md"
+                                        />
+                                        <img
+                                            v-else
+                                            src="../../common/assets/no-image.jpg"
+                                            alt="no image placeholder"
+                                            class="rounded-md"
+                                        />
                                     </div>
                                     <div class="w-7/12">
                                         <h3 class="font-bold">
