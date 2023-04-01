@@ -58,7 +58,7 @@
         </button>
         <HamburgerMenu
             :links="links"
-            class="absolute top-[115%] left-0 w-full duration-500 ease-in"
+            class="absolute top-[115%] left-0 w-full duration-500 ease-in lg:hidden"
             :class="[isOpen ? 'left-0' : 'left-[-100%]']"
             :userLinks="userLinks"
         />
