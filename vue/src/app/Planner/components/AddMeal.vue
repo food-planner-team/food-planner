@@ -40,13 +40,13 @@
                             >
                                 <DialogTitle
                                     as="h3"
-                                    class="text-2xl font-bold leading-6 text-gray-900 relative after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
+                                    class="text-2xl font-bold leading-6 text-gray-900"
                                 >
                                     Wybierz danie
                                 </DialogTitle>
                                 <button
                                     type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    class="lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hidden"
                                     @click="closeModal"
                                 >
                                     Powrót
@@ -63,13 +63,13 @@
                                     <input
                                         type="search"
                                         id="search"
-                                        class="rounded-md w-3/4"
+                                        class="rounded-md lg:w-3/4 w-full"
                                         placeholder="Wyszukaj"
                                         v-model="searchValue"
                                         @keyup.enter="getRecipes()"
                                     />
                                     <button
-                                        class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        class="lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hidden"
                                         @click="getRecipes()"
                                     >
                                         Szukaj
@@ -82,7 +82,7 @@
                                 ref="scrollComponent"
                             >
                                 <div
-                                    class="flex gap-5 h-20 items-center justify-between my-7"
+                                    class="flex gap-5 lg:h-20 items-center justify-center lg:justify-between my-7 lg:flex-row flex-col"
                                     v-for="(item, index) in recipes"
                                     :key="index"
                                 >
@@ -102,7 +102,7 @@
                                             class="rounded-md"
                                         />
                                     </div>
-                                    <div class="w-7/12">
+                                    <div class="lg:w-7/12">
                                         <h3 class="font-bold">
                                             {{ item.name }}
                                         </h3>
@@ -110,7 +110,7 @@
                                             {{ item.description }}
                                         </p>
                                     </div>
-                                    <div class="pr-4">
+                                    <div class="lg:pr-4">
                                         <button
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 w-[200px] py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             @click="addMeal(item)"
@@ -210,9 +210,6 @@ const getRecipesOnScroll = () => {
         limit: 4,
     }).then((res) => {
         if (page.value > res.meta.pagination.total_pages) return;
-
-        console.log(res.meta.pagination.total_pages);
-        console.log(page.value);
 
         recipes.value.push(...res.recipes);
         page.value++;

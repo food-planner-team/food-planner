@@ -122,6 +122,15 @@ const addMeal = (item) => {
             z-index: -1;
         }
     }
+
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding-inline: 1rem;
+    }
 }
 
 .block-header {
@@ -151,6 +160,10 @@ const addMeal = (item) => {
     justify-content: space-between;
     gap: 1rem;
     padding-right: 1rem;
+    @media (max-width: 600px) {
+        width: 100%;
+        padding-inline: 1rem;
+    }
 
     &__element {
         font-size: 10px;
@@ -178,9 +191,15 @@ const addMeal = (item) => {
     padding-right: 1rem;
     padding-bottom: 2rem;
     overflow: auto;
+    padding-left: 5px;
 
     @media (min-width: 2500px) {
         height: 48rem;
+    }
+
+    @media (max-width: 600px) {
+        height: auto;
+        padding: 5px;
     }
 }
 </style>

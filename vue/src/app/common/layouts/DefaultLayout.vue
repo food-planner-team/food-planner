@@ -63,5 +63,11 @@ import ToastList from "../components/ToastList.vue";
         border-radius: 434px 123px 213px 132px;
         z-index: -1;
     }
+
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
 }
 </style>

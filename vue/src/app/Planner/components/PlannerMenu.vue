@@ -1,8 +1,10 @@
 <template>
     <div class="wrapper">
-        <div class="flex w-full h-full items-center gap-6 justify-start">
+        <div class="flex w-full h-full items-center md:gap-6 justify-start">
             <div class="flex">
-                <h2 class="font-bold text-2xl">Planner posiłków</h2>
+                <h2 class="font-bold text-2xl hidden md:block">
+                    Planner posiłków
+                </h2>
             </div>
 
             <div class="flex items-center relative">

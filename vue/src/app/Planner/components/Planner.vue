@@ -92,6 +92,10 @@ watch(
     backdrop-filter: blur(25px);
     padding: 2rem;
     overflow: hidden;
+
+    @media (max-width: 600px) {
+        padding: 0;
+    }
 }
 
 .planner-container {
@@ -102,5 +106,16 @@ watch(
     overflow-x: scroll;
     padding-left: 2rem;
     padding-bottom: 2rem;
+
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
 }
 </style>

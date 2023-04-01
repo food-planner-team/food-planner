@@ -22,5 +22,10 @@ const dateEnd = ref("");
         "planner";
     gap: 1.5rem;
     overflow: hidden;
+
+    @media (max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 </style>
