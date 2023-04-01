@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('recipe_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('receipt_id');
+            $table->unsignedInteger('recipe_id');
+            $table->unsignedInteger('product_id');
             $table->integer('quantity');
             $table->boolean('optional')->default(0);
             $table->timestamps();

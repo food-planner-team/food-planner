@@ -18,7 +18,6 @@ class ImageTransformer extends TransformerAbstract
     {
         return [
             'id'   => $image->id,
-            'name' => $image->name,
             'path' => $image->path,
             'url' => $image->url,
         ];

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Recipe;
 use App\Models\User;
 
 class
@@ -28,11 +29,23 @@ UserSeeder extends ModelSeeder
         ];
 
         $admins = $this->useData($adminsData)
+            ->setAmount(count($adminsData))
             ->setHeader("Seeding Admins")
             ->seedModel(User::class, function ($user) {
                 $user->admin = 1;
                 $user->save();
+
+
             });
+        foreach ($admins as $admin) {
+            $today = new \DateTime('today');
+            for ($i = 1; $i <= 7; $i++) {
+                for ($d = 1; $d < 5; $d++) {
+                    $admin->recipes()->attach([$d => ['order' => $d, 'date' => $today]]);
+                }
+                $today->modify("+1 day");
+            }
+        }
 
         $user = $this->setHeader("Seeding Regular Users")
             ->setAmount(5)

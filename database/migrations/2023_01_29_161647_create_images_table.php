@@ -14,16 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->unsignedInteger('imageable_id');
             $table->string('imageable_type');
-            $table->string('name');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->string('url');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
