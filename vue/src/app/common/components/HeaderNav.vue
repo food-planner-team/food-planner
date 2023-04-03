@@ -35,7 +35,7 @@
                     <img src="../assets/user.png" alt="user's avatar" />
                 </div>
                 <div class="profile-info">
-                    <div class="profile-name">Witaj, {{ user.name }}!</div>
+                    <div class="profile-name">Witaj, {{ user?.name }}!</div>
                 </div>
                 <Dropdown
                     icon="expand_more"
@@ -58,8 +58,8 @@
         </button>
         <HamburgerMenu
             :links="links"
-            class="absolute top-[115%] left-0 w-full duration-500 ease-in lg:hidden"
-            :class="[isOpen ? 'left-0' : 'left-[-100%]']"
+            class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
+            :class="[isOpen ? 'right-0' : 'right-[-110%]']"
             :userLinks="userLinks"
         />
     </header>

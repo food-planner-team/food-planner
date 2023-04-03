@@ -5,20 +5,38 @@
         </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
-            <Dropdown
-                icon="more_vert"
-                :links="links"
-                class="setting__span-btn"
-            />
+            <div class="flex flex-col items-center justify-between gap-6">
+                <Dropdown
+                    icon="more_vert"
+                    :links="links"
+                    class="setting__span-btn"
+                />
+                <span
+                    class="material-symbols-outlined lg:hidden"
+                    :class="[windowWidth < 1024 && 'handle']"
+                >
+                    drag_indicator
+                </span>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Dropdown from "../../common/components/Dropdown.vue";
 
 const props = defineProps({
     meal: Object,
+});
+
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+    windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+    window.addEventListener("resize", handleResize);
 });
 
 const emit = defineEmits(["remove"]);
@@ -57,7 +75,7 @@ const links = ref([
         "meal-image meal-information";
     border-radius: 8px;
     padding: 1rem;
-    padding-top: 0.8rem;
+    padding-top: 0rem;
     box-shadow: 2px 3px 12px $alpha-dark;
     cursor: grab;
     margin-bottom: 1rem;

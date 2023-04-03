@@ -23,12 +23,14 @@
                 @start="drag = true"
                 @end="drag = false"
                 @change="saveUserRecipes"
+                handle=".handle"
             >
                 <template #item="{ element, index }">
                     <div :key="element.name">
                         <PlannerMealBlock
                             :meal="element"
                             @remove="removeAt(index)"
+                            :class="[windowWidth > 1024 && 'handle']"
                         />
                     </div>
                 </template>
@@ -46,12 +48,22 @@ import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
 import Recipe from "../models/Recipe.js";
 import draggable from "vuedraggable";
-import { ref, watch } from "vue";
+import { ref, onMounted } from "vue";
 import {
     getCurrentDayName,
     getLocaleDate,
 } from "../../common/utils/datesHelpers.js";
 import Loader from "../../common/components/Loader.vue";
+
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+    windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+    window.addEventListener("resize", handleResize);
+});
 
 const props = defineProps({
     date: String,
@@ -186,6 +198,7 @@ const addMeal = (item) => {
 
 .block-items-container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     height: 420px;
     padding-right: 1rem;
