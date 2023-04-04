@@ -1,6 +1,6 @@
 <template>
     <div
-        class="h-56 w-[23rem] rounded-lg flex items-center gap-5 p-5 shadow-md bg-[#fefffe]"
+        class="h-56 w-[22rem] rounded-lg flex items-center gap-5 p-5 shadow-md bg-[#fefffe]"
     >
         <div
             class="w-[120px] h-[120px] rounded-md ml-1 flex items-center"
