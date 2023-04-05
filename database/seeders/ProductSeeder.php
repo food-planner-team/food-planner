@@ -77,6 +77,6 @@ class ProductSeeder extends ModelSeeder
 //                $product->save();
 //            });
 
-        Excel::import(new ProductImport,__DIR__.'\data\seed\products-small.csv');
+        Excel::import(new ProductImport,__DIR__.'/data/seed/products-small.csv');
     }
 }
