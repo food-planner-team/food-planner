@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-    baseURL: `http://food-planner.test/api/v1/`,
+    baseURL: process.env.VUE_APP_API_URL,
 });
 // const refreshToken = async () => {
 //     try {
