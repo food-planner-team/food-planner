@@ -37,7 +37,7 @@
             </draggable>
             <Loader
                 v-if="loader"
-                class="top-[50%] translate-y-[-50%] mx-auto"
+                class="top-[50%] translate-y-[-50%] mx-auto mt-10 lg:mt-0"
             />
             <AddMeal :date="date" v-if="!loader" @update="addMeal" />
         </div>
@@ -212,6 +212,7 @@ const addMeal = (item) => {
 
     @media (max-width: 600px) {
         height: auto;
+        min-height: 300px;
         padding: 5px;
     }
 }

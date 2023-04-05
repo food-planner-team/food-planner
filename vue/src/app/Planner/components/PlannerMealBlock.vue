@@ -1,5 +1,5 @@
 <template>
-    <div class="meal-block">
+    <div class="meal-block justify-center items-center">
         <div class="meal-block__img">
             <img :src="meal?.image?.url" :alt="meal.name" class="rounded-md" />
         </div>

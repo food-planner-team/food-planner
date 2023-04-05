@@ -12,14 +12,16 @@
                     <input
                         type="search"
                         id="search"
-                        class="rounded-lg w-[29rem]"
+                        class="rounded-lg w-full md:w-[29rem]"
                         placeholder="Wyszukaj"
                         v-model="searchValue"
                         @keyup.enter="searchValue.length && getProducts()"
                     />
-                    <div class="flex gap-6 flex-wrap justify-center">
+                    <div
+                        class="flex gap-6 flex-wrap justify-center w-full md:w-auto"
+                    >
                         <button
-                            class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                            class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
                             @click="searchValue.length && getProducts()"
                         >
                             Szukaj

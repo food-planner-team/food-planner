@@ -33,8 +33,16 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col"
+                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative"
                         >
+                            <button
+                                class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
+                                @click="closeModal"
+                            >
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
                             <div
                                 class="m-4 flex justify-between items-center mr-7"
                             >
