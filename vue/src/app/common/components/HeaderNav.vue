@@ -169,7 +169,6 @@ const userLinks = ref([
 </script>
 <style lang="scss" scoped>
 .hamburger {
-    padding: 1em;
     display: none;
     cursor: pointer;
     background-color: transparent;

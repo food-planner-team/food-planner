@@ -1,6 +1,6 @@
 <template>
     <button
-        class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
         @click="openModal"
     >
         Dodaj produkt
@@ -33,20 +33,28 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col"
+                            class="w-full max-w-5xl h-[90dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative"
                         >
+                            <button
+                                class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
+                                @click="closeModal"
+                            >
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
                             <div
                                 class="m-4 flex justify-between items-center mr-7"
                             >
                                 <DialogTitle
                                     as="h3"
-                                    class="text-2xl font-bold leading-6 text-gray-900 relative after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
+                                    class="text-2xl font-bold leading-6 text-gray-900 relative lg:after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
                                 >
                                     Dodaj produkt
                                 </DialogTitle>
                                 <button
                                     type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                     @click="closeModal"
                                 >
                                     Powrót
@@ -58,13 +66,13 @@
                                     <input
                                         type="search"
                                         id="search"
-                                        class="rounded-md w-3/4"
+                                        class="rounded-md w-full lg:w-3/4"
                                         placeholder="Wyszukaj"
                                         v-model="searchValue"
                                         @keyup.enter="getProducts()"
                                     />
                                     <button
-                                        class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         @click="getProducts()"
                                     >
                                         Szukaj
@@ -72,12 +80,12 @@
                                 </div>
                             </div>
                             <div
-                                class="m-4 h-[420px] rounded-sm overflow-auto mr-0 p-1"
+                                class="lg:m-4 h-[420px] rounded-sm overflow-auto mr-0 p-1"
                                 v-if="products.length"
                                 ref="scrollComponent"
                             >
                                 <div
-                                    class="h-36 rounded-lg flex items-center gap-5 p-5 mb-2 shadow-md"
+                                    class="lg:h-36 rounded-lg flex flex-col lg:flex-row items-center gap-2 lg:gap-5 p-5 mb-2 shadow-md"
                                     v-for="(product, index) in products"
                                     :key="index"
                                 >
@@ -108,7 +116,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="pr-4">
+                                    <div class="lg:pr-4">
                                         <button
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             @click="

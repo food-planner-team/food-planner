@@ -33,7 +33,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative"
+                            class="w-full max-w-5xl h-[90dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative"
                         >
                             <button
                                 class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
@@ -67,7 +67,7 @@
                                 </span>
                             </div>
                             <div class="m-4 flex flex-col">
-                                <div class="flex justify-between pr-2.5">
+                                <div class="flex justify-between lg:pr-2.5">
                                     <input
                                         type="search"
                                         id="search"
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div
-                                class="m-4 h-[420px] rounded-sm overflow-auto mr-0"
+                                class="lg:m-4 h-[420px] rounded-sm overflow-auto mr-0"
                                 v-if="recipes.length"
                                 ref="scrollComponent"
                             >
