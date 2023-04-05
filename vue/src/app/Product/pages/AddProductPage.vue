@@ -8,28 +8,34 @@
                 <p class="pb-2 text-sm text-gray-500">
                     <label for="search">NAZWA PRODUKTU</label>
                 </p>
-                <input
-                    type="search"
-                    id="search"
-                    class="rounded-lg w-[29rem]"
-                    placeholder="Wyszukaj"
-                    v-model="searchValue"
-                    @keyup.enter="searchValue.length && getProducts()"
-                />
-                <button
-                    class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    @click="searchValue.length && getProducts()"
-                >
-                    Szukaj
-                </button>
-                <AddMainProductModal
-                    :chosen-products="chosenProducts"
-                    v-model:product-name="searchValue"
-                    v-model:products="products"
-                />
+                <div class="flex flex-wrap gap-6">
+                    <input
+                        type="search"
+                        id="search"
+                        class="rounded-lg w-full md:w-[29rem]"
+                        placeholder="Wyszukaj"
+                        v-model="searchValue"
+                        @keyup.enter="searchValue.length && getProducts()"
+                    />
+                    <div
+                        class="flex gap-6 flex-wrap justify-center w-full md:w-auto"
+                    >
+                        <button
+                            class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                            @click="searchValue.length && getProducts()"
+                        >
+                            Szukaj
+                        </button>
+                        <AddMainProductModal
+                            :chosen-products="chosenProducts"
+                            v-model:product-name="searchValue"
+                            v-model:products="products"
+                        />
+                    </div>
+                </div>
             </div>
             <div
-                class="h-[550px] 3xl:h-[57rem] overflow-y-scroll relative grid grid-cols-4 gap-14 justify-items-center pb-5 3xl:grid-cols-5"
+                class="h-auto min-h-[35vh] lg:h-[550px] 3xl:h-[57rem] lg:overflow-y-scroll relative grid products-grid justify-items-center pb-5 pt-5"
                 ref="scrollComponent"
             >
                 <template v-if="!isLoading">
@@ -140,7 +146,10 @@ const handleRemoveProduct = (id) => {
     box-shadow: 0px 6px 24px $alpha-dark;
     border-radius: 16px;
     backdrop-filter: blur(25px);
-    padding: 2rem;
     overflow: hidden;
+
+    @media screen and (min-width: 1024px) {
+        padding: 2rem;
+    }
 }
 </style>

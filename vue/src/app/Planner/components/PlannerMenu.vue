@@ -94,8 +94,12 @@ const generatePdf = () => {
     box-shadow: 0px 6px 24px $alpha-dark;
     border-radius: 16px;
     backdrop-filter: blur(25px);
-    padding: 2rem;
+    padding: 2rem 1.2rem;
     display: flex;
     flex-direction: column;
+
+    @media (min-width: 1024px) {
+        padding: 2rem 2rem;
+    }
 }
 </style>

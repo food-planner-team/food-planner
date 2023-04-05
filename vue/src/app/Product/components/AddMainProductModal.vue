@@ -1,6 +1,6 @@
 <template>
     <button
-        class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full md:w-auto"
         @click="openModal()"
     >
         Zatwierdź produkt
@@ -33,29 +33,44 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[50rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                            class="w-full max-w-5xl h-[150dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col justify-between relative"
                         >
-                            <div
-                                class="m-4 flex justify-between items-center mr-7"
+                            <button
+                                class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
+                                @click="closeModal"
                             >
-                                <DialogTitle
-                                    as="h3"
-                                    class="text-2xl font-bold leading-6 text-gray-900 relative after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
+                            <div>
+                                <div
+                                    class="m-4 flex justify-between items-center mr-7"
                                 >
-                                    Zatwierdź produkt
-                                </DialogTitle>
-                                <button
-                                    type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    @click="closeModal"
-                                >
-                                    Powrót
-                                </button>
+                                    <DialogTitle
+                                        as="h3"
+                                        class="text-2xl font-bold leading-6 text-gray-900 relative lg:after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
+                                    >
+                                        Zatwierdź produkt
+                                    </DialogTitle>
+                                    <button
+                                        type="button"
+                                        class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        @click="closeModal"
+                                    >
+                                        Powrót
+                                    </button>
+                                </div>
+                                <p class="m-4 text-grey">
+                                    Posortuj produkty (łapiąc za
+                                    {{
+                                        windowWidth > 1024
+                                            ? "produkt"
+                                            : "wskaźnik "
+                                    }}
+                                    i przeciągając go)
+                                </p>
                             </div>
-                            <p class="m-4 text-grey">
-                                Posortuj produkty (łapiąc za produkt i go
-                                przeciągając)
-                            </p>
 
                             <draggable
                                 item-key="order"
@@ -63,15 +78,19 @@
                                 v-bind="dragOptions"
                                 @start="drag = true"
                                 @end="drag = false"
-                                class="h-[550px] rounded-sm overflow-auto mb-10"
+                                class="lg:h-[550px] rounded-sm overflow-auto mb-10"
+                                handle=".handle"
                             >
                                 <template #item="{ element, index }">
                                     <div
                                         :key="element.name"
-                                        class="m-4 cursor-grab"
+                                        class="m-4 lg:cursor-grab"
+                                        :class="[
+                                            windowWidth > 1024 && 'handle',
+                                        ]"
                                     >
                                         <div
-                                            class="h-36 rounded-lg flex items-center gap-5 p-5 shadow-md"
+                                            class="rounded-lg flex flex-col md:flex-row items-center gap-5 p-5 shadow-md relative"
                                         >
                                             <div
                                                 class="w-[120px] h-[120px] rounded-md ml-1 flex items-center"
@@ -83,9 +102,11 @@
                                                 />
                                             </div>
                                             <div
-                                                class="flex flex-col justify-between flex-1 gap-2 p-1 h-full"
+                                                class="flex flex-col justify-between flex-1 gap-2 p-1 h-full text-center md:text-left"
                                             >
-                                                <h1 class="font-bold text-xl">
+                                                <h1
+                                                    class="font-bold lg:text-xl"
+                                                >
                                                     {{ element.name }}
                                                 </h1>
                                                 <div class="text-base">
@@ -98,21 +119,30 @@
                                                     </p>
                                                 </div>
                                             </div>
+                                            <span
+                                                class="material-symbols-outlined absolute top-5 right-5 lg:hidden"
+                                                :class="[
+                                                    windowWidth < 1024 &&
+                                                        'handle',
+                                                ]"
+                                            >
+                                                drag_indicator
+                                            </span>
                                         </div>
                                     </div>
                                 </template>
                             </draggable>
-                            <div class="m-4">
+                            <div class="m-4 flex flex-wrap gap-4">
                                 <input
                                     type="text"
-                                    class="rounded-md mr-6"
+                                    class="rounded-md w-full lg:w-auto"
                                     :value="props.productName"
                                     disabled
                                 />
                                 <select
                                     name="quantity_type"
                                     id="pet-quantity_type"
-                                    class="rounded-md mr-6"
+                                    class="rounded-md w-full lg:w-auto"
                                     v-model="quantityType"
                                 >
                                     <option value="">--Wybierz miarę--</option>
@@ -122,7 +152,7 @@
                                 </select>
                                 <button
                                     type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full lg:w-auto"
                                     @click="createMainProduct"
                                 >
                                     Zatwierdź
@@ -137,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import draggable from "vuedraggable";
 import {
     TransitionRoot,
@@ -174,6 +204,16 @@ const dragOptions = ref({
     group: "products",
     disabled: false,
     ghostClass: "ghost",
+});
+
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+    windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+    window.addEventListener("resize", handleResize);
 });
 
 const emit = defineEmits(["update:products", "update:product-name"]);

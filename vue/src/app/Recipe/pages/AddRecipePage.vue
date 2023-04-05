@@ -10,8 +10,8 @@
                     potrzebne do przygotowania przepisu.
                 </span>
             </div>
-            <div class="m-5 flex gap-10">
-                <div class="w-7/12 3xl:w-5/12">
+            <div class="m-5 flex gap-10 flex-col xl:flex-row">
+                <div class="xl:w-7/12 3xl:w-5/12">
                     <h2 class="font-bold text-xl mb-3">
                         Podstawowe informacje
                     </h2>
@@ -56,7 +56,7 @@
                                 :class="errors.image ? 'bg-red-100 ' : ''"
                             />
                         </div>
-                        <div class="flex flex-1 gap-5">
+                        <div class="flex flex-1 gap-5 flex-col sm:flex-row">
                             <div class="flex flex-col w-full">
                                 <label class="mb-2 flex gap-2" for="time"
                                     >Czas<span
@@ -117,14 +117,14 @@
                     </div>
                 </div>
                 <div class="w-full">
-                    <div class="flex justify-between mb-3">
+                    <div class="flex flex-col md:flex-row justify-between mb-3">
                         <h2 class="font-bold text-xl mb-3 pl-3 text-center">
                             Produkty potrzebne do przygotowania przepisu
                         </h2>
                         <AddProductModal @add-product="addProduct" />
                     </div>
                     <div
-                        class="flex flex-wrap gap-9 overflow-y-scroll h-[530px] 3xl:h-[55rem] p-2"
+                        class="lg:overflow-y-scroll min-h-[530px] md:h-[530px] 3xl:h-[55rem] products-wrapper justify-items-center md:pl-2 md:pr-4"
                     >
                         <template v-if="products.length">
                             <template
@@ -161,9 +161,9 @@
                             </div>
                         </template>
                     </div>
-                    <div class="mt-2 flex justify-end fixed bottom-3 right-12">
+                    <div class="mt-8 md:mt-2 flex md:fixed bottom-3 right-12">
                         <button
-                            class="inline-flex justify-center rounded-md border border-transparent ml-5 bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full"
                             @click="createRecipe"
                         >
                             Dodaj przepis
@@ -180,6 +180,7 @@ import ProductCard from "../../Recipe/components/ProductCard.vue";
 import AddProductModal from "../components/AddProductModal.vue";
 import Recipe from "../../Planner/models/Recipe";
 import { useStore } from "vuex";
+import { isFileImage } from "../../common/utils/validateImage";
 
 const store = useStore();
 
@@ -202,6 +203,16 @@ const errors = reactive({
 });
 
 const onFileChange = (e) => {
+    if (!isFileImage(e.target.files[0])) {
+        store.commit("Toast/addToast", {
+            message: "Nieprawidłowy format pliku",
+            type: "warning",
+        });
+
+        imageInput.value.value = "";
+        return;
+    }
+
     image.value = e.target.files || e.dataTransfer.files;
     errors.image = false;
 };
@@ -344,5 +355,15 @@ const createRecipe = () => {
     backdrop-filter: blur(25px);
     padding: 2rem;
     overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        padding-inline: 0;
+    }
+}
+
+.products-wrapper {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 </style>

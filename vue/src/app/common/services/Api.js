@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-    baseURL: `http://food-planner.test/api/v1/`,
+    baseURL: process.env.VUE_APP_API_URL,
 });
 // const refreshToken = async () => {
 //     try {
@@ -21,14 +21,13 @@ Api.interceptors.request.use(
         return config;
     },
     (error) => {
-    if (error.response.status === 401) {
-    localStorage.removeItem("TOKEN");
-    location.replace("/logowanie");
-    } else if (error.response.status === 404) {
+        if (error.response.status === 401) {
+            localStorage.removeItem("TOKEN");
+            location.replace("/logowanie");
+        } else if (error.response.status === 404) {
+        }
+        return error;
     }
-    return error;
-    }
-
-)
+);
 
 export default Api;
