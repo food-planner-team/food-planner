@@ -2,7 +2,6 @@ import axios from "axios";
 
 const Api = axios.create({
     baseURL: `http://food-planner.test/api/v1/`,
-    // baseURL: `https://food.bieda.it/api/v1/`,
 });
 // const refreshToken = async () => {
 //     try {

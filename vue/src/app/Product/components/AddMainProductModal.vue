@@ -33,7 +33,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-5xl h-[50rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col justify-between relative"
+                            class="w-full max-w-5xl h-[150dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col justify-between relative"
                         >
                             <button
                                 class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
