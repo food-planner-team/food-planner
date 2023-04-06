@@ -6,11 +6,11 @@
 [Demo](https://foodplanner.pl/)
 
 ## Features
-Plan meals for the week ✅
-Create recipes ✅
-Create your products ✅
-Generate pdf planner for fridge ✅
-Sorting meals in planner blocks ✅
-Generate a shopping list based on your meal plan ❌
-Search and save your favorite recipes ❌
-Customize your meal plan based on dietary preferences or restrictions ❌
+Plan meals for the week ✅ \
+Create recipes ✅ \
+Create your products ✅ \
+Generate pdf planner for fridge ✅ \
+Sorting meals in planner blocks ✅ \
+Generate a shopping list based on your meal plan ❌ \
+Search and save your favorite recipes ❌ \
+Customize your meal plan based on dietary preferences or restrictions ❌ \
