@@ -104,7 +104,7 @@ watch(
     display: flex;
     gap: 1rem;
     overflow-x: scroll;
-    padding-left: 2rem;
+    padding-left: 1rem;
     padding-bottom: 2rem;
 
     @media (max-width: 600px) {
