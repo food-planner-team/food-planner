@@ -1,9 +1,4 @@
-import PlannerPage from "../../Planner/pages/PlannerPage.vue";
-import LoginPage from "../pages/LoginPage.vue";
-import RegisterPage from "../pages/RegisterPage.vue";
-import NotFound from "../pages/NotFound.vue";
 import UnauthorizedLayout from "../../common/layouts/UnauthorizedLayout.vue";
-import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 
 const routes = [
     {
@@ -15,19 +10,19 @@ const routes = [
                 path: "/logowanie",
                 name: "Login",
                 meta: { requiresAuth: false },
-                component: LoginPage,
+                component: () => import("../pages/LoginPage.vue"),
             },
             {
                 path: "/rejestrowanie",
                 name: "Register",
                 meta: { requiresAuth: false },
-                component: RegisterPage,
+                component: () => import("../pages/RegisterPage.vue"),
             },
             {
                 path: "/404",
                 name: "404",
                 meta: { requiresAuth: false },
-                component: NotFound,
+                component: () => import("../pages/NotFound.vue"),
             },
         ],
     },

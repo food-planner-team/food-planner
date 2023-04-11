@@ -1,4 +1,3 @@
-import PlannerPage from "../pages/PlannerPage.vue";
 import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 
 const routes = [
@@ -11,7 +10,7 @@ const routes = [
                 path: "/",
                 name: "Planner",
                 meta: { requiresAuth: true },
-                component: PlannerPage,
+                component: () => import("../pages/PlannerPage.vue"),
             },
         ],
     },

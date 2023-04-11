@@ -1,4 +1,3 @@
-import AddRecipePage from "../pages/AddRecipePage.vue";
 import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 
 const routes = [
@@ -11,7 +10,7 @@ const routes = [
                 path: "/dodaj-przepis",
                 name: "AddRecipe",
                 meta: { requiresAuth: true },
-                component: AddRecipePage,
+                component: () => import("../pages/AddRecipePage.vue"),
             },
         ],
     },
