@@ -1,13 +1,12 @@
 {
-    "name": "Food-planner",
+    "name": "food-planner",
     "private": true,
     "version": "0.0.1",
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "serve": "vite preview",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite build && vite preview"
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.9",
