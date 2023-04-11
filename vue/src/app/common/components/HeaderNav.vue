@@ -2,7 +2,7 @@
     <header class="header relative">
         <router-link :to="{ name: 'Planner' }">
             <div class="logo-name">
-                <img :src="logo" alt="logo" />
+                <img :src="logo" alt="logo" width="36" height="30" />
                 <p>Food Planner</p>
             </div>
         </router-link>
@@ -32,7 +32,12 @@
         <div class="header-profile">
             <div class="profile-block">
                 <div class="profile-avatar">
-                    <img src="../assets/user.png" alt="user's avatar" />
+                    <img
+                        src="../assets/user.png"
+                        alt="user's avatar"
+                        width="50"
+                        height="50"
+                    />
                 </div>
                 <div class="profile-info">
                     <div class="profile-name">Witaj, {{ user?.name }}!</div>
