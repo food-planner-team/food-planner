@@ -234,6 +234,11 @@ useInfiniteScroll(
 </script>
 
 <style lang="scss" scoped>
+img {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: cover;
+}
 .meal-block {
     display: flex;
     align-items: center;
