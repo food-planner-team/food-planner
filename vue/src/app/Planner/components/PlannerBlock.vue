@@ -15,31 +15,33 @@
                 <span class="element__highlighted"> {{ recipes.length }} </span>
             </div>
         </div>
-        <div class="block-items-container">
-            <draggable
-                item-key="order"
-                :list="props.recipes"
-                v-bind="dragOptions"
-                @start="drag = true"
-                @end="drag = false"
-                @change="saveUserRecipes"
-                handle=".handle"
-            >
-                <template #item="{ element, index }">
-                    <div :key="element.name">
-                        <PlannerMealBlock
-                            :meal="element"
-                            @remove="removeAt(index)"
-                            :class="[windowWidth > 1024 && 'handle']"
-                        />
-                    </div>
-                </template>
-            </draggable>
-            <Loader
-                v-if="loader"
-                class="top-[50%] translate-y-[-50%] mx-auto mt-10 lg:mt-0"
-            />
-            <AddMeal :date="date" v-if="!loader" @update="addMeal" />
+        <div class="relative h-full w-full">
+            <div class="block-items-container">
+                <draggable
+                    item-key="order"
+                    :list="props.recipes"
+                    v-bind="dragOptions"
+                    @start="drag = true"
+                    @end="drag = false"
+                    @change="saveUserRecipes"
+                    handle=".handle"
+                >
+                    <template #item="{ element, index }">
+                        <div :key="element.name">
+                            <PlannerMealBlock
+                                :meal="element"
+                                @remove="removeAt(index)"
+                                :class="[windowWidth > 1024 && 'handle']"
+                            />
+                        </div>
+                    </template>
+                </draggable>
+                <Loader
+                    v-if="loader"
+                    class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                />
+                <AddMeal :date="date" v-if="!loader" @update="addMeal" />
+            </div>
         </div>
     </div>
 </template>
@@ -111,7 +113,7 @@ const addMeal = (item) => {
     height: 100%;
     min-width: 355px;
     width: 355px;
-    margin-right: 2rem;
+    margin-right: 1rem;
     border-radius: 8px;
     box-shadow: 0px 6px 24px $alpha-dark;
     padding: 2rem;
@@ -197,23 +199,20 @@ const addMeal = (item) => {
 }
 
 .block-items-container {
-    display: flex;
     width: 100%;
-    flex-direction: column;
-    height: 420px;
     padding-right: 1rem;
     padding-bottom: 2rem;
-    overflow: auto;
     padding-left: 5px;
-
-    @media (min-width: 2500px) {
-        height: 48rem;
-    }
+    max-height: 100%;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
 
     @media (max-width: 600px) {
-        height: auto;
+        position: initial;
         min-height: 300px;
-        padding: 5px;
     }
 }
 </style>

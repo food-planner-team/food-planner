@@ -247,14 +247,13 @@ img {
     padding: 1rem;
     padding-top: 0.8rem;
     box-shadow: 2px 3px 12px $alpha-dark;
-    height: 110px;
+    height: 100px;
 
     &__element {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        height: 100px;
         cursor: pointer;
     }
 }
