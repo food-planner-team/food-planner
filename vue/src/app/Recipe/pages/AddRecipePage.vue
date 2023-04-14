@@ -1,173 +1,187 @@
 <template>
     <main class="main">
         <div class="wrapper">
-            <div class="m-5">
-                <h1 class="font-bold text-2xl mb-3">
-                    Dodawanie nowego przepisu
-                </h1>
-                <span class="text-gray-500">
-                    Wypełnij dane dotyczące przepisu, następnie dodaj produkty
-                    potrzebne do przygotowania przepisu.
-                </span>
-            </div>
-            <div class="m-5 flex gap-10 flex-col xl:flex-row">
-                <div class="xl:w-7/12 3xl:w-5/12">
-                    <h2 class="font-bold text-xl mb-3">
-                        Podstawowe informacje
-                    </h2>
-                    <div class="flex flex-col gap-5">
-                        <div class="flex flex-col">
-                            <label class="mb-2" for="name"
-                                >Nazwa przepisu</label
-                            >
-                            <input
-                                class="border border-gray-300 rounded-md p-2"
-                                type="text"
-                                id="name"
-                                placeholder="Nazwa przepisu"
-                                v-model="name"
-                                :class="errors.name ? 'bg-red-100 ' : ''"
-                                @keypress="errors.name = false"
-                            />
-                        </div>
-                        <div class="flex flex-col">
-                            <label class="mb-2" for="description"
-                                >Krótki opis</label
-                            >
-                            <input
-                                class="border border-gray-300 rounded-md p-2"
-                                type="text"
-                                id="description"
-                                placeholder="Krótki opis"
-                                v-model="description"
-                                :class="errors.description ? 'bg-red-100 ' : ''"
-                                @keypress="errors.description = false"
-                            />
-                        </div>
-
-                        <div class="flex flex-col">
-                            <label class="mb-2" for="image">Zdjęcie</label>
-                            <input
-                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-blue-600 outline-offset-1"
-                                type="file"
-                                id="image"
-                                v-on:change="onFileChange"
-                                ref="imageInput"
-                                :class="errors.image ? 'bg-red-100 ' : ''"
-                            />
-                        </div>
-                        <div class="flex flex-1 gap-5 flex-col sm:flex-row">
-                            <div class="flex flex-col w-full">
-                                <label class="mb-2 flex gap-2" for="time"
-                                    >Czas<span
-                                        class="material-symbols-outlined text-gray-500"
-                                        data-te-toggle="tooltip"
-                                        title="Podaj czas przygotowania w minutach."
-                                    >
-                                        info
-                                    </span></label
-                                >
-                                <input
-                                    class="border border-gray-300 rounded-md p-2"
-                                    type="number"
-                                    id="time"
-                                    placeholder="Czas"
-                                    v-model="time"
-                                    @keypress="errors.time = false"
-                                    :class="errors.time ? 'bg-red-100 ' : ''"
-                                />
-                            </div>
-                            <div class="flex flex-col w-full">
-                                <label class="mb-2 flex gap-2" for="kcal"
-                                    >Kaloryczność
-                                    <span
-                                        class="material-symbols-outlined text-gray-500"
-                                        data-te-toggle="tooltip"
-                                        title="Podaj ilość kalorii w porcji"
-                                    >
-                                        info
-                                    </span></label
-                                >
-
-                                <input
-                                    class="border border-gray-300 rounded-md p-2"
-                                    type="number"
-                                    id="kcal"
-                                    placeholder="Kaloryczność"
-                                    v-model="kcal"
-                                    @keypress="errors.kcal = false"
-                                    :class="errors.kcal ? 'bg-red-100 ' : ''"
-                                />
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <label class="mb-2" for="preparation"
-                                >Opis przygotowania</label
-                            >
-                            <textarea
-                                class="border border-gray-300 rounded-md p-2 min-h-[145px]"
-                                style="resize: none"
-                                id="preparation"
-                                placeholder="Opis przygotowania"
-                                v-model="preparation"
-                                @keypress="errors.preparation = false"
-                                :class="errors.preparation ? 'bg-red-100 ' : ''"
-                            ></textarea>
-                        </div>
-                    </div>
+            <div class="h-full flex flex-col">
+                <div class="m-5">
+                    <h1 class="font-bold text-2xl mb-3">
+                        Dodawanie nowego przepisu
+                    </h1>
+                    <span class="text-gray-500">
+                        Wypełnij dane dotyczące przepisu, następnie dodaj
+                        produkty potrzebne do przygotowania przepisu.
+                    </span>
                 </div>
-                <div class="w-full">
-                    <div class="flex flex-col md:flex-row justify-between mb-3">
-                        <h2 class="font-bold text-xl mb-3 pl-3 text-center">
-                            Produkty potrzebne do przygotowania przepisu
+                <div class="m-5 mb-0 flex gap-10 flex-col xl:flex-row h-full">
+                    <div class="xl:w-7/12 3xl:w-5/12">
+                        <h2 class="font-bold text-xl mb-3">
+                            Podstawowe informacje
                         </h2>
-                        <AddProductModal @add-product="addProduct" />
-                    </div>
-                    <div
-                        class="lg:overflow-y-scroll min-h-[530px] md:h-[530px] 3xl:h-[55rem] products-wrapper justify-items-center md:pl-2 md:pr-4"
-                    >
-                        <template v-if="products.length">
-                            <template
-                                v-for="product in products"
-                                :key="product.id"
-                            >
-                                <ProductCard
-                                    :product="product"
-                                    @remove-product="removeProduct"
-                                    @update-product="updateProduct"
-                                    @remove-error="removeError"
-                                    :error="
-                                        errors.quantities.find(
-                                            (quantity) =>
-                                                quantity.id === product.id
-                                        )
-                                    "
-                                />
-                            </template>
-                        </template>
-                        <template v-else>
-                            <div
-                                class="flex flex-col gap-5 self-center mx-auto"
-                            >
-                                <span
-                                    :class="
-                                        errors.products
-                                            ? 'text-red-500'
-                                            : 'text-gray-500'
-                                    "
+                        <div class="flex flex-col gap-4">
+                            <div class="flex flex-col">
+                                <label class="mb-2" for="name"
+                                    >Nazwa przepisu</label
                                 >
-                                    Brak produktów
-                                </span>
+                                <input
+                                    class="border border-gray-300 rounded-md p-2"
+                                    type="text"
+                                    id="name"
+                                    placeholder="Nazwa przepisu"
+                                    v-model="name"
+                                    :class="errors.name ? 'bg-red-100 ' : ''"
+                                    @keypress="errors.name = false"
+                                />
                             </div>
-                        </template>
+                            <div class="flex flex-col">
+                                <label class="mb-2" for="description"
+                                    >Krótki opis</label
+                                >
+                                <input
+                                    class="border border-gray-300 rounded-md p-2"
+                                    type="text"
+                                    id="description"
+                                    placeholder="Krótki opis"
+                                    v-model="description"
+                                    :class="
+                                        errors.description ? 'bg-red-100 ' : ''
+                                    "
+                                    @keypress="errors.description = false"
+                                />
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label class="mb-2" for="image">Zdjęcie</label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-blue-600 outline-offset-1"
+                                    type="file"
+                                    id="image"
+                                    v-on:change="onFileChange"
+                                    ref="imageInput"
+                                    :class="errors.image ? 'bg-red-100 ' : ''"
+                                />
+                            </div>
+                            <div class="flex flex-1 gap-5 flex-col sm:flex-row">
+                                <div class="flex flex-col w-full">
+                                    <label class="mb-2 flex gap-2" for="time"
+                                        >Czas<span
+                                            class="material-symbols-outlined text-gray-500"
+                                            data-te-toggle="tooltip"
+                                            title="Podaj czas przygotowania w minutach."
+                                        >
+                                            info
+                                        </span></label
+                                    >
+                                    <input
+                                        class="border border-gray-300 rounded-md p-2"
+                                        type="number"
+                                        id="time"
+                                        placeholder="Czas"
+                                        v-model="time"
+                                        @keypress="errors.time = false"
+                                        :class="
+                                            errors.time ? 'bg-red-100 ' : ''
+                                        "
+                                    />
+                                </div>
+                                <div class="flex flex-col w-full">
+                                    <label class="mb-2 flex gap-2" for="kcal"
+                                        >Kaloryczność
+                                        <span
+                                            class="material-symbols-outlined text-gray-500"
+                                            data-te-toggle="tooltip"
+                                            title="Podaj ilość kalorii w porcji"
+                                        >
+                                            info
+                                        </span></label
+                                    >
+
+                                    <input
+                                        class="border border-gray-300 rounded-md p-2"
+                                        type="number"
+                                        id="kcal"
+                                        placeholder="Kaloryczność"
+                                        v-model="kcal"
+                                        @keypress="errors.kcal = false"
+                                        :class="
+                                            errors.kcal ? 'bg-red-100 ' : ''
+                                        "
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="mb-2" for="preparation"
+                                    >Opis przygotowania</label
+                                >
+                                <textarea
+                                    class="border border-gray-300 rounded-md p-2 min-h-[145px]"
+                                    style="resize: none"
+                                    id="preparation"
+                                    placeholder="Opis przygotowania"
+                                    v-model="preparation"
+                                    @keypress="errors.preparation = false"
+                                    :class="
+                                        errors.preparation ? 'bg-red-100 ' : ''
+                                    "
+                                ></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-8 md:mt-2 flex md:fixed bottom-3 right-12">
-                        <button
-                            class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-full"
-                            @click="createRecipe"
-                        >
-                            Dodaj przepis
-                        </button>
+                    <div class="w-full flex flex-col gap-3">
+                        <div class="flex flex-col md:flex-row justify-between">
+                            <h2 class="font-bold text-xl mb-3 pl-3 text-center">
+                                Produkty potrzebne do przygotowania przepisu
+                            </h2>
+                            <AddProductModal @add-product="addProduct" />
+                        </div>
+                        <div class="relative w-full h-full">
+                            <div
+                                class="products-wrapper justify-items-center md:pl-2 md:pr-4 bg-purple-500-400 w-full max-h-full overflow-y-scroll xl:absolute left-0 top-0 h-full"
+                            >
+                                <template v-if="products.length">
+                                    <template
+                                        v-for="product in products"
+                                        :key="product.id"
+                                    >
+                                        <ProductCard
+                                            :product="product"
+                                            @remove-product="removeProduct"
+                                            @update-product="updateProduct"
+                                            @remove-error="removeError"
+                                            :error="
+                                                errors.quantities.find(
+                                                    (quantity) =>
+                                                        quantity.id ===
+                                                        product.id
+                                                )
+                                            "
+                                        />
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <div
+                                        class="flex flex-col gap-5 self-center mx-auto"
+                                    >
+                                        <span
+                                            :class="
+                                                errors.products
+                                                    ? 'text-red-500'
+                                                    : 'text-gray-500'
+                                            "
+                                        >
+                                            Brak produktów
+                                        </span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center sm:justify-end">
+                            <button
+                                class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                @click="createRecipe"
+                            >
+                                Dodaj przepis
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -355,6 +369,7 @@ const createRecipe = () => {
     backdrop-filter: blur(25px);
     padding: 2rem;
     overflow: hidden;
+    height: 100%;
 
     @media screen and (max-width: 768px) {
         padding-inline: 0;
