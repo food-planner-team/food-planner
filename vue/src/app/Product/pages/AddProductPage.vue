@@ -35,7 +35,12 @@
                 </div>
             </div>
             <div
-                class="h-auto min-h-[35vh] lg:h-[550px] 3xl:h-[57rem] lg:overflow-y-scroll relative grid products-grid justify-items-center pb-5 pt-5"
+                class="h-auto min-h-[35vh] lg:h-[550px] 3xl:h-[57rem] lg:overflow-y-scroll relative justify-items-center pb-5 pt-5"
+                :class="
+                    products.length > 3
+                        ? 'grid products-grid'
+                        : 'flex flex-wrap gap-10 justify-center lg:justify-start ml-8 mr-8'
+                "
                 ref="scrollComponent"
             >
                 <template v-if="!isLoading">
@@ -53,7 +58,7 @@
                     class="m-auto col-start-2 col-span-2 3xl:col-start-3 3xl:col-span-1"
                 />
                 <p
-                    v-if="!searchValue"
+                    v-if="!searchValue && !products.length"
                     class="m-auto col-start-2 col-span-2 3xl:col-start-3 3xl:col-span-1"
                 >
                     Wpisz nazwę i wyszukaj produkt!

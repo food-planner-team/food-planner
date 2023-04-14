@@ -134,7 +134,12 @@
                         </div>
                         <div class="relative w-full h-full">
                             <div
-                                class="products-wrapper justify-items-center md:pl-2 md:pr-4 bg-purple-500-400 w-full max-h-full overflow-y-scroll xl:absolute left-0 top-0 h-full"
+                                class="justify-items-center md:pl-2 md:pr-4 bg-purple-500-400 w-full max-h-full overflow-y-scroll xl:absolute left-0 top-0 h-full"
+                                :class="
+                                    products.length > 2
+                                        ? 'products-wrapper'
+                                        : 'flex flex-wrap gap-10 justify-center md:justify-start'
+                                "
                             >
                                 <template v-if="products.length">
                                     <template
