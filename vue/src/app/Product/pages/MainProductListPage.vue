@@ -1,48 +1,52 @@
 <template>
     <main class="main">
         <div class="wrapper">
-            <h1 class="font-bold text-2xl m-5 pl-3">Lista produktów</h1>
-            <div class="m-5 pl-3">
-                <p class="pb-2 text-sm text-gray-500">
-                    <label for="search">WYSZUKAJ PRODUKT</label>
-                </p>
-                <div class="flex flex-wrap gap-6">
-                    <input
-                        type="search"
-                        id="search"
-                        class="rounded-lg w-full lg:w-[29rem]"
-                        placeholder="Wyszukaj"
-                        v-model="searchValue"
-                        @keyup.enter="getProducts()"
-                    />
-                    <button
-                        class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        @click="getProducts()"
-                    >
-                        Szukaj
-                    </button>
+            <div class="h-full flex flex-col">
+                <h1 class="font-bold text-2xl m-5 pl-3">Lista produktów</h1>
+                <div class="m-5 pl-3">
+                    <p class="pb-2 text-sm text-gray-500">
+                        <label for="search">WYSZUKAJ PRODUKT</label>
+                    </p>
+                    <div class="flex flex-wrap gap-6">
+                        <input
+                            type="search"
+                            id="search"
+                            class="rounded-lg w-full lg:w-[29rem]"
+                            placeholder="Wyszukaj"
+                            v-model="searchValue"
+                            @keyup.enter="getProducts()"
+                        />
+                        <button
+                            class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            @click="getProducts()"
+                        >
+                            Szukaj
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div
-                class="h-auto min-h-[35vh] lg:h-[550px] 3xl:h-[57rem] lg:overflow-y-scroll relative justify-items-center pb-5 pt-5"
-                :class="
-                    products.length > 3
-                        ? 'grid products-grid'
-                        : 'flex flex-wrap gap-10 justify-center lg:justify-start ml-8 mr-8'
-                "
-                ref="scrollComponent"
-            >
-                <template v-if="!isLoading">
-                    <MainProductCard
-                        v-for="product in products"
-                        :key="product.id"
-                        :product="product"
-                    />
-                </template>
-                <Loader
-                    v-else
-                    class="m-auto col-start-2 col-span-2 3xl:col-start-3 3xl:col-span-1"
-                />
+                <div class="h-full relative">
+                    <div
+                        class="lg:overflow-y-scroll relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full"
+                        :class="
+                            products.length > 3
+                                ? 'grid products-grid'
+                                : 'flex flex-wrap gap-10 justify-center lg:justify-start ml-8 mr-8'
+                        "
+                        ref="scrollComponent"
+                    >
+                        <template v-if="!isLoading">
+                            <MainProductCard
+                                v-for="product in products"
+                                :key="product.id"
+                                :product="product"
+                            />
+                        </template>
+                        <Loader
+                            v-else
+                            class="m-auto col-start-2 col-span-2 3xl:col-start-3 3xl:col-span-1"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </main>
