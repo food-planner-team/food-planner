@@ -105,7 +105,7 @@ const links = ref([
         children: [
             {
                 name: "wszystkie przepisy",
-                pathName: "",
+                pathName: "RecipeList",
                 icon: "list_alt",
                 action: () => (isOpen.value = !isOpen.value),
             },
