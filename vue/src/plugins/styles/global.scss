@@ -34,3 +34,9 @@ body {
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
 }
+
+.recipes-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(355px, 1fr));
+}
