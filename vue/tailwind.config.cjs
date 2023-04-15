@@ -25,6 +25,7 @@ module.exports = {
                 primary: "rgb(70, 110, 102)",
                 "primary-dark": "rgb(48, 80, 80)",
                 alpha: "rgba(255, 255, 255, 0.5)",
+                "alpha-accent": "rgba(255, 255, 255, 0.85)",
                 "alpha-dark": "rgba(0, 0, 0, 0.06)",
                 typography: "rgb(170, 170, 170)",
                 "typography-dark": "rgb(51, 51, 51)",
