@@ -53,7 +53,8 @@ const remove = () => {
 const links = ref([
     {
         name: "zobacz danie",
-        pathName: "",
+        pathName: "RecipeDetails",
+        params: { id: props.meal.id },
         icon: "search",
         action: "",
     },

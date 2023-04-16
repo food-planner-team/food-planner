@@ -25,7 +25,7 @@
                     <router-link
                         v-for="link in props.links"
                         :key="link.name"
-                        :to="{ name: link.pathName }"
+                        :to="{ name: link.pathName, params: link.params }"
                     >
                         <MenuItem
                             v-slot="{ active }"
