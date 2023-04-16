@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MainProduct;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\RecipeItem;
@@ -15,7 +16,7 @@ class RecipeItemsSeeder extends ModelSeeder
      */
     public function run()
     {
-        $products = Product::get()->pluck('id');
+        $products = MainProduct::get()->pluck('id');
         $recipes = Recipe::all()->pluck('id');
 
         $this->setHeader("Seeding recipes")
