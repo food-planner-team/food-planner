@@ -197,7 +197,7 @@
 import { ref, reactive } from "vue";
 import ProductCard from "../../Recipe/components/ProductCard.vue";
 import AddProductModal from "../components/AddProductModal.vue";
-import Recipe from "../../Planner/models/Recipe";
+import Recipe from "../models/Recipe";
 import { useStore } from "vuex";
 import { isFileImage } from "../../common/utils/validateImage";
 

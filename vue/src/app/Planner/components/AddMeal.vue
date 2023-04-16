@@ -153,7 +153,7 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import { getLocaleDate } from "../../common/utils/datesHelpers.js";
-import Recipe from "../models/Recipe.js";
+import Recipe from "../../Recipe/models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
 

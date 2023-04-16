@@ -22,6 +22,7 @@ class RecipeTransformer extends TransformerAbstract
             'id' => $recipe->id,
             'name' => $recipe->name,
             'description' => $recipe->description,
+            'preparation' => $recipe->preparation,
             'preparation_time' => $recipe->preparation_time,
         ];
         if ($recipe->pivot) {
@@ -33,7 +34,7 @@ class RecipeTransformer extends TransformerAbstract
 
     public function includeImage(Recipe $recipe)
     {
-        if(!$recipe->image){
+        if (!$recipe->image) {
             return null;
         }
         return $this->item($recipe->image, new ImageTransformer);
@@ -43,5 +44,4 @@ class RecipeTransformer extends TransformerAbstract
     {
         return $this->collection($recipe->recipeItems, new RecipeItemTransformer());
     }
-
 }

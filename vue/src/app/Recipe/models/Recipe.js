@@ -8,6 +8,7 @@ import Image from "../../System/models/Image.js";
 const schema = Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
+    preparation: Joi.string().allow(null).required(),
     preparation_time: Joi.number().required(),
     description: Joi.string().required(),
 });
@@ -18,6 +19,7 @@ class Recipe {
         this.id = data.id;
         this.name = data.name;
         this.preparation_time = data.preparation_time;
+        this.preparation = data.preparation;
         this.description = data.description;
         this.order = data.order;
         this.date = data.date;
@@ -59,6 +61,13 @@ class Recipe {
             recipes: convertToArrayOfModels(Recipe, response.data.data),
             meta: response.data.meta,
         };
+    }
+    static async getRecipeById(id, params) {
+        const response = await Api.get(`/recipes/${id}`, {
+            params: params,
+        });
+
+        return response.data.data;
     }
 }
 
