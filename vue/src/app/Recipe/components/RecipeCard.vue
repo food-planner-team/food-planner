@@ -1,23 +1,28 @@
 <template>
-    <div
-        class="h-56 w-[22rem] rounded-lg flex flex-col items-center gap-5 shadow-md bg-[#fefffe] overflow-hidden relative cursor-pointer"
+    <router-link
+        :to="{ name: 'RecipeDetails', params: { id: props.recipe.id } }"
     >
-        <img
-            v-if="props.recipe?.image?.url"
-            :src="props.recipe?.image?.url"
-            :alt="props.recipe.name"
-            class="aspect-auto"
-        />
-        <img
-            v-else
-            src="../../common/assets/no-image.jpg"
-            :alt="props.recipe.name"
-            class="aspect-auto"
-        />
-        <div class="bg-alpha-accent absolute bottom-0 w-full p-3 text-center">
-            <p class="font-medium">{{ props.recipe.name }}</p>
+        <div
+            class="h-56 min-w-[22rem] max-w-[24rem] rounded-lg flex flex-col items-center gap-5 shadow-md bg-[#fefffe] overflow-hidden relative cursor-pointer"
+        >
+            <img
+                v-if="props.recipe?.image"
+                :src="props.recipe?.image?.url"
+                :alt="props.recipe.name"
+                class="hover:scale-110 transition-transform duration-300"
+            />
+            <img
+                src="../../common/assets/no-image.jpg"
+                :alt="props.recipe.name"
+                class="object-fill"
+            />
+            <div
+                class="bg-alpha-accent absolute bottom-0 w-full p-3 text-center"
+            >
+                <p class="font-medium">{{ props.recipe.name }}</p>
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script setup>

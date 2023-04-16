@@ -18,6 +18,12 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () => import("../pages/RecipeListPage.vue"),
             },
+            {
+                path: "/przepis/:id",
+                name: "RecipeDetails",
+                meta: { requiresAuth: true },
+                component: () => import("../pages/RecipeDetailsPage.vue"),
+            },
         ],
     },
 ];

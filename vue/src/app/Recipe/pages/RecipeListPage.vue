@@ -2,8 +2,8 @@
     <main class="main">
         <div class="wrapper">
             <div class="h-full flex flex-col">
-                <h1 class="font-bold text-2xl m-5 pl-3 mt-0">Przepisy</h1>
-                <div class="m-5 pl-3 mt-0">
+                <h1 class="font-bold text-2xl m-5 mt-0">Przepisy</h1>
+                <div class="m-5 mt-0">
                     <p class="pb-2 text-sm text-gray-500">
                         <label for="search">NAZWA PRZEPISU</label>
                     </p>
@@ -11,7 +11,7 @@
                         <input
                             type="search"
                             id="search"
-                            class="rounded-lg w-full md:w-[29rem]"
+                            class="rounded-lg w-full md:w-[28rem]"
                             placeholder="Wyszukaj"
                             v-model="searchValue"
                             @keyup.enter="getRecipes()"
@@ -30,7 +30,7 @@
                 </div>
                 <div class="h-full relative">
                     <div
-                        class="lg:overflow-y-scroll relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full"
+                        class="lg:overflow-y-scroll relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full 3xl:px-2"
                         :class="
                             recipes.length > 3
                                 ? 'grid recipes-grid'
@@ -64,7 +64,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-import Recipe from "../../Planner/models/Recipe.js";
+import Recipe from "../models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
 import RecipeCard from "../components/RecipeCard.vue";
@@ -84,7 +84,7 @@ const getRecipes = () => {
         include: "image",
         search: searchValue.value,
         page: page.value,
-        limit: 12,
+        limit: 24,
     })
         .then((res) => {
             recipes.value = res.recipes;
@@ -92,7 +92,6 @@ const getRecipes = () => {
         })
         .finally(() => {
             isLoading.value = false;
-            // searchValue.value = "";
         });
 };
 

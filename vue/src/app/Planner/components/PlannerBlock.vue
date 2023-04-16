@@ -48,7 +48,7 @@
 <script setup>
 import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
-import Recipe from "../models/Recipe.js";
+import Recipe from "../../Recipe/models/Recipe.js";
 import draggable from "vuedraggable";
 import { ref, onMounted } from "vue";
 import {
