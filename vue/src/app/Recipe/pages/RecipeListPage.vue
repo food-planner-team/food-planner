@@ -2,7 +2,7 @@
     <main class="main">
         <div class="wrapper">
             <div class="h-full flex flex-col">
-                <h1 class="font-bold text-2xl m-5 mt-0">Przepisy</h1>
+                <h1 class="font-bold text-2xl m-5 xs:mt-0">Przepisy</h1>
                 <div class="m-5 mt-0">
                     <p class="pb-2 text-sm text-gray-500">
                         <label for="search">NAZWA PRZEPISU</label>
@@ -34,7 +34,7 @@
                         :class="
                             recipes.length > 3
                                 ? 'grid recipes-grid'
-                                : 'flex flex-wrap gap-10 justify-center lg:justify-start ml-8 mr-8'
+                                : 'flex flex-wrap gap-10 justify-center lg:justify-start xl:ml-8 xl:mr-8'
                         "
                         ref="scrollComponent"
                     >

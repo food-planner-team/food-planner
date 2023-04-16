@@ -7,7 +7,7 @@
                         <div
                             class="h-[500px] md:w-full md:h-full bg-cover bg-center rounded-md mx-2 shadow-lg"
                             :style="{
-                                backgroundImage: `url(${recipe.image.data.url})`,
+                                backgroundImage: `url(${recipe.image.url})`,
                             }"
                         ></div>
                         <div class="w-full m-2 p-5 relative">
@@ -69,10 +69,11 @@ const getRecipe = () => {
     isLoading.value = true;
 
     Recipe.getRecipeById(route.params.id, {
-        include: "image",
+        include: "image,recipeItems.product",
     })
         .then((res) => {
             recipe.value = res;
+            console.log(recipe.value);
         })
         .finally(() => {
             isLoading.value = false;

@@ -4,6 +4,7 @@ import Api from "../../common/services/Api.js";
 import convertToArrayOfModels from "../../common/utils/convertToArrayOfModels.js";
 import _get from "lodash/get";
 import Image from "../../System/models/Image.js";
+import RecipeItem from "./RecipeItem.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
@@ -26,6 +27,11 @@ class Recipe {
         const image = _get(data, "image.data");
         if (image) {
             this.image = new Image(image);
+        }
+
+        const recipeItems = _get(data, "recipeItems.data");
+        if (recipeItems) {
+            this.recipeItems = convertToArrayOfModels(RecipeItem, recipeItems);
         }
     }
 
@@ -67,7 +73,7 @@ class Recipe {
             params: params,
         });
 
-        return response.data.data;
+        return new Recipe(response.data.data);
     }
 }
 
