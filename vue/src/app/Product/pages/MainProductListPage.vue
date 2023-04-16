@@ -30,7 +30,7 @@
                         :class="
                             products.length > 3
                                 ? 'grid products-grid'
-                                : 'flex flex-wrap gap-10 justify-center lg:justify-start ml-8 mr-8'
+                                : 'flex flex-wrap gap-10 justify-center lg:justify-start xl:ml-8 xl:mr-8'
                         "
                         ref="scrollComponent"
                     >
