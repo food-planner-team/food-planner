@@ -146,8 +146,8 @@
                                     v-model="quantityType"
                                 >
                                     <option value="">--Wybierz miarę--</option>
-                                    <option value="kg">kilogramy</option>
-                                    <option value="l">litry</option>
+                                    <option value="g">gramy</option>
+                                    <option value="ml">mililitry</option>
                                     <option value="szt.">sztuki</option>
                                 </select>
                                 <button
