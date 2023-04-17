@@ -7,7 +7,7 @@
                         <div
                             class="h-[500px] md:w-full md:h-full bg-cover bg-center rounded-md mx-2 shadow-lg"
                             :style="{
-                                backgroundImage: `url(${recipe.image.url})`,
+                                backgroundImage: `url(${recipe?.image?.url})`,
                             }"
                         ></div>
                         <div class="w-full m-2 p-5 relative">
@@ -40,6 +40,38 @@
                                             {{ recipe.preparation }}
                                         </p>
                                     </div>
+                                    <div>
+                                        <p class="text-xl font-bold">
+                                            Składniki
+                                        </p>
+                                        <div class="flex flex-col gap-4">
+                                            <div
+                                                v-for="item in recipe.recipeItems"
+                                                :key="item.id"
+                                                class="flex flex-row gap-4"
+                                            >
+                                                <div class="flex flex-col">
+                                                    <p
+                                                        class="text-lg font-bold"
+                                                    >
+                                                        {{
+                                                            item.mainProduct
+                                                                .name
+                                                        }}
+                                                    </p>
+                                                    <p
+                                                        class="text-lg text-gray-500"
+                                                    >
+                                                        {{
+                                                            item.mainProduct
+                                                                .defaultProduct
+                                                                .description
+                                                        }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +101,7 @@ const getRecipe = () => {
     isLoading.value = true;
 
     Recipe.getRecipeById(route.params.id, {
-        include: "image,recipeItems.product",
+        include: "image,recipeItems.mainProduct.defaultProduct",
     })
         .then((res) => {
             recipe.value = res;
