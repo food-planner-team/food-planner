@@ -325,7 +325,7 @@ const createRecipe = () => {
         JSON.stringify(
             products.value.map((product) => {
                 return {
-                    product_id: product.id,
+                    main_product_id: product.id,
                     quantity: product.quantity,
                     optional: product.optional,
                 };

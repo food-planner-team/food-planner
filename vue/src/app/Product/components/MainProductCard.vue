@@ -98,18 +98,21 @@ const links = ref([
         pathName: "",
         icon: "search",
         action: "",
+        disabled: true,
     },
     {
         name: "edytuj",
         pathName: "",
         icon: "edit",
         action: "",
+        disabled: true,
     },
     {
         name: "usuń",
         pathName: "",
         icon: "delete",
         action: "",
+        disabled: true,
     },
 ]);
 
