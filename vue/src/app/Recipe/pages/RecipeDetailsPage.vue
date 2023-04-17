@@ -14,18 +14,22 @@
                             <div
                                 class="md:absolute top-0 w-full h-full overflow-auto pr-3"
                             >
-                                <h1 class="font-bold text-5xl mb-6">
+                                <h1
+                                    class="font-bold text-5xl mb-6 first-letter:uppercase"
+                                >
                                     {{ recipe.name }}
                                 </h1>
                                 <div class="flex flex-col gap-4">
                                     <div>
-                                        <p class="text-xl font-bold">Opis</p>
-                                        <p class="text-lg text-gray-500">
+                                        <p class="text-2xl font-bold">Opis</p>
+                                        <p
+                                            class="text-lg text-gray-500 first-letter:uppercase"
+                                        >
                                             {{ recipe.description }}
                                         </p>
                                     </div>
                                     <div>
-                                        <p class="text-xl font-bold">
+                                        <p class="text-2xl font-bold">
                                             Czas przygotowania
                                         </p>
                                         <p class="text-lg text-gray-500">
@@ -33,7 +37,7 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <p class="text-xl font-bold">
+                                        <p class="text-2xl font-bold">
                                             Przygotowanie
                                         </p>
                                         <p class="text-lg text-gray-500">
@@ -41,10 +45,10 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <p class="text-xl font-bold">
+                                        <p class="text-2xl font-bold">
                                             Składniki
                                         </p>
-                                        <div class="flex flex-col gap-4">
+                                        <div class="flex flex-col gap-2">
                                             <div
                                                 v-for="item in recipe.recipeItems"
                                                 :key="item.id"
@@ -63,9 +67,11 @@
                                                         class="text-lg text-gray-500"
                                                     >
                                                         {{
-                                                            item.mainProduct
-                                                                .defaultProduct
-                                                                .description
+                                                            displayCorrectQuantityType(
+                                                                item.quantity,
+                                                                item.mainProduct
+                                                                    .quantity_type
+                                                            )
                                                         }}
                                                     </p>
                                                 </div>
@@ -91,6 +97,7 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Recipe from "../models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
+import { displayCorrectQuantityType } from "../../common/utils/quantityType.js";
 
 const route = useRoute();
 const recipe = ref({});
@@ -105,7 +112,6 @@ const getRecipe = () => {
     })
         .then((res) => {
             recipe.value = res;
-            console.log(recipe.value);
         })
         .finally(() => {
             isLoading.value = false;

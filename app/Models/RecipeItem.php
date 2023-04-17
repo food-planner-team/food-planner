@@ -12,7 +12,7 @@ class RecipeItem extends Model
 
     protected $fillable = [
         'receipt_id',
-        'product_id',
+        'main_product_id',
         'quantity',
         'optional',
     ];
