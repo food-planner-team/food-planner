@@ -1,5 +1,3 @@
-import AddProductPage from "../pages/AddProductPage.vue";
-import MainProductListPage from "../pages/MainProductListPage.vue";
 import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 
 const routes = [
@@ -12,13 +10,13 @@ const routes = [
                 path: "/dodaj-produkt",
                 name: "AddProduct",
                 meta: { requiresAuth: true },
-                component: AddProductPage,
+                component: () => import("../pages/AddProductPage.vue"),
             },
             {
                 path: "/lista-produktow",
                 name: "MainProductList",
                 meta: { requiresAuth: true },
-                component: MainProductListPage,
+                component: () => import("../pages/MainProductListPage.vue"),
             },
         ],
     },

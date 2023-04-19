@@ -16,7 +16,7 @@
 </template>
 <script setup>
 import PlannerBlock from "./PlannerBlock.vue";
-import Recipe from "../models/Recipe.js";
+import Recipe from "../../Recipe/models/Recipe.js";
 import { onMounted, ref, computed, watch } from "vue";
 import {
     getFirstDayOfWeek,
@@ -104,7 +104,7 @@ watch(
     display: flex;
     gap: 1rem;
     overflow-x: scroll;
-    padding-left: 2rem;
+    padding-left: 1rem;
     padding-bottom: 2rem;
 
     @media (max-width: 600px) {

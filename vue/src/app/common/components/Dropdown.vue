@@ -2,6 +2,7 @@
     <Menu as="div" class="relative inline-block text-left">
         <div>
             <MenuButton class="flex items-center gap-2 capitalize">
+                <slot></slot>
                 <span className="material-symbols-outlined">{{
                     props.icon
                 }}</span>
@@ -25,11 +26,16 @@
                     <router-link
                         v-for="link in props.links"
                         :key="link.name"
-                        :to="{ name: link.pathName }"
+                        :to="{ name: link.pathName, params: link.params }"
                     >
                         <MenuItem
                             v-slot="{ active }"
                             class="flex items-center gap-2 cursor-pointer"
+                            :disabled="link.disabled"
+                            :class="[
+                                link.disabled &&
+                                    'cursor-not-allowed opacity-50',
+                            ]"
                         >
                             <a
                                 @click="link.action"
@@ -38,7 +44,7 @@
                                 :class="[
                                     active
                                         ? 'bg-gray-100 text-gray-900'
-                                        : 'text-gray-700',
+                                        : 'text-gray-700 ',
                                     'block px-4 py-2 text-sm',
                                 ]"
                             >

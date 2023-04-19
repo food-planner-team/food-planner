@@ -153,7 +153,7 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import { getLocaleDate } from "../../common/utils/datesHelpers.js";
-import Recipe from "../models/Recipe.js";
+import Recipe from "../../Recipe/models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
 
@@ -234,6 +234,11 @@ useInfiniteScroll(
 </script>
 
 <style lang="scss" scoped>
+img {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: cover;
+}
 .meal-block {
     display: flex;
     align-items: center;
@@ -242,14 +247,13 @@ useInfiniteScroll(
     padding: 1rem;
     padding-top: 0.8rem;
     box-shadow: 2px 3px 12px $alpha-dark;
-    height: 110px;
+    height: 100px;
 
     &__element {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        height: 100px;
         cursor: pointer;
     }
 }

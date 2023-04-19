@@ -1,7 +1,12 @@
 <template>
     <div class="meal-block justify-center items-center">
         <div class="meal-block__img">
-            <img :src="meal?.image?.url" :alt="meal.name" class="rounded-md" />
+            <img
+                :src="meal?.image?.url"
+                :alt="meal.name"
+                width="60"
+                height="60"
+            />
         </div>
         <div class="meal-block__info">
             <div class="info__title">{{ meal.name }}</div>
@@ -48,7 +53,8 @@ const remove = () => {
 const links = ref([
     {
         name: "zobacz danie",
-        pathName: "",
+        pathName: "RecipeDetails",
+        params: { id: props.meal.id },
         icon: "search",
         action: "",
     },
@@ -61,6 +67,11 @@ const links = ref([
 ]);
 </script>
 <style lang="scss" scoped>
+img {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: cover;
+}
 .handle {
     cursor: grab;
 }
@@ -101,7 +112,6 @@ const links = ref([
     &__img {
         grid-area: meal-image;
         width: 100%;
-        aspect-ratio: 1/1;
         display: flex;
         flex-direction: column;
         align-items: center;

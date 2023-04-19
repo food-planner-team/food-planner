@@ -12,7 +12,7 @@ class RecipeItem extends Model
 
     protected $fillable = [
         'receipt_id',
-        'product_id',
+        'main_product_id',
         'quantity',
         'optional',
     ];
@@ -20,8 +20,8 @@ class RecipeItem extends Model
     {
         return $this->belongsTo(RecipeItem::class);
     }
-    public function product(): BelongsTo
+    public function mainProduct(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(MainProduct::class);
     }
 }

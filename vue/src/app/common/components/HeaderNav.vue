@@ -2,7 +2,7 @@
     <header class="header relative">
         <router-link :to="{ name: 'Planner' }">
             <div class="logo-name">
-                <img :src="logo" alt="logo" />
+                <img :src="logo" alt="logo" width="36" height="30" />
                 <p>Food Planner</p>
             </div>
         </router-link>
@@ -31,17 +31,23 @@
         </div>
         <div class="header-profile">
             <div class="profile-block">
-                <div class="profile-avatar">
-                    <img src="../assets/user.png" alt="user's avatar" />
-                </div>
-                <div class="profile-info">
-                    <div class="profile-name">Witaj, {{ user?.name }}!</div>
-                </div>
                 <Dropdown
                     icon="expand_more"
                     :links="userLinks"
                     class="hidden sm:inline-block"
-                />
+                >
+                    <div class="profile-avatar">
+                        <img
+                            src="../assets/user.png"
+                            alt="user's avatar"
+                            width="50"
+                            height="50"
+                        />
+                    </div>
+                    <span class="font-bold ml-1">
+                        Witaj, {{ user?.name }}!
+                    </span>
+                </Dropdown>
             </div>
         </div>
         <button
@@ -90,6 +96,7 @@ const links = ref([
         pathName: "Planner",
         icon: "event_note",
         action: () => (isOpen.value = !isOpen.value),
+        disabled: false,
         children: [],
     },
     {
@@ -100,21 +107,24 @@ const links = ref([
         children: [
             {
                 name: "wszystkie przepisy",
-                pathName: "",
+                pathName: "RecipeList",
                 icon: "list_alt",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: false,
             },
             {
                 name: "moje przepisy",
                 pathName: "",
                 icon: "favorite",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: true,
             },
             {
                 name: "dodaj przepis",
                 pathName: "AddRecipe",
                 icon: "add_circle",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: false,
             },
         ],
     },
@@ -129,18 +139,21 @@ const links = ref([
                 pathName: "MainProductList",
                 icon: "list_alt",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: false,
             },
             {
                 name: "moje produkty",
                 pathName: "",
                 icon: "favorite",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: true,
             },
             {
                 name: "dodaj produkt",
                 pathName: "AddProduct",
                 icon: "add_circle",
                 action: () => (isOpen.value = !isOpen.value),
+                disabled: false,
             },
         ],
     },
@@ -158,12 +171,14 @@ const userLinks = ref([
         pathName: "",
         icon: "settings",
         action: () => (isOpen.value = !isOpen.value),
+        disabled: true,
     },
     {
         name: "wyloguj",
         pathName: "",
         icon: "logout",
         action: () => logout(),
+        disabled: false,
     },
 ]);
 </script>
