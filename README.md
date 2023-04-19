@@ -5,7 +5,9 @@
 ## Demo 
 [Demo](https://foodplanner.pl/)
 
-emial: test@test.com
+
+
+emial: test@test.com \
 password: 123456
 
 But you can also add a new account, and configure your producds and recipes
