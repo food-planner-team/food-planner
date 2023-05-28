@@ -8,6 +8,9 @@
         <div
             class="absolute bg-gradient-to-t from-primary to-transparent h-[450px] w-[450px] right-[-14rem] top-[-14rem] rounded-tl-[54px] rounded-tr-[123px] rounded-br-[434px] rounded-bl-[20px] rotate-[108deg] z-[-1] animate-spin-layout shadow-[0_0_45px_rgba(112,144,176,0.125)]"
         />
+        <Teleport to="body">
+            <ToastList />
+        </Teleport>
 
         <router-view v-slot="{ Component }">
             <transition name="unauth" mode="out-in">
@@ -17,7 +20,9 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import ToastList from "../components/ToastList.vue";
+</script>
 <style>
 .unauth-enter-active,
 .unauth-leave-active {

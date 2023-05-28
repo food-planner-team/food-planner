@@ -7,30 +7,33 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends ApiController
 {
     public function __invoke(ResetPasswordRequest $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password', 'token');
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
 
-        $updatePassword = DB::table('password_resets')
-            ->where([
-                'email' => $request->get('email'),
-                'token' => $request->get('token')
-            ])
-            ->first();
+                $user->save();
 
-        if (!$updatePassword) {
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json(['message' => 'Password has been reset successfully.']);
+        } else {
             return response()->json(['message' => 'Unable to reset the password.'], 500);
         }
-        $user = User::where('email', $request->get('email'))
-            ->update(['password' => Hash::make($request->get('password'))]);
-
-        DB::table('password_resets')->where(['email' => $request->get('email')])->delete();
-
-        return response()->json(['message' => 'Password has been reset successfully.']);
     }
 }

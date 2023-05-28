@@ -56,7 +56,7 @@
                                             >
                                                 <div class="flex flex-col">
                                                     <p
-                                                        class="text-lg font-bold"
+                                                        class="text-lg font-medium"
                                                     >
                                                         {{
                                                             item.mainProduct
