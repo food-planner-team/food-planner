@@ -36,7 +36,7 @@ class User {
                     message: "Zalogowano",
                     type: "success",
                 });
-                return response
+                return response;
             })
             .catch((error) => {
                 throw error;
@@ -52,7 +52,7 @@ class User {
                     message: "Zarejestrowano",
                     type: "success",
                 });
-                return response
+                return response;
             })
             .catch((error) => {
                 throw error;
@@ -69,6 +69,25 @@ class User {
             localStorage.removeItem("TOKEN");
             return response;
         });
+    }
+
+    static async sendResetLink(email) {
+        const data = await Api.post("/send-reset-link", {
+            email: email,
+        });
+
+        return data;
+    }
+
+    static async resetPassword(email, password, passwordConfirmation, token) {
+        const data = await Api.post("/reset", {
+            email: email,
+            password: password,
+            password_confirmation: passwordConfirmation,
+            token: token,
+        });
+
+        return data;
     }
 
     static async recipes(dateStart, dateEnd) {

@@ -1,21 +1,9 @@
 <template>
     <div class="pannel">
         <div class="panel__header">
-            <div class="header__title">Panel rejestracji</div>
+            <div class="header__title">Resetowanie hasła</div>
         </div>
-        <form class="panel__form" @submit="register">
-            <label class="form__label">
-                <div class="label__group">
-                    <div class="group__title">Login</div>
-                </div>
-                <input
-                    class="form__input"
-                    name="login"
-                    type="text"
-                    v-model="user.name"
-                    required
-                />
-            </label>
+        <form class="panel__form" @submit.prevent="handleForgotPassword">
             <label class="form__label">
                 <div class="label__group">
                     <div class="group__title">Email</div>
@@ -25,92 +13,76 @@
                     id="email-address"
                     name="email"
                     type="email"
-                    v-model="user.email"
+                    v-model="email"
+                    autocomplete="email"
                     required
                 />
             </label>
-            <label class="form__label">
-                <div class="label__group">
-                    <div class="group__title">Hasło</div>
-                </div>
-                <input
-                    class="form__input"
-                    id="password"
-                    name="password"
-                    type="password"
-                    v-model="user.password"
-                    required
-                />
-            </label>
-            <label class="form__label">
-                <div class="label__group">
-                    <div class="group__title">Powtórz hasło</div>
-                </div>
-                <input
-                    class="form__input"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    type="password"
-                    v-model="user.password_confirmation"
-                    required
-                />
-            </label>
-            <div class="group__error" v-if="error">
-                Podanne dane są nieprawidłowe
-            </div>
             <div class="form__group">
-                <input
-                    class="form__input-btn form__input-btn--secondary"
-                    type="reset"
-                    value="Wyczyść"
-                    @click="setError('')"
-                />
                 <button
                     class="form__input-btn form__input-btn--primary"
                     type="submit"
                 >
-                    Załóż konto
+                    <span class="flex justify-center items-center">
+                        <svg
+                            v-show="isLoading"
+                            class="w-4 h-4 text-white animate-spin"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle
+                                class="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                stroke-width="4"
+                            ></circle>
+                            <path
+                                class="opacity-75"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </span>
+                    <span v-show="!isLoading">Zresetuj hasło</span>
                 </button>
             </div>
         </form>
-        <div class="panel__footer">
-            <router-link to="/logowanie" class="hover:underline">
-                <div class="footer__element">
-                    Masz już konto?
-                    <span class="element__highlight"> Zaloguj się</span>
-                </div>
-            </router-link>
-        </div>
     </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import User from "../models/User.js";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import User from "../models/User";
 
 const router = useRouter();
-const error = ref("");
+const store = useStore();
+const email = ref("");
+const isLoading = ref(false);
 
-function setError(errorMessage) {
-    error.value = errorMessage;
-}
-
-const user = {
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-};
-
-const register = (ev) => {
-    ev.preventDefault();
-    User.register(user)
+const handleForgotPassword = () => {
+    isLoading.value = true;
+    User.sendResetLink(email.value)
         .then(() => {
-            router.push({ name: "Planner" });
+            store.commit("Toast/addToast", {
+                message: "Wysłano email z linkiem do resetowania hasła",
+                type: "success",
+            });
+
+            router.push({ name: "Login" });
         })
-        .catch(() => {
-            setError("Podane dane są nieprawidłowe!");
+        .catch((error) => {
+            store.commit("Toast/addToast", {
+                message: "Użytkownik o podanym adresie email nie istnieje",
+                type: "error",
+            });
+        })
+        .finally(() => {
+            isLoading.value = false;
         });
 };
 </script>
@@ -120,7 +92,7 @@ const register = (ev) => {
     box-shadow: 0px 16px 30px $box-shadow;
     border-radius: 16px;
     width: 800px;
-    min-height: 500px;
+    min-height: 300px;
     margin: 0 2rem;
     padding: 2rem;
     box-sizing: border-box;

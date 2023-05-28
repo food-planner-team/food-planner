@@ -19,6 +19,18 @@ const routes = [
                 component: () => import("../pages/RegisterPage.vue"),
             },
             {
+                path: "/resetowanie-hasla",
+                name: "ForgotPassword",
+                meta: { requiresAuth: false },
+                component: () => import("../pages/ForgotPasswordPage.vue"),
+            },
+            {
+                path: "/resetowanie-hasla/:token",
+                name: "ResetPassword",
+                meta: { requiresAuth: false },
+                component: () => import("../pages/ResetPasswordPage.vue"),
+            },
+            {
                 path: "/404",
                 name: "404",
                 meta: { requiresAuth: false },

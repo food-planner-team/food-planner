@@ -6,6 +6,7 @@ use App\Http\Controllers\v1\ApiController;
 use App\Http\Requests\SendResetPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
 class SendResetPasswordController extends ApiController
@@ -14,6 +15,7 @@ class SendResetPasswordController extends ApiController
 
     public function __invoke(SendResetPasswordRequest $request): JsonResponse
     {
+
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
