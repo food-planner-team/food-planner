@@ -58,7 +58,7 @@
                     }}
                     {{ props.product.quantity_type }}
                 </p>
-                <p>Cena: 5.55 zł - TODO</p>
+                <!-- <p>Cena: 5.55 zł - TODO</p> -->
             </div>
             <button
                 class="rounded-md border border-transparent bg-primary-dark py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
