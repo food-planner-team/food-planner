@@ -21,6 +21,9 @@ export const displayCorrectQuantityType = (value, type) => {
             convertedValue = value;
             unit = "ml";
         }
+    } else if (type === "szt.") {
+        convertedValue = value;
+        unit = "szt.";
     }
 
     return `${convertedValue.toLocaleString(undefined, {

@@ -24,6 +24,7 @@ class Recipe {
         this.description = data.description;
         this.order = data.order;
         this.date = data.date;
+        this.kcal = data.kcal;
         const image = _get(data, "image.data");
         if (image) {
             this.image = new Image(image);
