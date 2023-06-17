@@ -19,7 +19,7 @@ class RecipesController extends ApiController
     public function index(Request $request)
     {
 
-        $limit = Arr::get($request->all(), 'limit', 15);
+        $limit = Arr::get($request->all(), 'limit', 12);
         $recipes = Recipe::filter()->paginate($limit);
 
         return $this->fractal
