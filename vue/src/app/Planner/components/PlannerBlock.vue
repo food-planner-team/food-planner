@@ -8,7 +8,7 @@
         <div class="block-stats">
             <div class="block-stats__element">
                 {{ "Kalorie " }}
-                <span class="element__highlighted"> TODO </span>
+                <span class="element__highlighted"> {{ sumKcal() }} </span>
             </div>
             <div class="block-stats__element">
                 {{ "Dania " }}
@@ -97,9 +97,16 @@ const removeAt = (id) => {
     props.recipes.splice(id, 1);
     saveUserRecipes();
 };
+
 const addMeal = (item) => {
     props.recipes.push(item);
     saveUserRecipes();
+};
+
+const sumKcal = () => {
+    return props.recipes.reduce((acc, curr) => {
+        return acc + curr.kcal;
+    }, 0);
 };
 </script>
 <style lang="scss" scoped>
