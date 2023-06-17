@@ -27,6 +27,9 @@
                         v-for="link in props.links"
                         :key="link.name"
                         :to="{ name: link.pathName, params: link.params }"
+                        :style="{
+                            pointerEvents: link.disabled && 'none',
+                        }"
                     >
                         <MenuItem
                             v-slot="{ active }"

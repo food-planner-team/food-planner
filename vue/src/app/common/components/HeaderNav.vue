@@ -80,6 +80,7 @@ import { useStore } from "vuex";
 import HamburgerMenu from "./HamburgerMenu.vue";
 
 const store = useStore();
+
 const user = computed(() => store.getters["User/getUser"]);
 
 const router = useRouter();
@@ -90,74 +91,77 @@ const emit = defineEmits(["close-hamburger"]);
 
 const style = "left: 0";
 
-const links = ref([
-    {
-        name: "Planner",
-        pathName: "Planner",
-        icon: "event_note",
-        action: () => (isOpen.value = !isOpen.value),
-        disabled: false,
-        children: [],
-    },
-    {
-        name: "przepisy",
-        pathName: "",
-        icon: "menu_book",
-        action: "",
-        children: [
-            {
-                name: "wszystkie przepisy",
-                pathName: "RecipeList",
-                icon: "list_alt",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: false,
-            },
-            {
-                name: "moje przepisy",
-                pathName: "",
-                icon: "favorite",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: true,
-            },
-            {
-                name: "dodaj przepis",
-                pathName: "AddRecipe",
-                icon: "add_circle",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: false,
-            },
-        ],
-    },
-    {
-        name: "produkty",
-        pathName: "",
-        icon: "fastfood",
-        action: "",
-        children: [
-            {
-                name: "wszystkie produkty",
-                pathName: "MainProductList",
-                icon: "list_alt",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: false,
-            },
-            {
-                name: "moje produkty",
-                pathName: "",
-                icon: "favorite",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: true,
-            },
-            {
-                name: "dodaj produkt",
-                pathName: "AddProduct",
-                icon: "add_circle",
-                action: () => (isOpen.value = !isOpen.value),
-                disabled: false,
-            },
-        ],
-    },
-]);
+const links = computed(() => {
+    const currentUser = user.value;
+    return [
+        {
+            name: "Planner",
+            pathName: "Planner",
+            icon: "event_note",
+            action: () => (isOpen.value = !isOpen.value),
+            disabled: false,
+            children: [],
+        },
+        {
+            name: "przepisy",
+            pathName: "",
+            icon: "menu_book",
+            action: "",
+            children: [
+                {
+                    name: "wszystkie przepisy",
+                    pathName: "RecipeList",
+                    icon: "list_alt",
+                    action: () => (isOpen.value = !isOpen.value),
+                    disabled: false,
+                },
+                // {
+                //     name: "moje przepisy",
+                //     pathName: "",
+                //     icon: "favorite",
+                //     action: () => (isOpen.value = !isOpen.value),
+                //     disabled: true,
+                // },
+                {
+                    name: "dodaj przepis",
+                    pathName: "AddRecipe",
+                    icon: "add_circle",
+                    action: () => (isOpen.value = !isOpen.value),
+                    disabled: false,
+                },
+            ],
+        },
+        {
+            name: "produkty",
+            pathName: "",
+            icon: "fastfood",
+            action: "",
+            children: [
+                {
+                    name: "wszystkie produkty",
+                    pathName: "MainProductList",
+                    icon: "list_alt",
+                    action: () => (isOpen.value = !isOpen.value),
+                    disabled: false,
+                },
+                // {
+                //     name: "moje produkty",
+                //     pathName: "",
+                //     icon: "favorite",
+                //     action: () => (isOpen.value = !isOpen.value),
+                //     disabled: true,
+                // },
+                {
+                    name: `dodaj produkt`,
+                    pathName: "AddProduct",
+                    icon: "add_circle",
+                    action: () => (isOpen.value = !isOpen.value),
+                    disabled: currentUser.admin !== 1,
+                },
+            ],
+        },
+    ];
+});
 
 const logout = () => {
     User.logout().then(() => {
@@ -166,13 +170,13 @@ const logout = () => {
 };
 
 const userLinks = ref([
-    {
-        name: "ustawienia",
-        pathName: "",
-        icon: "settings",
-        action: () => (isOpen.value = !isOpen.value),
-        disabled: true,
-    },
+    // {
+    //     name: "ustawienia",
+    //     pathName: "",
+    //     icon: "settings",
+    //     action: () => (isOpen.value = !isOpen.value),
+    //     disabled: true,
+    // },
     {
         name: "wyloguj",
         pathName: "",
