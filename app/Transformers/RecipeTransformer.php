@@ -22,6 +22,7 @@ class RecipeTransformer extends TransformerAbstract
             'id' => $recipe->id,
             'name' => $recipe->name,
             'description' => $recipe->description,
+            'kcal' => $recipe->kcal,
             'preparation' => $recipe->preparation,
             'preparation_time' => $recipe->preparation_time,
         ];
