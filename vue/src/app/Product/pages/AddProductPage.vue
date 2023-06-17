@@ -72,12 +72,18 @@
     </main>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import AddMainProductModal from "../components/AddMainProductModal.vue";
 import ProductCard from "../components/ProductCard.vue";
 import Product from "../models/Product.js";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+const store = useStore();
+const user = computed(() => store.getters["User/getUser"]);
+const router = useRouter();
 
 const searchValue = ref("");
 const products = ref([]);

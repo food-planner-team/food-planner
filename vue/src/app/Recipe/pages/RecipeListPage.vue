@@ -104,7 +104,7 @@ const getRecipesOnScroll = () => {
         include: "image",
         search: searchValue.value,
         page: page.value,
-        limit: 12,
+        limit: 24,
     }).then((res) => {
         if (page.value > res.meta.pagination.total_pages) return;
 

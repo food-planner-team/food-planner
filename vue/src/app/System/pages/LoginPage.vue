@@ -46,16 +46,41 @@
                     class="form__input-btn form__input-btn--primary"
                     type="submit"
                 >
-                    Zaloguj
+                    <span class="flex justify-center items-center">
+                        <svg
+                            v-show="isLoading"
+                            class="w-4 h-4 text-white animate-spin"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle
+                                class="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                stroke-width="4"
+                            ></circle>
+                            <path
+                                class="opacity-75"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </span>
+                    <span v-show="!isLoading">Zaloguj</span>
                 </button>
             </div>
         </form>
         <div class="panel__footer">
-            <!-- <div class="footer__element">
-                Nie możesz się zalogować?
-                <span class="element__highlight"> Zresetuj hasło</span>
-            </div> TODO-->
-            <router-link to="/rejestrowanie">
+            <router-link to="/resetowanie-hasla" class="hover:underline">
+                <div class="footer__element">
+                    Nie możesz się zalogować?
+                    <span class="element__highlight"> Zresetuj hasło</span>
+                </div>
+            </router-link>
+            <router-link to="/rejestrowanie" class="hover:underline">
                 <div class="footer__element">
                     Nie masz konta?
                     <span class="element__highlight"> Założ konto</span>
@@ -72,6 +97,7 @@ import { ref } from "vue";
 
 const router = useRouter();
 const error = ref("");
+const isLoading = ref(false);
 
 function setError(errorMessage) {
     error.value = errorMessage;
@@ -83,6 +109,7 @@ const user = {
 };
 
 const login = (ev) => {
+    isLoading.value = true;
     ev.preventDefault();
     User.login(user)
         .then(() => {
@@ -90,6 +117,9 @@ const login = (ev) => {
         })
         .catch(() => {
             setError("Podane dane są nieprawidłowe!");
+        })
+        .finally(() => {
+            isLoading.value = false;
         });
 };
 </script>

@@ -1,27 +1,29 @@
 export const displayCorrectQuantityType = (value, type) => {
-    let convertedValue, unit;
-  
-    if (type === 'g') {
-      if (value >= 1000) {
-        convertedValue = value / 1000;
-        unit = 'kg';
-      } else if (value >= 100) {
-        convertedValue = value / 10;
-        unit = 'dag';
-      } else {
-        convertedValue = value;
-        unit = 'g';
-      }
-    } else if (type === 'ml') {
-      if (value >= 1000) {
-        convertedValue = value / 1000;
-        unit = 'l';
-      } else {
-        convertedValue = value;
-        unit = 'ml';
-      }
+    let convertedValue = 0;
+    let unit;
+
+    if (type === "g") {
+        if (value >= 1000) {
+            convertedValue = value / 1000;
+            unit = "kg";
+        } else if (value >= 100) {
+            convertedValue = value / 10;
+            unit = "dag";
+        } else {
+            convertedValue = value;
+            unit = "g";
+        }
+    } else if (type === "ml") {
+        if (value >= 1000) {
+            convertedValue = value / 1000;
+            unit = "l";
+        } else {
+            convertedValue = value;
+            unit = "ml";
+        }
     }
-  
-    return `${convertedValue.toLocaleString(undefined, {maximumFractionDigits: 1})} ${unit}`;
-  };
-  
+
+    return `${convertedValue.toLocaleString(undefined, {
+        maximumFractionDigits: 1,
+    })} ${unit}`;
+};
