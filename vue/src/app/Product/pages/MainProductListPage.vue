@@ -72,6 +72,8 @@ const getProducts = () => {
     MainProduct.getMainProducts({
         include: "defaultProduct.image",
         search: searchValue.value,
+        connected: 0,
+        limit: 20,
         page: page.value,
     })
         .then((res) => {
@@ -91,6 +93,8 @@ const getProductsOnScroll = () => {
     MainProduct.getMainProducts({
         include: "defaultProduct.image",
         search: searchValue.value,
+        connected: 0,
+        limit: 20,
         page: page.value,
     }).then((res) => {
         if (page.value > res.meta.pagination.total_pages) return;
