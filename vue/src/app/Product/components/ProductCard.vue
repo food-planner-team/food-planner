@@ -51,7 +51,7 @@
                     }}
                     {{ props.product.quantity_type }}
                 </p>
-                <p>Cena: 5.55 zł - TODO</p>
+                <!-- <p>Cena: 5.55 zł - TODO</p> -->
             </div>
             <button
                 v-if="!chosenProductsId.includes(props.product.id)"

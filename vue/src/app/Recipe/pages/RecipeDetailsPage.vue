@@ -30,6 +30,18 @@
                                     </div>
                                     <div>
                                         <p class="text-2xl font-bold">
+                                            Kalorie (na porcję)
+                                        </p>
+                                        <p class="text-lg text-gray-500">
+                                            {{
+                                                recipe.kcal
+                                                    ? recipe.kcal + " kcal"
+                                                    : "Nie podano"
+                                            }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-2xl font-bold">
                                             Czas przygotowania
                                         </p>
                                         <p class="text-lg text-gray-500">
@@ -112,6 +124,7 @@ const getRecipe = () => {
     })
         .then((res) => {
             recipe.value = res;
+            console.log(res);
         })
         .finally(() => {
             isLoading.value = false;
