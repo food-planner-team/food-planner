@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Http\Requests\StoreMainProductRequest;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;

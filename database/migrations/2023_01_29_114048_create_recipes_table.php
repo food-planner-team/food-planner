@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('preparation')->nullable();
             $table->integer('kcal')->nullable();
             $table->integer('preparation_time');
+            $table->unsignedInteger('status')->default(0);
             $table->timestamps();
         });
     }

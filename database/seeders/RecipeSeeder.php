@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enum\RecipeStatusEnum;
 use App\Factories\ImageFactory;
 use App\Models\Image;
 use App\Models\Recipe;
@@ -99,6 +100,7 @@ class RecipeSeeder extends ModelSeeder
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
             ->seedModel(Recipe::class, function ($recipe) {
+                $recipe->status = RecipeStatusEnum::ACCEPTED;
                 $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
                 unset($recipe->image);
                 $recipe->save();
