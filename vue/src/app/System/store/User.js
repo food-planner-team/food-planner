@@ -19,6 +19,9 @@ export default {
         getUser(state) {
             return state.user.data;
         },
+        getUserId(state) {
+            return state.user.data.id;
+        },
     },
     actions: {},
 };

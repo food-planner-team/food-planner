@@ -115,13 +115,13 @@ const links = computed(() => {
                     action: () => (isOpen.value = !isOpen.value),
                     disabled: false,
                 },
-                // {
-                //     name: "moje przepisy",
-                //     pathName: "",
-                //     icon: "favorite",
-                //     action: () => (isOpen.value = !isOpen.value),
-                //     disabled: true,
-                // },
+                {
+                    name: "moje przepisy",
+                    pathName: "MyRecipeList",
+                    icon: "favorite",
+                    action: () => (isOpen.value = !isOpen.value),
+                    disabled: false,
+                },
                 {
                     name: "dodaj przepis",
                     pathName: "AddRecipe",
