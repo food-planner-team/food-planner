@@ -107,6 +107,8 @@ class RecipeSeeder extends ModelSeeder
             {
                 $recipe->status = RecipeStatusEnum::ACCEPTED;
                 $recipe->user_id = $users->random();
+                $recipe->preparation_time = rand(5, 10);
+                $recipe->kcal = rand(100, 1000);
                 $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
                 unset($recipe->image);
                 $recipe->save();

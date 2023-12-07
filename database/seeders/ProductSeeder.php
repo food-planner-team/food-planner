@@ -50,6 +50,7 @@ class ProductSeeder extends ModelSeeder
             ->setAmount(count($productData))
             ->useData($productData)
             ->seedModel(Product::class, function ($product) {
+                $product->kcal = rand(100, 500);
                 $product->save();
             });
 
