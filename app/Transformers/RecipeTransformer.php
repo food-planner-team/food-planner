@@ -25,11 +25,9 @@ class RecipeTransformer extends TransformerAbstract
             'kcal' => $recipe->kcal,
             'preparation' => $recipe->preparation,
             'preparation_time' => $recipe->preparation_time,
+            'status' => $recipe->status,
+            'user_id' => $recipe->user_id,
         ];
-        if ($recipe->pivot) {
-            $data['order'] = $recipe->pivot->order;
-            $data['date'] = $recipe->pivot->date;
-        }
         return $data;
     }
 

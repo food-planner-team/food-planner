@@ -6,6 +6,7 @@ use App\Enum\RecipeStatusEnum;
 use App\Factories\ImageFactory;
 use App\Models\Image;
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
@@ -96,11 +97,16 @@ class RecipeSeeder extends ModelSeeder
                 'image' => 'barszcz-czerwony-zabielany.jpg'
             ],
         ];
+
+        $users = User::all()->pluck('id');
+
         $this->useData($recipesData)
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
-            ->seedModel(Recipe::class, function ($recipe) {
+            ->seedModel(Recipe::class, function ($recipe) use ($users)
+            {
                 $recipe->status = RecipeStatusEnum::ACCEPTED;
+                $recipe->user_id = $users->random();
                 $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
                 unset($recipe->image);
                 $recipe->save();
@@ -109,8 +115,6 @@ class RecipeSeeder extends ModelSeeder
                     $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
                     $image->create();
                 };
-
-
             });
     }
 }

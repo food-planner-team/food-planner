@@ -16,6 +16,7 @@ class Recipe extends Model
         'description',
         'kcal',
         'preparation',
+        'user_id',
         'preparation_time',
     ];
 
@@ -24,7 +25,10 @@ class Recipe extends Model
     {
         return $this->hasMany(RecipeItem::class);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function image()
     {
         return $this->morphOne(Image::class,'imageable');

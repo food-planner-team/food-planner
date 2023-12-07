@@ -35,20 +35,11 @@ class UserSeeder extends ModelSeeder
             ]
         ];
 
-        $usersData = $this->useData($users)
+        $this->useData($users)
             ->setAmount(count($users))
             ->setHeader("Seeding Admins")
             ->seedModel(User::class, function ($user) {
                 $user->save();
             });
-        foreach ($usersData as $user) {
-            $today = new \DateTime('today');
-            for ($i = 1; $i <= 7; $i++) {
-                for ($d = 1; $d < 5; $d++) {
-                    $user->recipes()->attach([$d => ['order' => $d, 'date' => $today]]);
-                }
-                $today->modify("+1 day");
-            }
-        }
     }
 }
