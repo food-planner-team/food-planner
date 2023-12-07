@@ -20,8 +20,8 @@ class RecipeItem extends Model
     {
         return $this->belongsTo(RecipeItem::class);
     }
-    public function mainProduct(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(MainProduct::class);
+        return $this->belongsTo(Product::class);
     }
 }

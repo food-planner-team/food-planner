@@ -13,7 +13,7 @@ class RecipeTransformer extends TransformerAbstract
     protected array $availableIncludes = [
         'image',
         'recipeItems',
-        'recipeUser'
+        'user'
     ];
 
     public function transform(Recipe $recipe): array
@@ -42,5 +42,9 @@ class RecipeTransformer extends TransformerAbstract
     public function includeRecipeItems(Recipe $recipe): Collection
     {
         return $this->collection($recipe->recipeItems, new RecipeItemTransformer());
+    }
+    public function includeUser(Recipe $recipe): Item
+    {
+        return $this->item($recipe->user, new UserTransformer());
     }
 }
