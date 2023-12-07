@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('category_name');
             $table->string('sku')->nullable();
             $table->double('quantity');
+            $table->integer('kcal')->nullable();
             $table->string('quantity_type');
             $table->unsignedInteger('status')->default(0);
             $table->timestamps();
