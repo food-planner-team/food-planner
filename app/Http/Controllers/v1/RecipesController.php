@@ -36,18 +36,26 @@ class RecipesController extends ApiController
      */
     public function store(StoreRecipeRequest $request)
     {
-        $recipe = Recipe::create($request->validationData());
+        $recipe = $request->user()->recipes()->create($request->validationData());
+//        $recipe = Recipe::create($request->validationData());
         if ($request->has('image')){
             $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
             $image->create();
         }
         if ($request->has('products')){
-            $products = array_map(fn($f) => (array)$f,json_decode($request->get('products')));
-            $recipe->recipeItems()->createMany($products);
+            $products = $request->get('products');
+            foreach ($products as $product) {
+                $recipe->recipeItems()->create([
+                    'product_id' => $product['product_id'],
+                    'quantity' => $product['quantity'],
+                    'optional' => $product['optional'],
+                ]);
+            }
         }
 
         if ($recipe) {
             return $this->fractal
+                ->parseIncludes("recipeItems.product")
                 ->item($recipe, new RecipeTransformer())
                 ->get();
         }

@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order'])->using(RecipeUser::class);
+        return $this->hasMany(Recipe::class);
     }
     public function sendPasswordResetNotification($token)
     {
