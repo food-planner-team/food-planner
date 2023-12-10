@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters\Recipe;
+namespace App\Filters\Product;
 
-class OwnerFilter
+class UserFilter
 {
     public static function handle($query, $userId)
     {
