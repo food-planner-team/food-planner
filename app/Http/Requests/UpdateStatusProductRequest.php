@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProductRequest extends FormRequest
+class UpdateStatusProductRequest extends FormRequest
 {
      /**
      * Get the validation rules that apply to the request.
@@ -14,9 +14,7 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'quantity' => 'required',
-            'quantity_type' => 'required|in:"g","ml","szt"',
+            'status' => 'required',
         ];
     }
 }

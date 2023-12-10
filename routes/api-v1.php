@@ -8,7 +8,9 @@ use App\Http\Controllers\v1\Auth\SendResetPasswordController;
 use App\Http\Controllers\v1\GenerateRecipesPlanController;
 use App\Http\Controllers\v1\MainProductsController;
 use App\Http\Controllers\v1\ProductsController;
+use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
+use App\Http\Controllers\v1\RecipeUpdateStatusController;
 use App\Http\Controllers\v1\UserRecipesController;
 use App\Http\Requests\SendResetPasswordRequest;
 use Illuminate\Http\Request;
@@ -33,7 +35,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::resource('/recipes', RecipesController::class);
-    Route::resource('/products', ProductsController::class)->only(['index']);
+    Route::post("/recipes/{recipe}/update-status", RecipeUpdateStatusController::class);
+    Route::post("/products/{product}/update-status", ProductUpdateStatusController::class);
+    Route::resource('/products', ProductsController::class);
     Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
     Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
 

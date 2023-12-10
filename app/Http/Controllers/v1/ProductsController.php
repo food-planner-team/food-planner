@@ -25,4 +25,33 @@ class ProductsController extends ApiController
             ->paginate($products, new ProductTransformer())
             ->get();
     }
+
+    public function store(StoreProductRequest $request)
+    {
+        $product = Product::create($request->validationData());
+        return $this->fractal
+            ->item($product, new ProductTransformer())
+            ->get();
+    }
+
+    public function update(Request $request)
+    {
+        $product = Product::update($request->all());
+        return $this->fractal
+            ->item($product, new ProductTransformer())
+            ->get();
+    }
+
+    public function show(Product $product)
+    {
+        return $this->fractal
+            ->item($product, new ProductTransformer())
+            ->get();
+    }
+
+    public function delete(Product $product)
+    {
+        $product->delete();
+        return $this->respondOK();
+    }
 }

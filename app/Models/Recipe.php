@@ -14,9 +14,10 @@ class Recipe extends Model
     protected $fillable = [
         'name',
         'description',
-        'kcal',
         'preparation',
+        'kcal',
         'user_id',
+        'status',
         'preparation_time',
     ];
 
