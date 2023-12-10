@@ -37,7 +37,6 @@ class RecipesController extends ApiController
     public function store(StoreRecipeRequest $request)
     {
         $recipe = $request->user()->recipes()->create($request->validationData());
-//        $recipe = Recipe::create($request->validationData());
         if ($request->has('image')){
             $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
             $image->create();
