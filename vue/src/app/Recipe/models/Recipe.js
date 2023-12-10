@@ -5,7 +5,6 @@ import convertToArrayOfModels from "../../common/utils/convertToArrayOfModels.js
 import _get from "lodash/get";
 import Image from "../../System/models/Image.js";
 import RecipeItem from "./RecipeItem.js";
-// import store from "../../../plugins/store";
 import store from "../../../plugins/store";
 
 const schema = Joi.object({
@@ -14,7 +13,7 @@ const schema = Joi.object({
     preparation: Joi.string().allow(null).required(),
     preparation_time: Joi.number().required(),
     description: Joi.string().required(),
-    // kcal: Joi.number().required(),
+    kcal: Joi.number().required(),
     status: Joi.number().required(),
     user_id: Joi.number().required(),
 });
@@ -55,53 +54,35 @@ class Recipe {
             params: paramsData,
         });
 
-        // return convertToArrayOfModels(Recipe, response.data.data);
         return {
             recipes: convertToArrayOfModels(Recipe, response.data.data),
             meta: response.data.meta,
         };
     }
 
-    // static async fetchUserRecipes(include) {
-    //     const response = await Api.get("/user/recipes", {
-    //         params: include,
-    //     });
-    //     return convertToArrayOfModels(Recipe, response.data.data);
-    // }
+    static async getRecipes(params) {
+        const paramsData = {
+            include: "image,recipeItems.product",
+            status: 1,
+            ...params,
+        };
 
-    // static async saveUserRecipes(date, recipes) {
-    //     const response = await Api.post("/user/recipes", {
-    //         date,
-    //         recipes,
-    //     });
-    //     return convertToArrayOfModels(Recipe, response.data.data);
-    // }
+        const response = await Api.get("/recipes", {
+            params: paramsData,
+        });
 
-    // static async createRecipe(data) {
-    //     const response = await Api.post("/recipes", data, {
-    //         headers: { "Content-Type": "multipart/form-data" },
-    //     });
-
-    //     return new Recipe(response.data.data);
-    // }
-
-    // static async getRecipes(params) {
-    //     const response = await Api.get("/recipes", {
-    //         params: params,
-    //     });
-
-    //     return {
-    //         recipes: convertToArrayOfModels(Recipe, response.data.data),
-    //         meta: response.data.meta,
-    //     };
-    // }
-    // static async getRecipeById(id, params) {
-    //     const response = await Api.get(`/recipes/${id}`, {
-    //         params: params,
-    //     });
-
-    //     return new Recipe(response.data.data);
-    // }
+        return {
+            recipes: convertToArrayOfModels(Recipe, response.data.data),
+            meta: response.data.meta,
+        };
+    }
 }
 
 export default Recipe;
+
+export const RecipeStatusEnum = {
+    PENDING: 0,
+    ACCEPTED: 1,
+    REJECTED: 2,
+    ALL: 3,
+};

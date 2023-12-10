@@ -110,14 +110,14 @@ const links = computed(() => {
             children: [
                 {
                     name: "wszystkie przepisy",
-                    pathName: "RecipeList",
+                    pathName: "Recipes",
                     icon: "list_alt",
                     action: () => (isOpen.value = !isOpen.value),
                     disabled: false,
                 },
                 {
                     name: "moje przepisy",
-                    pathName: "MyRecipeList",
+                    pathName: "MyRecipes",
                     icon: "favorite",
                     action: () => (isOpen.value = !isOpen.value),
                     disabled: false,

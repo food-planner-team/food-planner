@@ -26,17 +26,7 @@
                 <Dropdown icon="more_vert" :links="links" />
             </div>
             <div class="flex gap-1 text-[10px]">
-                <RecipeCardInfo
-                    :bg-color="statusBgColor"
-                    :text-color="statusTextColor"
-                >
-                    <template #icon> info </template>
-                    {{ statusLabel }}
-                </RecipeCardInfo>
-                <RecipeCardInfo>
-                    <template #icon> equalizer </template>
-                    {{ recipe.kcal }} kcal
-                </RecipeCardInfo>
+                <slot />
             </div>
             <div>
                 <p class="text-sm" :title="recipe.description">
@@ -50,7 +40,6 @@
 <script setup>
 import { computed, ref } from "vue";
 import Dropdown from "../../common/components/Dropdown.vue";
-import RecipeCardInfo from "./RecipeCardInfo.vue";
 
 const props = defineProps({
     recipe: {
@@ -91,45 +80,6 @@ const recipeDescription = computed(() => {
         return props.recipe.preparation.slice(0, 110) + "...";
     } else {
         return props.recipe.preparation;
-    }
-});
-
-const statusLabel = computed(() => {
-    switch (props.recipe.status) {
-        case 1:
-            return "Zaakceptowany";
-        case 2:
-            return "Do weryfikacji";
-        case 3:
-            return "Odrzucony";
-        default:
-            return "Nieznany";
-    }
-});
-
-const statusBgColor = computed(() => {
-    switch (props.recipe.status) {
-        case 1:
-            return "bg-[#E4FFDB]";
-        case 2:
-            return "bg-[#FFF5DC]";
-        case 3:
-            return "bg-[#FFEAEA]";
-        default:
-            return "bg-gray-300";
-    }
-});
-
-const statusTextColor = computed(() => {
-    switch (props.recipe.status) {
-        case 1:
-            return "text-[#5D8F4C]";
-        case 2:
-            return "text-[#9F6D21]";
-        case 3:
-            return "text-[#B03E3E]";
-        default:
-            return "text-gray-500";
     }
 });
 </script>

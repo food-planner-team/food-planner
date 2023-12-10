@@ -5,7 +5,7 @@
                 <div class="m-5 mt-0 flex justify-between">
                     <div>
                         <h1 class="font-bold text-2xl my-5 xs:mt-0">
-                            Moje przepisy
+                            Przepisy
                         </h1>
                         <div>
                             <p class="pb-2 text-sm text-gray-500">
@@ -18,14 +18,14 @@
                                     class="rounded-lg w-full md:w-[28rem]"
                                     placeholder="Wyszukaj"
                                     v-model="searchValue"
-                                    @keyup.enter="getUserRecipes()"
+                                    @keyup.enter="getRecipes()"
                                 />
                                 <div
                                     class="flex gap-6 flex-wrap justify-center w-full md:w-auto"
                                 >
                                     <button
                                         class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                                        @click="getUserRecipes()"
+                                        @click="getRecipes()"
                                     >
                                         Szukaj
                                     </button>
@@ -40,40 +40,6 @@
                             <span class="material-symbols-outlined"> add </span>
                             Dodaj przepis
                         </button>
-                        <div>
-                            <p class="text-gray-500/70 flex items-center gap-1">
-                                <span
-                                    class="material-symbols-outlined text-gray-500 text-base"
-                                    data-te-toggle="tooltip"
-                                    title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                >
-                                    info
-                                </span>
-                                Status
-                            </p>
-                            <div class="flex gap-2">
-                                <button
-                                    class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-[#E4FFDB] px-4 py-2 font-semibold text-sm text-[#5D8F4C] hover:bg-[#C2FFBA] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                                >
-                                    Wyświetl wszystko
-                                </button>
-                                <button
-                                    class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                                >
-                                    Zaakceptowany
-                                </button>
-                                <button
-                                    class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                                >
-                                    Odrzucony
-                                </button>
-                                <button
-                                    class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                                >
-                                    Do weryfikacji
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="h-full relative">
@@ -82,7 +48,7 @@
                         :class="
                             recipes.length > 3
                                 ? 'grid my-recipes-grid'
-                                : 'flex flex-wrap gap-10 justify-center lg:justify-start xl:ml-8 xl:mr-8'
+                                : 'flex flex-wrap gap-16 justify-center lg:justify-start xl:ml-5 xl:mr-5'
                         "
                         ref="scrollComponent"
                     >
@@ -91,7 +57,20 @@
                                 v-for="recipe in recipes"
                                 :key="recipe.id"
                                 :recipe="recipe"
-                            />
+                            >
+                                <RecipeCardInfo>
+                                    <template #icon> equalizer </template>
+                                    {{ recipe.kcal }} kcal
+                                </RecipeCardInfo>
+                                <RecipeCardInfo>
+                                    <template #icon> schedule </template>
+                                    {{ recipe.preparationTime }} min
+                                </RecipeCardInfo>
+                                <RecipeCardInfo>
+                                    <template #icon> inventory_2 </template>
+                                    {{ recipe.recipeItems.length }} produktów
+                                </RecipeCardInfo>
+                            </RecipeCard>
                         </template>
                         <Loader
                             v-else
@@ -116,6 +95,7 @@ import Recipe from "../models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
 import RecipeCard from "../components/RecipeCard.vue";
+import RecipeCardInfo from "../components/RecipeCardInfo.vue";
 
 const recipes = ref([]);
 const searchValue = ref("");
@@ -123,12 +103,12 @@ const isLoading = ref(true);
 const page = ref(1);
 const scrollComponent = ref(null);
 
-const getUserRecipes = async () => {
+const getRecipes = async () => {
     recipes.value = [];
     isLoading.value = true;
     page.value = 1;
 
-    const response = await Recipe.getUserRecipes({
+    const response = await Recipe.getRecipes({
         search: searchValue.value,
         page: page.value,
         limit: 24,
@@ -139,11 +119,11 @@ const getUserRecipes = async () => {
 };
 
 onMounted(() => {
-    getUserRecipes();
+    getRecipes();
 });
 
-const getUserRecipesOnScroll = async () => {
-    const response = await Recipe.getUserRecipes({
+const getRecipesOnScroll = async () => {
+    const response = await Recipe.getRecipes({
         search: searchValue.value,
         page: page.value,
         limit: 24,
@@ -158,10 +138,49 @@ const getUserRecipesOnScroll = async () => {
 useInfiniteScroll(
     scrollComponent,
     () => {
-        getUserRecipesOnScroll();
+        getRecipesOnScroll();
     },
     { distance: 500 }
 );
+
+const statusLabel = (status) => {
+    switch (status) {
+        case 1:
+            return "Zaakceptowany";
+        case 2:
+            return "Do weryfikacji";
+        case 3:
+            return "Odrzucony";
+        default:
+            return "Nieznany";
+    }
+};
+
+const statusBgColor = (status) => {
+    switch (status) {
+        case 1:
+            return "bg-[#E4FFDB]";
+        case 2:
+            return "bg-[#FFF5DC]";
+        case 3:
+            return "bg-[#FFEAEA]";
+        default:
+            return "bg-gray-300";
+    }
+};
+
+const statusTextColor = (status) => {
+    switch (status) {
+        case 1:
+            return "text-[#5D8F4C]";
+        case 2:
+            return "text-[#9F6D21]";
+        case 3:
+            return "text-[#B03E3E]";
+        default:
+            return "text-gray-500";
+    }
+};
 </script>
 
 <style lang="scss" scoped>
