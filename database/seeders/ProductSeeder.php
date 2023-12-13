@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Imports\ProductImport;
 use App\Models\Product;
+use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductSeeder extends ModelSeeder
@@ -46,12 +47,14 @@ class ProductSeeder extends ModelSeeder
         ];
 
 
+        $users = User::all()->pluck('id');
 
         $this->setHeader("Seeding Product")
             ->setAmount(count($productData))
             ->useData($productData)
-            ->seedModel(Product::class, function ($product) {
+            ->seedModel(Product::class, function ($product) use ($users) {
                 $product->kcal = rand(100, 500);
+                $product->user_id = $users->random();
                 $product->save();
             });
 

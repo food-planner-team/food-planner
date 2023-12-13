@@ -13,6 +13,7 @@ class ProductTransformer extends TransformerAbstract
     /** @var array */
     protected array $availableIncludes = [
         'image',
+        'user'
     ];
 
     public function transform(Product $product): array
@@ -22,6 +23,7 @@ class ProductTransformer extends TransformerAbstract
             'name' => $product->name,
             'status' => $product->status,
             'kcal' => $product->kcal,
+            'user_id' => $product->user_id,
             'quantity' => $product->quantity,
             'quantity_type' => $product->quantity_type,
         ];
@@ -31,6 +33,10 @@ class ProductTransformer extends TransformerAbstract
     {
         if (!$product->image) return $this->null();
         return $this->item($product->image, new ImageTransformer);
+    }
+    public function includeUser(Product $product)
+    {
+        return $this->item($product->user, new UserTransformer);
     }
 
 }

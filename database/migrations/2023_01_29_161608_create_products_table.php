@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->double('quantity');
+            $table->unsignedInteger('user_id');
             $table->integer('kcal')->nullable();
             $table->string('quantity_type');
             $table->unsignedInteger('status')->default(0);
