@@ -27,7 +27,7 @@ class RecipeTransformer extends TransformerAbstract
             'preparation_time' => $recipe->preparation_time,
             'status' => $recipe->status,
             'user_id' => $recipe->user_id,
-            'created_at' => $recipe->created_at,
+            'created_at' => $recipe->created_at->format('Y-m-d'),
         ];
         return $data;
     }
