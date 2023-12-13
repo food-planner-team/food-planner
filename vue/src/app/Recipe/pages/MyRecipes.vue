@@ -124,6 +124,7 @@ const getUserRecipes = async () => {
     });
 
     recipes.value = response.recipes;
+    page.value++;
     isLoading.value = false;
 };
 

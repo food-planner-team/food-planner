@@ -16,6 +16,7 @@ const schema = Joi.object({
     kcal: Joi.number().required(),
     status: Joi.number().required(),
     user_id: Joi.number().required(),
+    created_at: Joi.string().required(),
 });
 
 class Recipe {
@@ -29,6 +30,7 @@ class Recipe {
         this.kcal = data.kcal;
         this.status = data.status;
         this.userId = data.user_id;
+        this.createdAt = data.created_at;
 
         const image = _get(data, "image.data");
         if (image) {
@@ -39,6 +41,11 @@ class Recipe {
         if (recipeItems) {
             this.recipeItems = convertToArrayOfModels(RecipeItem, recipeItems);
         }
+
+        const user = _get(data, "user.data");
+        if (user) {
+            this.user = user;
+        }
     }
 
     static async getUserRecipes(params) {
@@ -46,7 +53,7 @@ class Recipe {
 
         const paramsData = {
             include: "image,recipeItems.product",
-            owner: userId,
+            user: userId,
             ...params,
         };
 
@@ -62,7 +69,7 @@ class Recipe {
 
     static async getRecipes(params) {
         const paramsData = {
-            include: "image,recipeItems.product",
+            include: "image,recipeItems.product,user",
             status: 1,
             ...params,
         };
@@ -75,6 +82,20 @@ class Recipe {
             recipes: convertToArrayOfModels(Recipe, response.data.data),
             meta: response.data.meta,
         };
+    }
+
+    static async updateRecipeStatus(recipeId, status) {
+        const response = await Api.post(`/recipes/${recipeId}/update-status`, {
+            status,
+        });
+
+        return new Recipe(response.data.data);
+    }
+
+    static async removeRecipe(recipeId) {
+        const response = await Api.delete(`/recipes/${recipeId}`);
+
+        return response;
     }
 }
 

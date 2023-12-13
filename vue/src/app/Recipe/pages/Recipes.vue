@@ -115,6 +115,7 @@ const getRecipes = async () => {
     });
 
     recipes.value = response.recipes;
+    page.value++;
     isLoading.value = false;
 };
 
@@ -142,45 +143,6 @@ useInfiniteScroll(
     },
     { distance: 500 }
 );
-
-const statusLabel = (status) => {
-    switch (status) {
-        case 1:
-            return "Zaakceptowany";
-        case 2:
-            return "Do weryfikacji";
-        case 3:
-            return "Odrzucony";
-        default:
-            return "Nieznany";
-    }
-};
-
-const statusBgColor = (status) => {
-    switch (status) {
-        case 1:
-            return "bg-[#E4FFDB]";
-        case 2:
-            return "bg-[#FFF5DC]";
-        case 3:
-            return "bg-[#FFEAEA]";
-        default:
-            return "bg-gray-300";
-    }
-};
-
-const statusTextColor = (status) => {
-    switch (status) {
-        case 1:
-            return "text-[#5D8F4C]";
-        case 2:
-            return "text-[#9F6D21]";
-        case 3:
-            return "text-[#B03E3E]";
-        default:
-            return "text-gray-500";
-    }
-};
 </script>
 
 <style lang="scss" scoped>
