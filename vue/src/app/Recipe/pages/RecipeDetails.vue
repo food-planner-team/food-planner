@@ -70,19 +70,17 @@
                                                     <p
                                                         class="text-lg font-medium"
                                                     >
-                                                        {{
-                                                            item.mainProduct
-                                                                .name
-                                                        }}
+                                                        {{ item.product.name }}
                                                     </p>
                                                     <p
                                                         class="text-lg text-gray-500"
                                                     >
                                                         {{
                                                             displayCorrectQuantityType(
-                                                                item.quantity,
-                                                                item.mainProduct
-                                                                    .quantity_type
+                                                                item.product
+                                                                    .quantity,
+                                                                item.product
+                                                                    .quantityType
                                                             )
                                                         }}
                                                     </p>
@@ -115,24 +113,20 @@ const route = useRoute();
 const recipe = ref({});
 const isLoading = ref(true);
 
-const getRecipe = () => {
+const getRecipe = async () => {
     recipe.value = {};
     isLoading.value = true;
 
-    Recipe.getRecipeById(route.params.id, {
-        include: "image,recipeItems.mainProduct.defaultProduct",
-    })
-        .then((res) => {
-            recipe.value = res;
-            console.log(res);
-        })
-        .finally(() => {
-            isLoading.value = false;
-        });
+    const respones = await Recipe.getRecipeById(route.params.id);
+
+    console.log(respones);
+
+    recipe.value = respones;
+    isLoading.value = false;
 };
 
-onMounted(() => {
-    getRecipe();
+onMounted(async () => {
+    await getRecipe();
 });
 </script>
 <style lang="scss" scoped>

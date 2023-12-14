@@ -34,6 +34,7 @@ class Recipe {
 
         const image = _get(data, "image.data");
         if (image) {
+            console.log(image);
             this.image = new Image(image);
         }
 
@@ -96,6 +97,24 @@ class Recipe {
         const response = await Api.delete(`/recipes/${recipeId}`);
 
         return response;
+    }
+
+    static async getRecipeById(recipeId) {
+        const response = await Api.get(`/recipes/${recipeId}`, {
+            params: {
+                include: "image,recipeItems.product,user",
+            },
+        });
+
+        return new Recipe(response.data.data);
+    }
+
+    static async createRecipe(data) {
+        const response = await Api.post("/recipes", data, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        return new Recipe(response.data.data);
     }
 }
 

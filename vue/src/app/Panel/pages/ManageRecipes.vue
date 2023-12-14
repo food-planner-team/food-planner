@@ -188,7 +188,7 @@
                                                 {{ recipe.kcal }} kcal
                                             </td>
                                             <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
+                                                class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]"
                                             >
                                                 {{ recipe.preparationTime }} min
                                             </td>
@@ -356,10 +356,10 @@ const links = (id) => {
     return [
         {
             name: "zobacz przepis",
-            pathName: "",
-            icon: "visibility",
+            pathName: "RecipeDetails",
+            params: { id: id },
+            icon: "search",
             action: "",
-            disabled: true,
         },
         {
             name: "edytuj",
