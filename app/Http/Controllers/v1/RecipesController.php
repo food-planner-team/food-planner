@@ -45,9 +45,9 @@ class RecipesController extends ApiController
                 $image->create();
             }
             if ($request->has('products')) {
-                $products = $request->get('products');
+                $products = json_decode($request->products, true);
                 foreach ($products as $product) {
-                    $recipe->recipeItems()->create([
+                    $result = $recipe->recipeItems()->create([
                         'product_id' => $product['product_id'],
                         'quantity' => $product['quantity'],
                         'optional' => boolval($product['optional']),
@@ -62,6 +62,7 @@ class RecipesController extends ApiController
                 ->get();
         } catch (\Exception $e) {
             DB::rollBack();
+            \Log::error('Error in file: ' . $e->getFile() . ', line: ' . $e->getLine() . '\nMessage: ' . $e->getMessage());
             return $this->respondUnprocessable();
         }
     }
