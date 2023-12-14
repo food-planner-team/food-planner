@@ -1,18 +1,17 @@
 <?php
 
+use App\Enum\UserRoleEnum;
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\LogoutController;
 use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Auth\ResetPasswordController;
 use App\Http\Controllers\v1\Auth\SendResetPasswordController;
 use App\Http\Controllers\v1\GenerateRecipesPlanController;
-use App\Http\Controllers\v1\MainProductsController;
 use App\Http\Controllers\v1\ProductsController;
 use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
 use App\Http\Controllers\v1\RecipeUpdateStatusController;
 use App\Http\Controllers\v1\UserRecipesController;
-use App\Http\Requests\SendResetPasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,23 +26,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-    Route::resource('/recipes', RecipesController::class);
-    Route::post("/recipes/{recipe}/update-status", RecipeUpdateStatusController::class);
-    Route::post("/products/{product}/update-status", ProductUpdateStatusController::class);
-    Route::resource('/products', ProductsController::class);
-    Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
-    Route::resource('/user/recipes', UserRecipesController::class)->only(['index', 'store']);
-
-    Route::post('/logout', LogoutController::class);
-});
 Route::post('/login', LoginController::class);
 Route::post('/register', RegisterController::class);
 Route::post('/send-reset-link', SendResetPasswordController::class);
 Route::post('/reset', ResetPasswordController::class);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', LogoutController::class);
+    Route::resource('/user/recipes', UserRecipesController::class)->except(['update']);  //@TODO ??
+    Route::resource('/products', ProductsController::class)->except(['update']);
+    Route::resource('/recipes', RecipesController::class)->except(['update']);
+});
+Route::middleware(['auth:sanctum', 'role:admin,employee'])->group(function () {
+    Route::resource('/products', ProductsController::class)->only(['update']);
+    Route::resource('/recipes', RecipesController::class)->only(['update']);
+    Route::post("/recipes/{recipe}/update-status", RecipeUpdateStatusController::class);
+    Route::post("/products/{product}/update-status", ProductUpdateStatusController::class);
+});
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::post("/users/{user}/update-role", ProductUpdateStatusController::class);
+});
+

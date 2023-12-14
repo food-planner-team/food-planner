@@ -4,14 +4,9 @@ namespace Database\Seeders;
 
 use App\Enum\RecipeStatusEnum;
 use App\Factories\ImageFactory;
-use App\Models\Image;
 use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
-use Ramsey\Uuid\Uuid;
 
 class RecipeSeeder extends ModelSeeder
 {

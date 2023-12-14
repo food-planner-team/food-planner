@@ -9,6 +9,7 @@ use App\Transformers\ImageTransformer;
 use App\Transformers\RecipeTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class RecipesController extends ApiController
 {
@@ -36,30 +37,56 @@ class RecipesController extends ApiController
      */
     public function store(StoreRecipeRequest $request)
     {
-        $recipe = $request->user()->recipes()->create($request->validationData());
-        if ($request->has('image')){
-            $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
-            $image->create();
-        }
-        if ($request->has('products')){
-            $products = $request->get('products');
-            foreach ($products as $product) {
-                $recipe->recipeItems()->create([
-                    'product_id' => $product['product_id'],
-                    'quantity' => $product['quantity'],
-                    'optional' => $product['optional'],
-                ]);
+        DB::beginTransaction();
+        try {
+            $recipe = $request->user()->recipes()->create($request->validationData());
+            if ($request->has('image')) {
+                $image = new ImageFactory('images/recipes/', $request->file('image'), $recipe, 'public');
+                $image->create();
             }
-        }
+            if ($request->has('products')) {
+                $products = $request->get('products');
+                foreach ($products as $product) {
+                    $recipe->recipeItems()->create([
+                        'product_id' => $product['product_id'],
+                        'quantity' => $product['quantity'],
+                        'optional' => $product['optional'],
+                    ]);
+                }
+            }
 
-        if ($recipe) {
+            DB::commit();
             return $this->fractal
                 ->parseIncludes("recipeItems.product")
                 ->item($recipe, new RecipeTransformer())
                 ->get();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->respondUnprocessable();
         }
-
-        return $this->respondUnprocessable();
+//        if ($request->has('image')){
+//            $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
+//            $image->create();
+//        }
+//        if ($request->has('products')){
+//            $products = $request->get('products');
+//            foreach ($products as $product) {
+//                $recipe->recipeItems()->create([
+//                    'product_id' => $product['product_id'],
+//                    'quantity' => $product['quantity'],
+//                    'optional' => $product['optional'],
+//                ]);
+//            }
+//        }
+//
+//        if ($recipe) {
+//            return $this->fractal
+//                ->parseIncludes("recipeItems.product")
+//                ->item($recipe, new RecipeTransformer())
+//                ->get();
+//        }
+//
+//        return $this->respondUnprocessable();
     }
 
     /**

@@ -32,6 +32,9 @@ class RecipeItemTransformer extends TransformerAbstract
 
     public function includeProduct(RecipeItem $recipeItem)
     {
+        if (!$recipeItem->product) {
+            return null;
+        }
         return $this->item($recipeItem->product, new ProductTransformer());
     }
 
