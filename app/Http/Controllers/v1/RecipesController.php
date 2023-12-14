@@ -58,7 +58,7 @@ class RecipesController extends ApiController
             DB::commit();
             return $this->fractal
                 ->parseIncludes("recipeItems.product")
-                ->item($recipe, new RecipeTransformer())
+                ->item($recipe->fresh(), new RecipeTransformer())
                 ->get();
         } catch (\Exception $e) {
             DB::rollBack();
