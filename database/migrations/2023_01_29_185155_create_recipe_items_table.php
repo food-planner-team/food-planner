@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('recipe_id');
             $table->unsignedInteger('product_id');
             $table->integer('quantity');
-            $table->boolean('optional')->default(0);
+            $table->boolean('optional')->default(false);
             $table->timestamps();
         });
     }

@@ -50,7 +50,7 @@ class RecipesController extends ApiController
                     $recipe->recipeItems()->create([
                         'product_id' => $product['product_id'],
                         'quantity' => $product['quantity'],
-                        'optional' => $product['optional'],
+                        'optional' => boolval($product['optional']),
                     ]);
                 }
             }
@@ -64,29 +64,6 @@ class RecipesController extends ApiController
             DB::rollBack();
             return $this->respondUnprocessable();
         }
-//        if ($request->has('image')){
-//            $image = new ImageFactory('images/recipes/', $request->file('image'),$recipe,'public');
-//            $image->create();
-//        }
-//        if ($request->has('products')){
-//            $products = $request->get('products');
-//            foreach ($products as $product) {
-//                $recipe->recipeItems()->create([
-//                    'product_id' => $product['product_id'],
-//                    'quantity' => $product['quantity'],
-//                    'optional' => $product['optional'],
-//                ]);
-//            }
-//        }
-//
-//        if ($recipe) {
-//            return $this->fractal
-//                ->parseIncludes("recipeItems.product")
-//                ->item($recipe, new RecipeTransformer())
-//                ->get();
-//        }
-//
-//        return $this->respondUnprocessable();
     }
 
     /**
