@@ -51,6 +51,13 @@ const props = defineProps({
 
 const links = ref([
     {
+        name: "zobacz przepis",
+        pathName: "RecipeDetails",
+        params: { id: props.recipe.id },
+        icon: "search",
+        action: "",
+    },
+    {
         name: "edytuj",
         pathName: "",
         icon: "edit",

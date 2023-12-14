@@ -12,7 +12,7 @@
         </p>
         <div class="flex gap-2">
             <button
-                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 font-semibold text-sm text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 font-semibold text-sm text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center transition-colors"
                 :class="{
                     [activeClass]: status === RecipeStatusEnum.ALL,
                 }"
@@ -21,7 +21,7 @@
                 Wyświetl wszystko
             </button>
             <button
-                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center transition-colors"
                 :class="{
                     [activeClass]: status === RecipeStatusEnum.ACCEPTED,
                 }"
@@ -30,7 +30,7 @@
                 Zaakceptowany
             </button>
             <button
-                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center transition-colors"
                 :class="{
                     [activeClass]: status === RecipeStatusEnum.REJECTED,
                 }"
@@ -39,7 +39,7 @@
                 Odrzucony
             </button>
             <button
-                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-gray-300/50 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center transition-colors"
                 :class="{
                     [activeClass]: status === RecipeStatusEnum.PENDING,
                 }"

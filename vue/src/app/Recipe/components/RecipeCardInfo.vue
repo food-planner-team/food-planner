@@ -1,6 +1,6 @@
 <template>
     <span
-        class="flex items-center gap-1 rounded-3xl px-3"
+        class="flex items-center gap-1 rounded-3xl px-3 justify-center"
         :class="`${bgColor} ${textColor}`"
     >
         <span
