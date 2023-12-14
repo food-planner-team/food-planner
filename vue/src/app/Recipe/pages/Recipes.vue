@@ -34,12 +34,16 @@
                         </div>
                     </div>
                     <div class="my-5 flex flex-col items-end gap-4">
-                        <button
-                            class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[230px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
-                        >
-                            <span class="material-symbols-outlined"> add </span>
-                            Dodaj przepis
-                        </button>
+                        <RouterLink :to="{ name: 'AddRecipe' }">
+                            <button
+                                class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[230px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                            >
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                                Dodaj przepis
+                            </button>
+                        </RouterLink>
                     </div>
                 </div>
                 <div class="h-full relative">
@@ -115,6 +119,7 @@ const getRecipes = async () => {
     });
 
     recipes.value = response.recipes;
+    page.value++;
     isLoading.value = false;
 };
 
@@ -142,45 +147,6 @@ useInfiniteScroll(
     },
     { distance: 500 }
 );
-
-const statusLabel = (status) => {
-    switch (status) {
-        case 1:
-            return "Zaakceptowany";
-        case 2:
-            return "Do weryfikacji";
-        case 3:
-            return "Odrzucony";
-        default:
-            return "Nieznany";
-    }
-};
-
-const statusBgColor = (status) => {
-    switch (status) {
-        case 1:
-            return "bg-[#E4FFDB]";
-        case 2:
-            return "bg-[#FFF5DC]";
-        case 3:
-            return "bg-[#FFEAEA]";
-        default:
-            return "bg-gray-300";
-    }
-};
-
-const statusTextColor = (status) => {
-    switch (status) {
-        case 1:
-            return "text-[#5D8F4C]";
-        case 2:
-            return "text-[#9F6D21]";
-        case 3:
-            return "text-[#B03E3E]";
-        default:
-            return "text-gray-500";
-    }
-};
 </script>
 
 <style lang="scss" scoped>

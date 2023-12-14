@@ -50,7 +50,7 @@
                         class="block text-sm font-medium text-gray-700"
                     >
                         Miara w ({{
-                            convertQuantity(props.product.quantity_type)
+                            convertQuantity(props.product.quantityType)
                         }}):
                     </label>
                     <input

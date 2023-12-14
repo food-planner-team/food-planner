@@ -313,26 +313,26 @@ const createRecipe = () => {
         return;
     }
 
-    const formdata = new FormData();
-    formdata.append("name", name.value);
-    formdata.append("description", description.value);
-    formdata.append("preparation", preparation.value);
-    formdata.append("preparation_time", time.value);
-    formdata.append("kcal", kcal.value);
-    formdata.append("image", image.value[0]);
-    formdata.append(
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("description", description.value);
+    formData.append("preparation", preparation.value);
+    formData.append("preparation_time", time.value);
+    formData.append("kcal", kcal.value);
+    formData.append("image", image.value[0]);
+    formData.append(
         "products",
         JSON.stringify(
             products.value.map((product) => {
                 return {
-                    main_product_id: product.id,
+                    product_id: product.id,
                     quantity: product.quantity,
                     optional: product.optional,
                 };
             })
         )
     );
-    Recipe.createRecipe(formdata)
+    Recipe.createRecipe(formData)
         .then(() => {
             store.commit("Toast/addToast", {
                 message: "Przepis został dodany",

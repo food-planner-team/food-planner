@@ -4,14 +4,11 @@ import Api from "../../common/services/Api.js";
 import convertToArrayOfModels from "../../common/utils/convertToArrayOfModels.js";
 import _get from "lodash/get";
 import Image from "../../System/models/Image.js";
+import User from "../../System/models/User.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    brand_name: Joi.string().required(),
-    sku: Joi.string().required(),
-    external_id: Joi.string().required(),
-    provider: Joi.string().required(),
     quantity: Joi.number().required(),
     quantity_type: Joi.string().required(),
 });
@@ -21,21 +18,29 @@ class Product {
         validateData(schema, data);
         this.id = data.id;
         this.name = data.name;
-        this.brand_name = data.brand_name;
-        this.sku = data.sku;
-        this.external_id = data.external_id;
-        this.provider = data.provider;
         this.quantity = data.quantity;
-        this.quantity_type = data.quantity_type;
-        const image = _get(data, "image.data");
-        if (image) {
-            this.image = new Image(image);
+        this.quantityType = data.quantity_type;
+
+        // const image = _get(data, "image.data");
+        // if (image) {
+        //     this.image = new Image(image);
+        // }
+
+        const user = _get(data, "user.data");
+        if (user) {
+            this.user = new User(user);
         }
     }
 
     static async getProducts(params) {
+        const paramsData = {
+            include: "image",
+            status: 1,
+            ...params,
+        };
+
         const response = await Api.get("/products", {
-            params: params,
+            params: paramsData,
         });
 
         return {
