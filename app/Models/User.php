@@ -43,10 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     public function recipes()
     {
         return $this->hasMany(Recipe::class);
+    }
+    public function userRecipes()
+    {
+        return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order'])->using(RecipeUser::class);
     }
     public function sendPasswordResetNotification($token)
     {

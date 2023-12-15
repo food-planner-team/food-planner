@@ -29,9 +29,7 @@ class RecipesController extends ApiController
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
+    /**y
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
