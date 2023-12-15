@@ -4,7 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Requests\UpdateRoleUserRequest;
 use App\Models\User;
-use App\Transformers\RecipeTransformer;
+use App\Transformers\UserTransformer;
 
 class UserUpdateRoleController extends ApiController
 {
@@ -13,7 +13,7 @@ class UserUpdateRoleController extends ApiController
         $user->update(['role' => $request->get("role")]);
 
         return $this->fractal
-            ->item($user, new RecipeTransformer())
+            ->item($user, new UserTransformer())
             ->get();
     }
 }

@@ -12,6 +12,8 @@ use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
 use App\Http\Controllers\v1\RecipeUpdateStatusController;
 use App\Http\Controllers\v1\UserRecipesController;
+use App\Http\Controllers\v1\UsersController;
+use App\Http\Controllers\v1\UserUpdateRoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,17 +39,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::post('/logout', LogoutController::class);
-    Route::resource('/user/recipes', UserRecipesController::class)->except(['update']);  //@TODO ??
+    Route::resource('/users',UsersController::class)->only(['update']);
+    Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
     Route::resource('/products', ProductsController::class)->except(['update']);
     Route::resource('/recipes', RecipesController::class)->except(['update']);
-});
-Route::middleware(['auth:sanctum', 'role:admin,employee'])->group(function () {
-    Route::resource('/products', ProductsController::class)->only(['update']);
-    Route::resource('/recipes', RecipesController::class)->only(['update']);
-    Route::post("/recipes/{recipe}/update-status", RecipeUpdateStatusController::class);
-    Route::post("/products/{product}/update-status", ProductUpdateStatusController::class);
-});
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::post("/users/{user}/update-role", ProductUpdateStatusController::class);
+    Route::middleware(['role:admin,employee'])->group(function () {
+        Route::resource('/products', ProductsController::class)->only(['update']);
+        Route::resource('/recipes', RecipesController::class)->only(['update']);
+        Route::post("/recipes/{recipe}/statuses", RecipeUpdateStatusController::class);
+        Route::post("/products/{product}/statuses", ProductUpdateStatusController::class);
+    });
+    Route::middleware(['role:admin'])->group(function () {
+        Route::post("/users/{user}/roles", UserUpdateRoleController::class);
+    });
 });
 
