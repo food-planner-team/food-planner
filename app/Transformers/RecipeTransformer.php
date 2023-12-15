@@ -29,6 +29,10 @@ class RecipeTransformer extends TransformerAbstract
             'user_id' => $recipe->user_id,
             'created_at' => $recipe->created_at->format('Y-m-d'),
         ];
+        if ($recipe->pivot) {
+            $data['order'] = $recipe->pivot->order;
+            $data['date'] = $recipe->pivot->date;
+        }
         return $data;
     }
 
