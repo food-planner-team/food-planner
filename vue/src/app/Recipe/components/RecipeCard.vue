@@ -23,7 +23,12 @@
                 {{ recipeName }}
             </h2>
             <div class="absolute right-0 top-2">
-                <Dropdown icon="more_vert" :links="links" />
+                <Dropdown
+                    v-if="links.length"
+                    icon="more_vert"
+                    :links="links"
+                    @click.stop
+                />
             </div>
             <div class="flex gap-1 text-[10px]">
                 <slot />
@@ -47,31 +52,12 @@ const props = defineProps({
         default: {},
         required: true,
     },
+    links: {
+        type: Array,
+        default: () => [],
+        required: false,
+    },
 });
-
-const links = ref([
-    {
-        name: "zobacz przepis",
-        pathName: "RecipeDetails",
-        params: { id: props.recipe.id },
-        icon: "search",
-        action: "",
-    },
-    {
-        name: "edytuj",
-        pathName: "",
-        icon: "edit",
-        action: "",
-        disabled: true,
-    },
-    {
-        name: "usuń",
-        pathName: "",
-        icon: "delete",
-        action: "",
-        disabled: true,
-    },
-]);
 
 const recipeName = computed(() => {
     if (props.recipe.name.length > 25) {

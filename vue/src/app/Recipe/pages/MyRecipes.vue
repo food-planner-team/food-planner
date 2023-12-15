@@ -64,6 +64,15 @@
                                 v-for="recipe in recipes"
                                 :key="recipe.id"
                                 :recipe="recipe"
+                                :links="links(recipe.id)"
+                                class="cursor-pointer"
+                                @click="
+                                    () =>
+                                        $router.push({
+                                            name: 'RecipeDetails',
+                                            params: { id: recipe.id },
+                                        })
+                                "
                             >
                                 <RecipeCardInfo
                                     :bg-color="statusBgColor(recipe.status)"
@@ -104,6 +113,32 @@ import RecipeCard from "../components/RecipeCard.vue";
 import RecipeCardInfo from "../components/RecipeCardInfo.vue";
 import RecipeFilters from "../components/RecipeFilters.vue";
 import { RecipeStatusEnum } from "../models/Recipe.js";
+
+const links = (id) => {
+    return [
+        {
+            name: "zobacz przepis",
+            pathName: "RecipeDetails",
+            params: { id: id },
+            icon: "search",
+            action: "",
+        },
+        {
+            name: "edytuj",
+            pathName: "",
+            icon: "edit",
+            action: "",
+            disabled: true,
+        },
+        {
+            name: "usuń",
+            pathName: "",
+            icon: "delete",
+            action: () => handleRemoveRecipe(id),
+            disabled: false,
+        },
+    ];
+};
 
 const recipes = ref([]);
 const searchValue = ref("");
@@ -168,6 +203,17 @@ const handleActiveFilter = (filter) => {
 watch(filterValue, () => {
     getUserRecipes();
 });
+
+const handleRemoveRecipe = async (recipeId) => {
+    const recipeIndex = recipes.value.findIndex(
+        (recipe) => recipe.id === recipeId
+    );
+    const response = await Recipe.removeRecipe(recipeId);
+
+    if (response.data.status_code === 200) {
+        recipes.value.splice(recipeIndex, 1);
+    }
+};
 
 const statusLabel = (status) => {
     switch (status) {

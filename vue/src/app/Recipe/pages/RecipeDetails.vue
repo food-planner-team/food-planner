@@ -119,8 +119,6 @@ const getRecipe = async () => {
 
     const respones = await Recipe.getRecipeById(route.params.id);
 
-    console.log(respones);
-
     recipe.value = respones;
     isLoading.value = false;
 };

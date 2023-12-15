@@ -21,10 +21,10 @@ class Product {
         this.quantity = data.quantity;
         this.quantityType = data.quantity_type;
 
-        // const image = _get(data, "image.data");
-        // if (image) {
-        //     this.image = new Image(image);
-        // }
+        const image = _get(data, "image.data");
+        if (image) {
+            this.image = new Image(image);
+        }
 
         const user = _get(data, "user.data");
         if (user) {

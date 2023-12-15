@@ -66,7 +66,7 @@ watch(
         });
 
         loader.value = true;
-        Recipe.fetchUserRecipes({
+        Recipe.getUserRecipes({
             include: "image",
             dateStart: `${dateStart.value}`,
             dateEnd: `${dateEnd.value}`,

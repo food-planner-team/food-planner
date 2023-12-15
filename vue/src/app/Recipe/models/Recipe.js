@@ -34,7 +34,6 @@ class Recipe {
 
         const image = _get(data, "image.data");
         if (image) {
-            console.log(image);
             this.image = new Image(image);
         }
 

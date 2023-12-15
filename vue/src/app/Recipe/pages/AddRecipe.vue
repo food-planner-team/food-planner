@@ -281,7 +281,7 @@ const removeError = (productsId) => {
     });
 };
 
-const createRecipe = () => {
+const createRecipe = async () => {
     if (
         !products.value.length ||
         !name.value ||
@@ -332,28 +332,29 @@ const createRecipe = () => {
             })
         )
     );
-    Recipe.createRecipe(formData)
-        .then(() => {
-            store.commit("Toast/addToast", {
-                message: "Przepis został dodany",
-                type: "success",
-            });
 
-            products.value = [];
-            name.value = "";
-            image.value = null;
-            preparation.value = "";
-            time.value = "";
-            kcal.value = "";
-            description.value = "";
-            imageInput.value.value = "";
-        })
-        .catch((err) => {
-            store.commit("Toast/addToast", {
-                message: "Coś poszło nie tak",
-                type: "warning",
-            });
+    try {
+        await Recipe.createRecipe(formData);
+
+        store.commit("Toast/addToast", {
+            message: "Przepis został dodany",
+            type: "success",
         });
+
+        products.value = [];
+        name.value = "";
+        image.value = null;
+        preparation.value = "";
+        time.value = "";
+        kcal.value = "";
+        description.value = "";
+        imageInput.value.value = "";
+    } catch (err) {
+        store.commit("Toast/addToast", {
+            message: "Coś poszło nie tak",
+            type: "warning",
+        });
+    }
 };
 </script>
 <style lang="scss" scoped>

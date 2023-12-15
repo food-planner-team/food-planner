@@ -93,11 +93,8 @@
                                         class="w-[120px] h-[120px] rounded-md ml-1 flex items-center"
                                     >
                                         <img
-                                            v-if="
-                                                product.defaultProduct?.image
-                                                    ?.url
-                                            "
-                                            :src="`${product.defaultProduct?.image?.url}.webp`"
+                                            v-if="product?.image?.url"
+                                            :src="`${product?.image?.url}`"
                                             :alt="product.name"
                                             class="rounded-md"
                                         />

@@ -60,7 +60,15 @@
                             <RecipeCard
                                 v-for="recipe in recipes"
                                 :key="recipe.id"
+                                class="cursor-pointer"
                                 :recipe="recipe"
+                                @click="
+                                    () =>
+                                        $router.push({
+                                            name: 'RecipeDetails',
+                                            params: { id: recipe.id },
+                                        })
+                                "
                             >
                                 <RecipeCardInfo>
                                     <template #icon> equalizer </template>
