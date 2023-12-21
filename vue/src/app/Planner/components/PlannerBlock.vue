@@ -15,6 +15,27 @@
                 <span class="element__highlighted"> {{ recipes.length }} </span>
             </div>
         </div>
+        <div v-if="sumKcal > userKcalLimit">
+            <span
+                class="flex items-center gap-3 rounded-md px-3 py-2 justify-center text-sm bg-[#FFE3E3] w-[292px] text-[#C81414]"
+                style="background-image: linear-gradient(90deg, rgba(254,247,247,1) 0%, rgba(255,227,227,1) 100%);"
+            >
+                <span
+                    class="material-symbols-outlined text-xl"
+                    data-te-toggle="tooltip"
+                >
+                    info
+                </span>
+                <div>
+                    <p>
+                        Przekroczyłeś ustalony limit kalorii
+                    </p>
+                    <p class="font-bold">
+                        Twój limit to: {{ userKcalLimit }} kcal
+                    </p>
+                </div>
+            </span>
+        </div>
         <div class="relative h-full w-full">
             <div class="block-items-container">
                 <draggable
@@ -56,6 +77,11 @@ import {
     getLocaleDate,
 } from "../../common/utils/datesHelpers.js";
 import Loader from "../../common/components/Loader.vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const userKcalLimit = computed(() => store.getters["User/getKcalLimit"]);
 
 const windowWidth = ref(window.innerWidth);
 
