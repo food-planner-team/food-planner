@@ -15,7 +15,7 @@
                 <span class="element__highlighted"> {{ recipes.length }} </span>
             </div>
         </div>
-        <div v-if="sumKcal > userKcalLimit">
+        <div v-if="userKcalLimit && sumKcal > userKcalLimit">
             <span
                 class="flex items-center gap-3 rounded-md px-3 py-2 justify-center text-sm bg-[#FFE3E3] w-[292px] text-[#C81414]"
                 style="background-image: linear-gradient(90deg, rgba(254,247,247,1) 0%, rgba(255,227,227,1) 100%);"
