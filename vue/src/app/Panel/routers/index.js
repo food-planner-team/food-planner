@@ -2,7 +2,7 @@ import DefaultLayout from "../../common/layouts/DefaultLayout.vue";
 
 const routes = [
     {
-        path: "/",
+        path: "/panel",
         meta: { requiresAuth: true },
         component: DefaultLayout,
         children: [

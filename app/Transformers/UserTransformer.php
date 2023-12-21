@@ -20,6 +20,7 @@ class UserTransformer extends TransformerAbstract
             'name' => $user->name,
             'role' => $user->role,
             'email' => $user->email,
+            'kcal_limit' => $user->kcal_limit,
         ];
     }
 }

@@ -8,7 +8,7 @@
         <div class="block-stats">
             <div class="block-stats__element">
                 {{ "Kalorie " }}
-                <span class="element__highlighted"> {{ sumKcal() }} </span>
+                <span class="element__highlighted"> {{ sumKcal }} </span>
             </div>
             <div class="block-stats__element">
                 {{ "Dania " }}
@@ -50,7 +50,7 @@ import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
 import Recipe from "../../Recipe/models/Recipe.js";
 import draggable from "vuedraggable";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import {
     getCurrentDayName,
     getLocaleDate,
@@ -81,7 +81,7 @@ const saveUserRecipes = () => {
         return { recipe_id: e.id, order: index };
     });
 
-    Recipe.saveUserRecipes(props.date, recipesData);
+    Recipe.saveUserPlannerRecipes(props.date, recipesData);
 };
 
 const dragOptions = ref({
@@ -103,11 +103,11 @@ const addMeal = (item) => {
     saveUserRecipes();
 };
 
-const sumKcal = () => {
+const sumKcal = computed(() => {
     return props.recipes.reduce((acc, curr) => {
         return acc + curr.kcal;
     }, 0);
-};
+});
 </script>
 <style lang="scss" scoped>
 .ghost {

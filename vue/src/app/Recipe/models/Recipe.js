@@ -67,6 +67,28 @@ class Recipe {
         };
     }
 
+    static async getUserPlannerRecipes(params) {
+        const paramsData = {
+            include: "image,RecipeUser",
+            ...params,
+        };
+
+        const response = await Api.get("/users/recipes", {
+            params: paramsData,
+        });
+
+        return convertToArrayOfModels(Recipe, response.data.data);
+    }
+
+    static async saveUserPlannerRecipes(date, recipes) {
+        const response = await Api.post("/users/recipes", {
+            date,
+            recipes,
+        });
+
+        return convertToArrayOfModels(Recipe, response.data.data);
+    }
+
     static async getRecipes(params) {
         const paramsData = {
             include: "image,recipeItems.product,user",
