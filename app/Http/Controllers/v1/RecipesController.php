@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Enum\RecipeStatusEnum;
+use App\Enum\UserRoleEnum;
 use App\Factories\ImageFactory;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Models\Recipe;
@@ -45,7 +47,7 @@ class RecipesController extends ApiController
             if ($request->has('products')) {
                 $products = json_decode($request->products, true);
                 foreach ($products as $product) {
-                    $result = $recipe->recipeItems()->create([
+                    $recipe->recipeItems()->create([
                         'product_id' => $product['product_id'],
                         'quantity' => $product['quantity'],
                         'optional' => boolval($product['optional']),
@@ -88,8 +90,43 @@ class RecipesController extends ApiController
      */
     public function update(Request $request, Recipe $recipe)
     {
+        DB::beginTransaction();
+        try {
+            $recipe = $request->user()->recipes()->update($request->all());
+            if ($request->has('image')) {
+                $image = new ImageFactory('images/recipes/', $request->file('image'), $recipe, 'public');
+                $image->create();
+            }
+            if ($request->has('products')) {
+                $products = json_decode($request->products, true);
+                $recipe->recipeItems()->delete();
+                foreach ($products as $product) {
+                    $result = $recipe->recipeItems()->createOrUpdate([
+                        'product_id' => $product['product_id'],
+                        'quantity' => $product['quantity'],
+                        'optional' => boolval($product['optional']),
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return $this->fractal
+                ->parseIncludes("recipeItems.product")
+                ->item($recipe->fresh(), new RecipeTransformer())
+                ->get();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Error in file: ' . $e->getFile() . ', line: ' . $e->getLine() . '\nMessage: ' . $e->getMessage());
+            return $this->respondUnprocessable();
+    }
+
+
         if ($recipe->update($request->all())) {
 
+            $userRole = $request->user()->role;
+            if ($userRole == UserRoleEnum::USER) {
+                $recipe->update(['status' => RecipeStatusEnum::PENDING]);
+            }
             return $this->fractal
                 ->item($recipe, new RecipeTransformer())
                 ->get();

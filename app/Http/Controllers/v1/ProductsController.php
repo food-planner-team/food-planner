@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Enum\RecipeStatusEnum;
+use App\Enum\UserRoleEnum;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use App\Transformers\ProductTransformer;
@@ -34,14 +36,22 @@ class ProductsController extends ApiController
             ->get();
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Product $product)
     {
-        $product = Product::update($request->all());
-        return $this->fractal
-            ->item($product, new ProductTransformer())
-            ->get();
-    }
+        if ($product->update($request->all())) {
 
+            $userRole = $request->user()->role;
+            if ($userRole == UserRoleEnum::USER) {
+                $product->update(['status' => RecipeStatusEnum::PENDING]);
+            }
+            return $this->fractal
+                ->item($product, new ProductTransformer())
+                ->get();
+        }
+
+        return $this->respondUnprocessable();
+
+    }
     public function show(Product $product)
     {
         return $this->fractal
