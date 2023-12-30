@@ -248,48 +248,36 @@ const removeError = (productsId) => {
 };
 
 const updateRecipe = async () => {
-    if (!name.value) {
-        errors.name = true;
+    if (
+        !products.value.length ||
+        !name.value ||
+        !image.value ||
+        !preparation.value ||
+        !time.value ||
+        !kcal.value ||
+        !description.value ||
+        products.value.filter((p) => p.quantity).length !==
+        products.value.length
+    ) {
+        store.commit("Toast/addToast", {
+            message: "Nie wszystkie pola zostały wypełnione",
+            type: "warning",
+        });
+
+        errors.name = name.value ? false : true;
+        errors.image = image.value ? false : true;
+        errors.preparation = preparation.value ? false : true;
+        errors.time = time.value ? false : true;
+        errors.kcal = kcal.value ? false : true;
+        errors.description = description.value ? false : true;
+        errors.products = products.value.length ? false : true;
+
+        errors.quantities = products.value.map((p) => {
+            return { id: p.id, error: p.quantity ? false : true };
+        });
+
         return;
     }
-
-    if (!image.value) {
-        errors.image = true;
-        return;
-    }
-
-    if (!preparation.value) {
-        errors.preparation = true;
-        return;
-    }
-
-    if (!time.value) {
-        errors.time = true;
-        return;
-    }
-
-    if (!kcal.value) {
-        errors.kcal = true;
-        return;
-    }
-
-    if (!description.value) {
-        errors.description = true;
-        return;
-    }
-
-    if (!products.value.length) {
-        errors.products = true;
-        return;
-    }
-
-    const recipeItems = products.value.map((product) => {
-        return {
-            productId: product.id,
-            optional: product.optional,
-            quantity: product.quantity,
-        };
-    });
 
     const data = {
         name: name.value,
