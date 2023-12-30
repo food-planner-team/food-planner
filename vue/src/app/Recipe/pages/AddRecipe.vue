@@ -18,110 +18,54 @@
                         </h2>
                         <div class="flex flex-col gap-4">
                             <div class="flex flex-col">
-                                <label class="mb-2" for="name"
-                                    >Nazwa przepisu</label
-                                >
-                                <input
-                                    class="border border-gray-300 rounded-md p-2"
-                                    type="text"
-                                    id="name"
-                                    placeholder="Nazwa przepisu"
-                                    v-model="name"
-                                    :class="errors.name ? 'bg-red-100 ' : ''"
-                                    @keypress="errors.name = false"
-                                />
+                                <label class="mb-2" for="name">Nazwa przepisu</label>
+                                <input class="border border-gray-300 rounded-md p-2" type="text" id="name"
+                                    placeholder="Nazwa przepisu" v-model="name" :class="errors.name ? 'bg-red-100 ' : ''"
+                                    @keypress="errors.name = false" />
                             </div>
                             <div class="flex flex-col">
-                                <label class="mb-2" for="description"
-                                    >Krótki opis</label
-                                >
-                                <input
-                                    class="border border-gray-300 rounded-md p-2"
-                                    type="text"
-                                    id="description"
-                                    placeholder="Krótki opis"
-                                    v-model="description"
-                                    :class="
-                                        errors.description ? 'bg-red-100 ' : ''
-                                    "
-                                    @keypress="errors.description = false"
-                                />
+                                <label class="mb-2" for="description">Krótki opis</label>
+                                <input class="border border-gray-300 rounded-md p-2" type="text" id="description"
+                                    placeholder="Krótki opis" v-model="description" :class="errors.description ? 'bg-red-100 ' : ''
+                                        " @keypress="errors.description = false" />
                             </div>
 
                             <div class="flex flex-col">
                                 <label class="mb-2" for="image">Zdjęcie</label>
                                 <input
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-blue-600 outline-offset-1"
-                                    type="file"
-                                    id="image"
-                                    v-on:change="onFileChange"
-                                    ref="imageInput"
-                                    :class="errors.image ? 'bg-red-100 ' : ''"
-                                />
+                                    type="file" id="image" v-on:change="onFileChange" ref="imageInput"
+                                    :class="errors.image ? 'bg-red-100 ' : ''" />
                             </div>
                             <div class="flex flex-1 gap-5 flex-col sm:flex-row">
                                 <div class="flex flex-col w-full">
-                                    <label class="mb-2 flex gap-2" for="time"
-                                        >Czas<span
-                                            class="material-symbols-outlined text-gray-500"
-                                            data-te-toggle="tooltip"
-                                            title="Podaj czas przygotowania w minutach."
-                                        >
+                                    <label class="mb-2 flex gap-2" for="time">Czas<span
+                                            class="material-symbols-outlined text-gray-500" data-te-toggle="tooltip"
+                                            title="Podaj czas przygotowania w minutach.">
                                             info
-                                        </span></label
-                                    >
-                                    <input
-                                        class="border border-gray-300 rounded-md p-2"
-                                        type="number"
-                                        id="time"
-                                        placeholder="Czas"
-                                        v-model="time"
-                                        @keypress="errors.time = false"
-                                        :class="
-                                            errors.time ? 'bg-red-100 ' : ''
-                                        "
-                                    />
+                                        </span></label>
+                                    <input class="border border-gray-300 rounded-md p-2" type="number" id="time"
+                                        placeholder="Czas" v-model="time" @keypress="errors.time = false" :class="errors.time ? 'bg-red-100 ' : ''
+                                            " />
                                 </div>
                                 <div class="flex flex-col w-full">
-                                    <label class="mb-2 flex gap-2" for="kcal"
-                                        >Kaloryczność
-                                        <span
-                                            class="material-symbols-outlined text-gray-500"
-                                            data-te-toggle="tooltip"
-                                            title="Podaj ilość kalorii w porcji"
-                                        >
+                                    <label class="mb-2 flex gap-2" for="kcal">Kaloryczność
+                                        <span class="material-symbols-outlined text-gray-500" data-te-toggle="tooltip"
+                                            title="Podaj ilość kalorii w porcji">
                                             info
-                                        </span></label
-                                    >
+                                        </span></label>
 
-                                    <input
-                                        class="border border-gray-300 rounded-md p-2"
-                                        type="number"
-                                        id="kcal"
-                                        placeholder="Kaloryczność"
-                                        v-model="kcal"
-                                        @keypress="errors.kcal = false"
-                                        :class="
-                                            errors.kcal ? 'bg-red-100 ' : ''
-                                        "
-                                    />
+                                    <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal"
+                                        placeholder="Kaloryczność" v-model="kcal" @keypress="errors.kcal = false" :class="errors.kcal ? 'bg-red-100 ' : ''
+                                            " />
                                 </div>
                             </div>
                             <div class="flex flex-col">
-                                <label class="mb-2" for="preparation"
-                                    >Opis przygotowania</label
-                                >
-                                <textarea
-                                    class="border border-gray-300 rounded-md p-2 min-h-[145px]"
-                                    style="resize: none"
-                                    id="preparation"
-                                    placeholder="Opis przygotowania"
-                                    v-model="preparation"
-                                    @keypress="errors.preparation = false"
-                                    :class="
-                                        errors.preparation ? 'bg-red-100 ' : ''
-                                    "
-                                ></textarea>
+                                <label class="mb-2" for="preparation">Opis przygotowania</label>
+                                <textarea class="border border-gray-300 rounded-md p-2 min-h-[145px]" style="resize: none"
+                                    id="preparation" placeholder="Opis przygotowania" v-model="preparation"
+                                    @keypress="errors.preparation = false" :class="errors.preparation ? 'bg-red-100 ' : ''
+                                        "></textarea>
                             </div>
                         </div>
                     </div>
@@ -133,45 +77,28 @@
                             <AddProductModal @add-product="addProduct" />
                         </div>
                         <div class="relative w-full h-full">
-                            <div
-                                class="justify-items-center md:pl-2 md:pr-4 bg-purple-500-400 w-full max-h-full overflow-y-scroll xl:absolute left-0 top-0 h-full"
-                                :class="
-                                    products.length > 2
-                                        ? 'products-wrapper'
-                                        : 'flex flex-wrap gap-10 justify-center md:justify-start'
-                                "
-                            >
+                            <div class="justify-items-center md:pl-2 md:pr-4 bg-purple-500-400 w-full max-h-full overflow-y-scroll xl:absolute left-0 top-0 h-full"
+                                :class="products.length > 2
+                                    ? 'products-wrapper'
+                                    : 'flex flex-wrap gap-10 justify-center md:justify-start'
+                                    ">
                                 <template v-if="products.length">
-                                    <template
-                                        v-for="product in products"
-                                        :key="product.id"
-                                    >
-                                        <ProductCard
-                                            :product="product"
-                                            @remove-product="removeProduct"
-                                            @update-product="updateProduct"
-                                            @remove-error="removeError"
-                                            :error="
-                                                errors.quantities.find(
-                                                    (quantity) =>
-                                                        quantity.id ===
-                                                        product.id
-                                                )
-                                            "
-                                        />
+                                    <template v-for="product in products" :key="product.id">
+                                        <ProductCard :product="product" @remove-product="removeProduct"
+                                            @update-product="updateProduct" @remove-error="removeError" :error="errors.quantities.find(
+                                                (quantity) =>
+                                                    quantity.id ===
+                                                    product.id
+                                            )
+                                                " />
                                     </template>
                                 </template>
                                 <template v-else>
-                                    <div
-                                        class="flex flex-col gap-5 self-center mx-auto"
-                                    >
-                                        <span
-                                            :class="
-                                                errors.products
-                                                    ? 'text-red-500'
-                                                    : 'text-gray-500'
-                                            "
-                                        >
+                                    <div class="flex flex-col gap-5 self-center mx-auto">
+                                        <span :class="errors.products
+                                            ? 'text-red-500'
+                                            : 'text-gray-500'
+                                            ">
                                             Brak produktów
                                         </span>
                                     </div>
@@ -182,8 +109,7 @@
                         <div class="flex justify-center sm:justify-end">
                             <button
                                 class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                @click="createRecipe"
-                            >
+                                @click="createRecipe">
                                 Dodaj przepis
                             </button>
                         </div>
@@ -249,6 +175,8 @@ const addProduct = (product) => {
     }
 
     products.value.push({ ...product, optional: false, quantity: null });
+
+    console.log('products', products.value);
     errors.products = false;
     store.commit("Toast/addToast", {
         message: "Dodano produkt do przepisu",
@@ -291,7 +219,7 @@ const createRecipe = async () => {
         !kcal.value ||
         !description.value ||
         products.value.filter((p) => p.quantity).length !==
-            products.value.length
+        products.value.length
     ) {
         store.commit("Toast/addToast", {
             message: "Nie wszystkie pola zostały wypełnione",
