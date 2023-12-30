@@ -1,25 +1,29 @@
 <template>
-    <div class="meal-block justify-center items-center">
+    <div class="meal-block justify-center items-center relative">
         <div class="meal-block__img">
-            <img
-                :src="meal?.image?.url"
-                :alt="meal.name"
-                width="60"
-                height="60"
-            />
+            <img :src="meal?.image?.url" :alt="meal.name" width="60" height="60" />
         </div>
         <div class="meal-block__info">
-            <div class="info__title">{{ meal.name }}</div>
-            <div class="flex flex-col items-center justify-between gap-6">
-                <Dropdown
-                    icon="more_vert"
-                    :links="links"
-                    class="setting__span-btn"
-                />
-                <span
-                    class="material-symbols-outlined lg:hidden"
-                    :class="[windowWidth < 1024 && 'handle']"
-                >
+            <div class="flex flex-col gap-2 justify-between">
+                <div class="info__title">{{ meal.name }}</div>
+                <div class="flex gap-1 text-[0.65rem]">
+                    <RecipeCardInfo>
+                        <template #icon>
+                            equalizer
+                        </template>
+                        {{ meal.kcal }} kcal
+                    </RecipeCardInfo>
+                    <RecipeCardInfo>
+                        <template #icon>
+                            schedule
+                        </template>
+                        {{ meal.preparationTime }} min
+                    </RecipeCardInfo>
+                </div>
+            </div>
+            <div class="absolute top-2 right-2">
+                <Dropdown icon="more_vert" :links="links" class="setting__span-btn" />
+                <span class="material-symbols-outlined lg:hidden" :class="[windowWidth < 1024 && 'handle']">
                     drag_indicator
                 </span>
             </div>
@@ -29,6 +33,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Dropdown from "../../common/components/Dropdown.vue";
+import RecipeCardInfo from "../../Recipe/components/RecipeCardInfo.vue";
 
 const props = defineProps({
     meal: Object,
@@ -72,6 +77,7 @@ img {
     width: 100%;
     object-fit: cover;
 }
+
 .handle {
     cursor: grab;
 }

@@ -12,21 +12,12 @@
                                 <label for="search">NAZWA PRZEPISU</label>
                             </p>
                             <div class="flex flex-wrap gap-6">
-                                <input
-                                    type="search"
-                                    id="search"
-                                    class="rounded-lg w-full md:w-[28rem]"
-                                    placeholder="Wyszukaj"
-                                    v-model="searchValue"
-                                    @keyup.enter="getRecipes()"
-                                />
-                                <div
-                                    class="flex gap-6 flex-wrap justify-center w-full md:w-auto"
-                                >
+                                <input type="search" id="search" class="rounded-lg w-full md:w-[28rem]"
+                                    placeholder="Wyszukaj" v-model="searchValue" @keyup.enter="getRecipes()" />
+                                <div class="flex gap-6 flex-wrap justify-center w-full md:w-auto">
                                     <button
                                         class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center transition-colors"
-                                        @click="getRecipes()"
-                                    >
+                                        @click="getRecipes()">
                                         Szukaj
                                     </button>
                                 </div>
@@ -34,130 +25,86 @@
                         </div>
                     </div>
                     <div class="mt-20 flex flex-col items-end gap-4">
-                        <RecipeFilters
-                            @handleActiveFilter="handleActiveFilter"
-                        />
+                        <RecipeFilters @handleActiveFilter="handleActiveFilter" />
                     </div>
                 </div>
                 <div class="h-full relative m-5 mb-0">
                     <template v-if="!isLoading">
                         <div
-                            class="relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full 3xl:px-2"
-                        >
-                            <div
-                                class="h-full overflow-y-auto"
-                                ref="scrollComponent"
-                            >
-                                <table
-                                    class="w-full text-left"
-                                    v-if="recipes.length"
-                                >
+                            class="relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full 3xl:px-2">
+                            <div class="h-full overflow-y-auto" ref="scrollComponent">
+                                <table class="w-full text-left" v-if="recipes.length">
                                     <thead>
                                         <tr>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 ID
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Zdjęcie
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Status
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Nazwa
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Opis
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Kaloryczność
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Czas przygotowania
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Ilość produktów
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Autor
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Data dodania
                                             </th>
                                             <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300"
-                                            >
+                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Akcja
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr
-                                            v-for="recipe in recipes"
-                                            :key="recipe.id"
-                                        >
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                        <tr v-for="recipe in recipes" :key="recipe.id">
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ recipe.id }}
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 <div
-                                                    class="w-[50px] h-[50px] rounded-lg flex items-center justify-center overflow-hidden"
-                                                >
-                                                    <img
-                                                        v-if="
-                                                            recipe?.image?.url
-                                                        "
-                                                        :src="`${recipe?.image?.url}`"
-                                                        :alt="recipe.name"
-                                                        class="rounded-md"
-                                                    />
-                                                    <img
-                                                        v-else
-                                                        src="../../common/assets/no-image.jpg"
-                                                        alt="no image placeholder"
-                                                        class="rounded-md mix-blend-darken"
-                                                    />
+                                                    class="w-[50px] h-[50px] rounded-lg flex items-center justify-center overflow-hidden">
+                                                    <img v-if="recipe?.image?.url
+                                                        " :src="`${recipe?.image?.url}`" :alt="recipe.name"
+                                                        class="rounded-md" />
+                                                    <img v-else src="../../common/assets/no-image.jpg"
+                                                        alt="no image placeholder" class="rounded-md mix-blend-darken" />
                                                 </div>
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
-                                                <RecipeCardInfo
-                                                    :bg-color="
-                                                        statusBgColor(
-                                                            recipe.status
-                                                        )
-                                                    "
-                                                    :text-color="
-                                                        statusTextColor(
-                                                            recipe.status
-                                                        )
-                                                    "
-                                                >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
+                                                <RecipeCardInfo :bg-color="statusBgColor(
+                                                    recipe.status
+                                                )
+                                                    " :text-color="statusTextColor(
+        recipe.status
+    )
+        ">
                                                     <template #icon>
                                                         info
                                                     </template>
@@ -168,151 +115,84 @@
                                                     }}
                                                 </RecipeCardInfo>
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ recipe.name }}
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{
                                                     recipeDescription(
                                                         recipe.preparation
                                                     )
                                                 }}
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ recipe.kcal }} kcal
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]">
                                                 {{ recipe.preparationTime }} min
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]">
                                                 {{ recipe.recipeItems.length }}
                                                 produktów
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ recipe.user.name }}
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]"
-                                            >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]">
                                                 {{ recipe.createdAt }}
                                             </td>
-                                            <td
-                                                class="py-2 px-4 border-b-[1px] border-gray-300"
-                                            >
-                                                <div
-                                                    class="flex gap-2 items-center"
-                                                >
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
+                                                <div class="flex gap-2 items-center">
                                                     <button
                                                         class="bg-[#E4FFDB] text-[#5D8F4C] font-semibold rounded-lg py-1 px-5 hover:bg-[#D4FFC8] transition-colors w-[130px] h-[30px] disabled:cursor-not-allowed disabled:opacity-60"
-                                                        :disabled="
-                                                            recipe.status ===
+                                                        :disabled="recipe.status ===
                                                             RecipeStatusEnum.ACCEPTED
-                                                        "
-                                                        @click="
-                                                            handleAcceptRecipe(
-                                                                recipe.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <span
-                                                            class="flex justify-center items-center"
-                                                        >
-                                                            <svg
-                                                                v-show="
-                                                                    isLoadingBtn
-                                                                "
-                                                                class="w-4 h-4 text-white animate-spin"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                            >
-                                                                <circle
-                                                                    class="opacity-25"
-                                                                    cx="12"
-                                                                    cy="12"
-                                                                    r="10"
-                                                                    stroke="currentColor"
-                                                                    stroke-width="4"
-                                                                ></circle>
-                                                                <path
-                                                                    class="opacity-75"
+                                                            " @click="
+        handleAcceptRecipe(
+            recipe.id
+        )
+        ">
+                                                        <span class="flex justify-center items-center">
+                                                            <svg v-show="isLoadingBtn
+                                                                " class="w-4 h-4 text-white animate-spin" fill="none"
+                                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                                <path class="opacity-75"
                                                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                                    fill="currentColor"
-                                                                ></path>
+                                                                    fill="currentColor"></path>
                                                             </svg>
                                                         </span>
-                                                        <span
-                                                            v-show="
-                                                                !isLoadingBtn
-                                                            "
-                                                            >Zaakceptuj</span
-                                                        >
+                                                        <span v-show="!isLoadingBtn
+                                                            ">Zaakceptuj</span>
                                                     </button>
                                                     <button
                                                         class="bg-[#FFEAEA] text-[#B03E3E] font-semibold rounded-lg py-1 px-5 hover:bg-[#FFDADA] transition-colors w-[100px] h-[30px] disabled:cursor-not-allowed disabled:opacity-60"
-                                                        :disabled="
-                                                            recipe.status ===
+                                                        :disabled="recipe.status ===
                                                             RecipeStatusEnum.REJECTED
-                                                        "
-                                                        @click="
-                                                            handleRejectRecipe(
-                                                                recipe.id
-                                                            )
-                                                        "
-                                                    >
-                                                        <span
-                                                            class="flex justify-center items-center"
-                                                        >
-                                                            <svg
-                                                                v-show="
-                                                                    isLoadingBtn
-                                                                "
-                                                                class="w-4 h-4 text-white animate-spin"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                            >
-                                                                <circle
-                                                                    class="opacity-25"
-                                                                    cx="12"
-                                                                    cy="12"
-                                                                    r="10"
-                                                                    stroke="currentColor"
-                                                                    stroke-width="4"
-                                                                ></circle>
-                                                                <path
-                                                                    class="opacity-75"
+                                                            " @click="
+        handleRejectRecipe(
+            recipe.id
+        )
+        ">
+                                                        <span class="flex justify-center items-center">
+                                                            <svg v-show="isLoadingBtn
+                                                                " class="w-4 h-4 text-white animate-spin" fill="none"
+                                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                                <path class="opacity-75"
                                                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                                    fill="currentColor"
-                                                                ></path>
+                                                                    fill="currentColor"></path>
                                                             </svg>
                                                         </span>
-                                                        <span
-                                                            v-show="
-                                                                !isLoadingBtn
-                                                            "
-                                                            >Odrzuć</span
-                                                        >
+                                                        <span v-show="!isLoadingBtn
+                                                            ">Odrzuć</span>
                                                     </button>
-                                                    <Dropdown
-                                                        icon="more_vert"
+                                                    <Dropdown icon="more_vert"
                                                         class="setting__span-btn bg-gray-200 rounded-lg py-1 hover:bg-gray-300 transition-colors"
-                                                        :links="
-                                                            links(recipe.id)
-                                                        "
-                                                    />
+                                                        :links="links(recipe.id)
+                                                            " />
                                                 </div>
                                             </td>
                                         </tr>
@@ -363,10 +243,10 @@ const links = (id) => {
         },
         {
             name: "edytuj",
-            pathName: "",
+            pathName: "UpdateRecipe",
+            params: { id: id },
             icon: "edit",
             action: "",
-            disabled: true,
         },
         {
             name: "usuń",

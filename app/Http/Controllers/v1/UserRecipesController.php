@@ -38,12 +38,12 @@ class UserRecipesController extends ApiController
                     'date' => $date
                 ]);
             }
+            DB::commit();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
             return $this->respondUnprocessable();
         }
-        DB::commit();
 
         $recipes = $user->userRecipes()->wherePivot('date', $date)->get();
         return $this->fractal

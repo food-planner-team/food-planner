@@ -17,6 +17,7 @@ const schema = Joi.object({
     status: Joi.number().required(),
     user_id: Joi.number().required(),
     created_at: Joi.string().required(),
+    date: Joi.string().allow(null),
 });
 
 class Recipe {
@@ -31,6 +32,7 @@ class Recipe {
         this.status = data.status;
         this.userId = data.user_id;
         this.createdAt = data.created_at;
+        this.date = data.date;
 
         const image = _get(data, "image.data");
         if (image) {
@@ -69,7 +71,7 @@ class Recipe {
 
     static async getUserPlannerRecipes(params) {
         const paramsData = {
-            include: "image,RecipeUser",
+            include: "image",
             ...params,
         };
 
@@ -123,7 +125,7 @@ class Recipe {
     static async getRecipeById(recipeId) {
         const response = await Api.get(`/recipes/${recipeId}`, {
             params: {
-                include: "image,recipeItems.product,user",
+                include: "image,recipeItems.product.image,user",
             },
         });
 
@@ -134,6 +136,12 @@ class Recipe {
         const response = await Api.post("/recipes", data, {
             headers: { "Content-Type": "multipart/form-data" },
         });
+
+        return new Recipe(response.data.data);
+    }
+
+    static async updateRecipe(recipeId, params) {
+        const response = await Api.put(`/recipes/${recipeId}`, params);
 
         return new Recipe(response.data.data);
     }

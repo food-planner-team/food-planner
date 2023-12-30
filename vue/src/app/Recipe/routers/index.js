@@ -13,6 +13,12 @@ const routes = [
                 component: () => import("../pages/AddRecipe.vue"),
             },
             {
+                path: "/edytuj-przepis/:id",
+                name: "UpdateRecipe",
+                meta: { requiresAuth: true },
+                component: () => import("../pages/UpdateRecipe.vue"),
+            },
+            {
                 path: "/przepisy",
                 name: "Recipes",
                 meta: { requiresAuth: true },
