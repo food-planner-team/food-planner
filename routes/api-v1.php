@@ -39,13 +39,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::post('/logout', LogoutController::class);
-    Route::resource('/users',UsersController::class)->only(['update']);
+    Route::resource('/users', UsersController::class)->only(['update']);
     Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
     Route::resource('/products', ProductsController::class)->except(['update']);
     Route::resource('/recipes', RecipesController::class)->except(['update']);
+    Route::post('/recipes/{recipe}', [RecipesController::class, 'update']);
+    Route::post('/products/{product}', [ProductsController::class, 'update']);
     Route::middleware(['role:admin,employee'])->group(function () {
-        Route::resource('/products', ProductsController::class)->only(['update']);
-        Route::resource('/recipes', RecipesController::class)->only(['update']);
         Route::post("/recipes/{recipe}/statuses", RecipeUpdateStatusController::class);
         Route::post("/products/{product}/statuses", ProductUpdateStatusController::class);
     });

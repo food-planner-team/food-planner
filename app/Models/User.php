@@ -47,6 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Recipe::class);
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
     public function userRecipes()
     {
         return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order'])->using(RecipeUser::class);
