@@ -43,9 +43,11 @@ class ImageFactory
         return null;
     }
 
-    public function update(Image $image)
+    public function update($image)
     {
-        if ($this->image) {
+        if (!$image) {
+            return $this->create();
+        } else if ($this->image) {
             $path = Storage::disk($this->disk)->putFile($this->path . $image->id, $this->image);
             $image->update([
                 'path' => $path,

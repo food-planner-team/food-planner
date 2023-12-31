@@ -33,7 +33,7 @@ class UserRecipesController extends ApiController
             $user->userRecipes()->wherePivot('date', $date)->detach();
             $recipes = $request->get('recipes');
             foreach ($recipes as $recipe) {
-                $user->userRecipes()->attach($recipe['recipe_id'],[
+                $user->userRecipes()->attach($recipe['recipe_id'], [
                     'order' => $recipe['order'],
                     'date' => $date
                 ]);

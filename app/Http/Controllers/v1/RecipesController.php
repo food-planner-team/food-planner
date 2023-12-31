@@ -12,6 +12,7 @@ use App\Transformers\RecipeTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RecipesController extends ApiController
 {
@@ -57,12 +58,12 @@ class RecipesController extends ApiController
 
             DB::commit();
             return $this->fractal
-                ->parseIncludes("recipeItems.product")
+                ->parseIncludes("recipeItems.product.image,image")
                 ->item($recipe->fresh(), new RecipeTransformer())
                 ->get();
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Error in file: ' . $e->getFile() . ', line: ' . $e->getLine() . '\nMessage: ' . $e->getMessage());
+            Log::error('Error in file: ' . $e->getFile() . ', line: ' . $e->getLine() . '\nMessage: ' . $e->getMessage());
             return $this->respondUnprocessable();
         }
     }
@@ -92,16 +93,19 @@ class RecipesController extends ApiController
     {
         DB::beginTransaction();
         try {
-            $recipe = $request->user()->recipes()->update($request->all());
-            if ($request->has('image')) {
+            if ($request->user()->role == UserRoleEnum::USER) {
+                $recipe->update(['status' => RecipeStatusEnum::PENDING]);
+            }
+            $recipe->update($request->except('products'));
+            if ($request->file('image')) {
                 $image = new ImageFactory('images/recipes/', $request->file('image'), $recipe, 'public');
-                $image->create();
+                $image->update($recipe->image);
             }
             if ($request->has('products')) {
                 $products = json_decode($request->products, true);
                 $recipe->recipeItems()->delete();
                 foreach ($products as $product) {
-                    $result = $recipe->recipeItems()->createOrUpdate([
+                    $result = $recipe->recipeItems()->create([
                         'product_id' => $product['product_id'],
                         'quantity' => $product['quantity'],
                         'optional' => boolval($product['optional']),
@@ -111,28 +115,14 @@ class RecipesController extends ApiController
 
             DB::commit();
             return $this->fractal
-                ->parseIncludes("recipeItems.product")
+                ->parseIncludes("recipeItems.product.image,image")
                 ->item($recipe->fresh(), new RecipeTransformer())
                 ->get();
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Error in file: ' . $e->getFile() . ', line: ' . $e->getLine() . '\nMessage: ' . $e->getMessage());
             return $this->respondUnprocessable();
-    }
-
-
-        if ($recipe->update($request->all())) {
-
-            $userRole = $request->user()->role;
-            if ($userRole == UserRoleEnum::USER) {
-                $recipe->update(['status' => RecipeStatusEnum::PENDING]);
-            }
-            return $this->fractal
-                ->item($recipe, new RecipeTransformer())
-                ->get();
         }
-
-        return $this->respondUnprocessable();
     }
 
     /**

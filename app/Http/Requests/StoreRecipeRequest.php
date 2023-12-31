@@ -19,6 +19,7 @@ class StoreRecipeRequest extends FormRequest
             'preparation_time' => 'required|int',
             'products.*.quantity' => 'required',
             'products.*.product_id' => 'required',
+            'products.*.optional' => 'boolean',
         ];
     }
 }
