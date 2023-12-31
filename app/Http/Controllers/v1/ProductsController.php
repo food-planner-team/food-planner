@@ -43,6 +43,7 @@ class ProductsController extends ApiController
             }
             DB::commit();
             return $this->fractal
+                ->parseIncludes("image")
                 ->item($product->fresh(), new ProductTransformer())
                 ->get();
         } catch (\Exception $e) {
@@ -66,6 +67,7 @@ class ProductsController extends ApiController
             }
             DB::commit();
             return $this->fractal
+                ->parseIncludes("image")
                 ->item($product, new ProductTransformer())
                 ->get();
         } catch (\Exception $e) {
