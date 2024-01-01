@@ -29,41 +29,45 @@
                                         placeholder="Krótki opis" v-model="description" :class="errors.description ? 'bg-red-100 ' : ''
                                             " @keypress="errors.description = false" />
                                 </div>
-
-                                <div class="flex flex-col">
-                                    <label class="mb-2" for="image">Zdjęcie</label>
-                                    <input
-                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-blue-600 outline-offset-1"
-                                        type="file" id="image" v-on:change="onFileChange" ref="imageInput"
-                                        :class="errors.image ? 'bg-red-100 ' : ''" />
-                                </div>
-                                <div class="flex flex-1 gap-5 flex-col sm:flex-row">
-                                    <div class="flex flex-col w-full">
-                                        <label class="mb-2 flex gap-2" for="time">Czas<span
-                                                class="material-symbols-outlined text-gray-500" data-te-toggle="tooltip"
-                                                title="Podaj czas przygotowania w minutach.">
-                                                info
-                                            </span></label>
-                                        <input class="border border-gray-300 rounded-md p-2" type="number" id="time"
-                                            placeholder="Czas" v-model="time" @keypress="errors.time = false" :class="errors.time ? 'bg-red-100 ' : ''
-                                                " />
+                                <div class="flex gap-5">
+                                    <div class="flex flex-col">
+                                        <label class="mb-2" for="image">Zdjęcie</label>
+                                        <input class="hidden" type="file" id="image" v-on:change="onFileChange"
+                                            ref="imageInput" :class="errors.image ? 'bg-red-100 ' : ''" />
+                                        <div class="w-[120px] h-[120px] rounded-md items-center cursor-pointer overflow-hidden"
+                                            @click="handleChangeImage">
+                                            <img v-if="newImage" :src="newImage" class="rounded-md" />
+                                            <img v-else :src="image" class="rounded-md" />
+                                        </div>
                                     </div>
-                                    <div class="flex flex-col w-full">
-                                        <label class="mb-2 flex gap-2" for="kcal">Kaloryczność
-                                            <span class="material-symbols-outlined text-gray-500" data-te-toggle="tooltip"
-                                                title="Podaj ilość kalorii w porcji">
-                                                info
-                                            </span></label>
+                                    <div class="flex flex-col w-full justify-between">
+                                        <div class="flex flex-col">
+                                            <label class="mb-2 flex gap-2" for="time">Czas<span
+                                                    class="material-symbols-outlined text-gray-500" data-te-toggle="tooltip"
+                                                    title="Podaj czas przygotowania w minutach.">
+                                                    info
+                                                </span></label>
+                                            <input class="border border-gray-300 rounded-md p-2" type="number" id="time"
+                                                placeholder="Czas" v-model="time" @keypress="errors.time = false" :class="errors.time ? 'bg-red-100 ' : ''
+                                                    " />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-2 flex gap-2" for="kcal">Kaloryczność
+                                                <span class="material-symbols-outlined text-gray-500"
+                                                    data-te-toggle="tooltip" title="Podaj ilość kalorii w porcji">
+                                                    info
+                                                </span></label>
 
-                                        <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal"
-                                            placeholder="Kaloryczność" v-model="kcal" @keypress="errors.kcal = false"
-                                            :class="errors.kcal ? 'bg-red-100 ' : ''
-                                                " />
+                                            <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal"
+                                                placeholder="Kaloryczność" v-model="kcal" @keypress="errors.kcal = false"
+                                                :class="errors.kcal ? 'bg-red-100 ' : ''
+                                                    " />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex flex-col">
                                     <label class="mb-2" for="preparation">Opis przygotowania</label>
-                                    <textarea class="border border-gray-300 rounded-md p-2 min-h-[145px]"
+                                    <textarea class="border border-gray-300 rounded-md p-2 min-h-[160px]"
                                         style="resize: none" id="preparation" placeholder="Opis przygotowania"
                                         v-model="preparation" @keypress="errors.preparation = false" :class="errors.preparation ? 'bg-red-100 ' : ''
                                             "></textarea>
@@ -139,6 +143,7 @@ const store = useStore();
 const products = ref([]);
 const name = ref("");
 const image = ref(null);
+const newImage = ref(null);
 const preparation = ref("");
 const time = ref("");
 const kcal = ref("");
@@ -172,6 +177,7 @@ onMounted(async () => {
     time.value = recipe.value.preparationTime;
     kcal.value = recipe.value.kcal;
     description.value = recipe.value.description;
+    image.value = recipe.value.image.url;
     products.value = recipe.value.recipeItems.map((product) => {
         return {
             id: product.product.id,
@@ -185,6 +191,9 @@ onMounted(async () => {
 
 });
 
+const handleChangeImage = () => {
+    imageInput.value.click();
+};
 
 const onFileChange = (e) => {
     if (!isFileImage(e.target.files[0])) {
@@ -198,6 +207,12 @@ const onFileChange = (e) => {
     }
 
     image.value = e.target.files || e.dataTransfer.files;
+    newImage.value = e.target.files || e.dataTransfer.files;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        newImage.value = e.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
     errors.image = false;
 };
 
@@ -285,7 +300,6 @@ const updateRecipe = async () => {
         preparation: preparation.value,
         preparation_time: time.value,
         kcal: kcal.value,
-        image: image.value[0],
         products: JSON.stringify(
             products.value.map((product) => {
                 return {
@@ -296,6 +310,10 @@ const updateRecipe = async () => {
             })
         ),
     };
+
+    if (image.value) {
+        data.image = image.value[0];
+    }
 
     const response = await Recipe.updateRecipe(route.params.id, data);
 

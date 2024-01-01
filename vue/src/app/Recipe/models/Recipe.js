@@ -109,7 +109,7 @@ class Recipe {
     }
 
     static async updateRecipeStatus(recipeId, status) {
-        const response = await Api.post(`/recipes/${recipeId}/update-status`, {
+        const response = await Api.post(`/recipes/${recipeId}/statuses`, {
             status,
         });
 
@@ -140,8 +140,10 @@ class Recipe {
         return new Recipe(response.data.data);
     }
 
-    static async updateRecipe(recipeId, params) {
-        const response = await Api.put(`/recipes/${recipeId}`, params);
+    static async updateRecipe(recipeId, data) {
+        const response = await Api.post(`/recipes/${recipeId}`, data, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
 
         return new Recipe(response.data.data);
     }
