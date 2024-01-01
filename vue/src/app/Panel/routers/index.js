@@ -12,6 +12,18 @@ const routes = [
                 meta: { requiresAuth: true },
                 component: () => import("../pages/ManageRecipes.vue"),
             },
+            {
+                path: "/panel/produkty",
+                name: "ManageProducts",
+                meta: { requiresAuth: true },
+                component: () => import("../pages/ManageProducts.vue"),
+            },
+            {
+                path: "/panel/moje-konto",
+                name: "MyAccount",
+                meta: { requiresAuth: true },
+                component: () => import("../pages/MyAccount.vue"),
+            },
         ],
     },
 ];

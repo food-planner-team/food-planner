@@ -9,18 +9,10 @@
         <div class="header-nav">
             <div class="nav-element" v-for="link in links" :key="link.name">
                 <template v-if="link.children.length">
-                    <Dropdown
-                        :name="link.name"
-                        :icon="link.icon"
-                        :links="link.children"
-                        :style="style"
-                    />
+                    <Dropdown :name="link.name" :icon="link.icon" :links="link.children" :style="style" />
                 </template>
                 <template v-else>
-                    <router-link
-                        :to="{ name: link.pathName }"
-                        class="flex items-center gap-2"
-                    >
+                    <router-link :to="{ name: link.pathName }" class="flex items-center gap-2">
                         <span className="material-symbols-outlined">{{
                             link.icon
                         }}</span>
@@ -31,18 +23,9 @@
         </div>
         <div class="header-profile">
             <div class="profile-block">
-                <Dropdown
-                    icon="expand_more"
-                    :links="userLinks"
-                    class="hidden sm:inline-block"
-                >
+                <Dropdown icon="expand_more" :links="userLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
-                        <img
-                            src="../assets/user.png"
-                            alt="user's avatar"
-                            width="50"
-                            height="50"
-                        />
+                        <img src="../assets/user.png" alt="user's avatar" width="50" height="50" />
                     </div>
                     <span class="font-bold ml-1">
                         Witaj, {{ user?.name }}!
@@ -50,24 +33,13 @@
                 </Dropdown>
             </div>
         </div>
-        <button
-            class="hamburger"
-            aria-label="hamburger-menu"
-            @click="() => (isOpen = !isOpen)"
-        >
-            <span
-                class="hamburger-box"
-                :class="[isOpen ? 'hamburger-active' : '']"
-            >
+        <button class="hamburger" aria-label="hamburger-menu" @click="() => (isOpen = !isOpen)">
+            <span class="hamburger-box" :class="[isOpen ? 'hamburger-active' : '']">
                 <span class="hamburger-inner"></span>
             </span>
         </button>
-        <HamburgerMenu
-            :links="links"
-            class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
-            :class="[isOpen ? 'right-0' : 'right-[-110%]']"
-            :userLinks="userLinks"
-        />
+        <HamburgerMenu :links="links" class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
+            :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="userLinks" />
     </header>
 </template>
 <script setup>
@@ -170,13 +142,12 @@ const logout = () => {
 };
 
 const userLinks = ref([
-    // {
-    //     name: "ustawienia",
-    //     pathName: "",
-    //     icon: "settings",
-    //     action: () => (isOpen.value = !isOpen.value),
-    //     disabled: true,
-    // },
+    {
+        name: "moje konto",
+        pathName: "MyAccount",
+        icon: "person",
+        action: () => (isOpen.value = !isOpen.value),
+    },
     {
         name: "wyloguj",
         pathName: "",
@@ -254,6 +225,7 @@ const userLinks = ref([
     translate: 0 -1em;
     rotate: -45deg;
 }
+
 .header {
     background-color: $alpha;
     box-shadow: 0px 6px 24px $alpha-dark;

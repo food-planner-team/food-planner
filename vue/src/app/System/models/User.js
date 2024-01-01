@@ -7,6 +7,8 @@ import store from "../../../plugins/store/index.js";
 const schema = Joi.object({
     id: Joi.number().required(),
     email: Joi.string().required(),
+    name: Joi.string().required(),
+    role: Joi.number().required(),
 });
 
 class User {
@@ -14,6 +16,8 @@ class User {
         validateData(schema, data);
         this.id = data.id;
         this.email = data.email;
+        this.name = data.name;
+        this.role = data.role;
     }
 
     static async fetchCurrent() {
@@ -103,6 +107,24 @@ class User {
 
         return data;
     }
+
+    static async getLoggedUser() {
+        const response = await Api.get("/user");
+
+        return new User(response.data);
+    }
+
+    static async updateUser(userId, data) {
+        const response = await Api.put(`/users/${userId}`, data);
+
+        return new User(response.data.data);
+    }
 }
 
 export default User;
+
+export const UserRoleEnum = {
+    USER: 0,
+    EMPLOYEE: 1,
+    ADMIN: 2,
+};

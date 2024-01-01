@@ -11,6 +11,9 @@ const schema = Joi.object({
     name: Joi.string().required(),
     quantity: Joi.number().required(),
     quantity_type: Joi.string().required(),
+    kcal: Joi.number().required(),
+    status: Joi.number().required(),
+    user_id: Joi.number().required(),
 });
 
 class Product {
@@ -20,6 +23,9 @@ class Product {
         this.name = data.name;
         this.quantity = data.quantity;
         this.quantityType = data.quantity_type;
+        this.kcal = data.kcal;
+        this.status = data.status;
+        this.userId = data.user_id;
 
         const image = _get(data, "image.data");
         if (image) {
@@ -48,6 +54,27 @@ class Product {
             meta: response.data.meta,
         };
     }
+
+    static async updateProductStatus(productId, status) {
+        const response = await Api.post(`/products/${productId}/statuses`, {
+            status,
+        });
+
+        return new Product(response.data.data);
+    }
+
+    static async removeProduct(productId) {
+        const response = await Api.delete(`/products/${productId}`);
+
+        return response;
+    }
 }
 
 export default Product;
+
+export const ProductStatusEnum = {
+    PENDING: 0,
+    ACCEPTED: 1,
+    REJECTED: 2,
+    ALL: 3,
+};
