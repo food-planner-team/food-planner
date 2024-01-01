@@ -29,7 +29,7 @@
                             convertQuantity(props.product.quantityType)
                         }}):
                     </label>
-                    <input v-model="props.product.quantity" type="number" name="quantity" id="quantity"
+                    <input v-model="props.product.quantity" type="number" name="quantity" id="quantity" min="0"
                         placeholder="Podaj miarę" class="border border-gray-300 rounded-md p-1 pl-2"
                         :class="props.error.error ? 'bg-red-100' : ''" @keypress="$emit('removeError', props.product.id)" />
                 </div>

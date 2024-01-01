@@ -35,6 +35,7 @@
                                         <input class="hidden" type="file" id="image" v-on:change="onFileChange"
                                             ref="imageInput" :class="errors.image ? 'bg-red-100 ' : ''" />
                                         <div class="w-[120px] h-[120px] rounded-md items-center cursor-pointer overflow-hidden"
+                                            :style="errors.image ? 'border: 4px solid rgb(255 232 232)' : 'border: 1px solid #d1d5db'"
                                             @click="handleChangeImage">
                                             <img v-if="newImage" :src="newImage" class="rounded-md" />
                                             <img v-else :src="image" class="rounded-md" />
@@ -250,7 +251,6 @@ const updateProduct = (product) => {
     const index = products.value.findIndex((p) => p.id === product.id);
 
     products.value[index] = product;
-    console.log('products', products.value);
 };
 
 const removeError = (productsId) => {
@@ -275,20 +275,20 @@ const updateRecipe = async () => {
         products.value.length
     ) {
         store.commit("Toast/addToast", {
-            message: "Nie wszystkie pola zostały wypełnione",
+            message: "Popraw błędy",
             type: "warning",
         });
 
         errors.name = name.value ? false : true;
         errors.image = image.value ? false : true;
         errors.preparation = preparation.value ? false : true;
-        errors.time = time.value ? false : true;
-        errors.kcal = kcal.value ? false : true;
+        errors.time = time.value > 0 ? false : true;
+        errors.kcal = kcal.value > 0 ? false : true;
         errors.description = description.value ? false : true;
         errors.products = products.value.length ? false : true;
 
         errors.quantities = products.value.map((p) => {
-            return { id: p.id, error: p.quantity ? false : true };
+            return { id: p.id, error: p.quantity > 0 ? false : true };
         });
 
         return;

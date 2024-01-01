@@ -35,6 +35,7 @@
                                     <input class="hidden" type="file" id="image" v-on:change="onFileChange" ref="imageInput"
                                         :class="errors.image ? 'bg-red-100 ' : ''" />
                                     <div class="w-[120px] h-[120px] rounded-md items-center cursor-pointer overflow-hidden"
+                                        :style="errors.image ? 'border: 4px solid rgb(255 232 232)' : 'border: 1px solid #d1d5db'"
                                         @click="handleChangeImage">
                                         <img v-if="newImage" :src="newImage" class="rounded-md" />
                                         <img v-else src="../../common/assets/imageAdd.jpg" class="rounded-md" />
@@ -47,7 +48,7 @@
                                                 title="Podaj czas przygotowania w minutach.">
                                                 info
                                             </span></label>
-                                        <input class="border border-gray-300 rounded-md p-2" type="number" id="time"
+                                        <input class="border border-gray-300 rounded-md p-2" type="number" id="time" min="0"
                                             placeholder="Czas" v-model="time" @keypress="errors.time = false" :class="errors.time ? 'bg-red-100 ' : ''
                                                 " />
                                     </div>
@@ -59,8 +60,8 @@
                                             </span></label>
 
                                         <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal"
-                                            placeholder="Kaloryczność" v-model="kcal" @keypress="errors.kcal = false"
-                                            :class="errors.kcal ? 'bg-red-100 ' : ''
+                                            placeholder="Kaloryczność" min="0" v-model="kcal"
+                                            @keypress="errors.kcal = false" :class="errors.kcal ? 'bg-red-100 ' : ''
                                                 " />
                                     </div>
                                 </div>
@@ -192,7 +193,6 @@ const addProduct = (product) => {
 
     products.value.push({ ...product, optional: false, quantity: null });
 
-    console.log('products', products.value);
     errors.products = false;
     store.commit("Toast/addToast", {
         message: "Dodano produkt do przepisu",
@@ -238,20 +238,20 @@ const createRecipe = async () => {
         products.value.length
     ) {
         store.commit("Toast/addToast", {
-            message: "Nie wszystkie pola zostały wypełnione",
+            message: "Popraw błędy",
             type: "warning",
         });
 
         errors.name = name.value ? false : true;
         errors.image = image.value ? false : true;
         errors.preparation = preparation.value ? false : true;
-        errors.time = time.value ? false : true;
-        errors.kcal = kcal.value ? false : true;
+        errors.time = time.value > 0 ? false : true;
+        errors.kcal = kcal.value > 0 ? false : true;
         errors.description = description.value ? false : true;
         errors.products = products.value.length ? false : true;
 
         errors.quantities = products.value.map((p) => {
-            return { id: p.id, error: p.quantity ? false : true };
+            return { id: p.id, error: p.quantity > 0 ? false : true };
         });
 
         return;
