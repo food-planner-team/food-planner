@@ -25,7 +25,8 @@
             <div class="profile-block">
                 <Dropdown icon="expand_more" :links="userLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
-                        <img src="../assets/user.png" alt="user's avatar" width="50" height="50" />
+                        <img v-if="image.url" :src="image.url" alt="user's avatar" width="50" height="50" />
+                        <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50" />
                     </div>
                     <span class="font-bold ml-1">
                         Witaj, {{ user?.name }}!
@@ -43,7 +44,7 @@
     </header>
 </template>
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import logo from "../assets/logo.svg";
 import Dropdown from "./Dropdown.vue";
 import { useRouter } from "vue-router";
@@ -54,6 +55,17 @@ import HamburgerMenu from "./HamburgerMenu.vue";
 const store = useStore();
 
 const user = computed(() => store.getters["User/getUser"]);
+const image = ref("");
+
+const getUserById = async (id) => {
+    const response = await User.getUserById(id);
+
+    image.value = response.image;
+};
+
+onBeforeMount(async () => {
+    await getUserById(user.value.id);
+});
 
 const router = useRouter();
 
