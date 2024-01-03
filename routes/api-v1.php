@@ -11,6 +11,7 @@ use App\Http\Controllers\v1\ProductsController;
 use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
 use App\Http\Controllers\v1\RecipeUpdateStatusController;
+use App\Http\Controllers\v1\StatisticsController;
 use App\Http\Controllers\v1\UserRecipesController;
 use App\Http\Controllers\v1\UsersController;
 use App\Http\Controllers\v1\UserUpdateRoleController;
@@ -40,11 +41,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::post('/logout', LogoutController::class);
     Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
-    Route::resource('/users', UsersController::class)->only(['update', 'show']);
+    Route::get('/users/{user}', [UsersController::class, 'show']);
+    Route::post('/users/{user}', [UsersController::class, 'update']);
     Route::resource('/products', ProductsController::class)->except(['update']);
     Route::resource('/recipes', RecipesController::class)->except(['update']);
     Route::post('/recipes/{recipe}', [RecipesController::class, 'update']);
     Route::post('/products/{product}', [ProductsController::class, 'update']);
+    Route::get('/statistics', StatisticsController::class);
     Route::middleware(['role:admin,employee'])->group(function () {
         Route::resource('/users', UsersController::class)->only(['index', 'destroy']);
         Route::post("/recipes/{recipe}/statuses", RecipeUpdateStatusController::class);
