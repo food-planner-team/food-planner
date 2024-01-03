@@ -36,7 +36,7 @@
                                             Czas przygotowania
                                         </p>
                                         <p class="text-lg text-gray-500">
-                                            {{ recipe.preparation_time }} minut
+                                            {{ recipe.preparationTime }} minut
                                         </p>
                                     </div>
                                     <div>
@@ -61,10 +61,8 @@
                                                     <p class="text-lg text-gray-500">
                                                         {{
                                                             displayCorrectQuantityType(
-                                                                item.product
-                                                                    .quantity,
-                                                                item.product
-                                                                    .quantityType
+                                                                item.quantity,
+                                                                item.product.quantityType
                                                             )
                                                         }}
                                                     </p>
