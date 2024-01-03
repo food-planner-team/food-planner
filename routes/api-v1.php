@@ -12,7 +12,6 @@ use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
 use App\Http\Controllers\v1\RecipeUpdateStatusController;
 use App\Http\Controllers\v1\StatisticsController;
-use App\Http\Controllers\v1\UserController;
 use App\Http\Controllers\v1\UserRecipesController;
 use App\Http\Controllers\v1\UsersController;
 use App\Http\Controllers\v1\UserUpdateRoleController;
@@ -37,7 +36,9 @@ Route::post('/reset', ResetPasswordController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
-    Route::get('/user', UserController::class);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
     Route::post('/logout', LogoutController::class);
     Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
     Route::get('/users/{user}', [UsersController::class, 'show']);
