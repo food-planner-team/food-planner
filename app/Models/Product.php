@@ -16,6 +16,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'quantity',
+        'user_id',
         'quantity_type',
         'kcal',
         'status'
@@ -24,5 +25,9 @@ class Product extends Model
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
