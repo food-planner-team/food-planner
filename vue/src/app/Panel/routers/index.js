@@ -15,7 +15,7 @@ const routes = [
             {
                 path: "/panel/produkty",
                 name: "ManageProducts",
-                meta: { requiresAuth: true },
+                meta: { requiresAuth: true, employeeRole: true },
                 component: () => import("../pages/ManageProducts.vue"),
             },
             {
