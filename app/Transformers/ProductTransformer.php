@@ -23,9 +23,10 @@ class ProductTransformer extends TransformerAbstract
             'name' => $product->name,
             'status' => $product->status,
             'kcal' => $product->kcal,
-            'user_id' => $product->user_id,
             'quantity' => $product->quantity,
             'quantity_type' => $product->quantity_type,
+            'created_at' => $product->created_at,
+            'user_id' => $product->user_id,
         ];
     }
 
@@ -34,6 +35,7 @@ class ProductTransformer extends TransformerAbstract
         if (!$product->image) return $this->null();
         return $this->item($product->image, new ImageTransformer);
     }
+
     public function includeUser(Product $product)
     {
         return $this->item($product->user, new UserTransformer);
