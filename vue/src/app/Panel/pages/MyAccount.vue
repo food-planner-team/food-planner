@@ -22,6 +22,7 @@
                                     <div class="w-[120px] h-[120px] rounded-md items-center cursor-pointer overflow-hidden border border-gray-300"
                                         @click="handleChangeImage">
                                         <img v-if="newImage" :src="newImage" class="rounded-md" />
+                                        <img v-else-if="image?.url" :src="image.url" class="rounded-md" />
                                         <img v-else src="../../common/assets/imageAdd.jpg" class="rounded-md" />
                                     </div>
                                 </div>
@@ -62,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 import User from "../../System/models/User";
 import { isFileImage } from "../../common/utils/validateImage";
 import { useStore } from "vuex";
@@ -84,6 +85,8 @@ const errors = reactive({
     role: false,
     kcalLimit: false,
 });
+
+const loggedUser = computed(() => store.getters["User/getUser"]);
 
 const userRoleLabel = (role) => {
     switch (role) {
@@ -108,8 +111,15 @@ const getUser = async () => {
     kcalLimit.value = response.kcalLimit;
 };
 
-onMounted(() => {
+const getUserById = async (id) => {
+    const response = await User.getUserById(id);
+
+    image.value = response.image;
+};
+
+onMounted(async () => {
     getUser();
+    await getUserById(loggedUser.value.id);
 });
 
 const handleChangeImage = () => {

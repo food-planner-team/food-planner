@@ -127,6 +127,16 @@ class User {
         return new User(response.data);
     }
 
+    static async getUserById(id) {
+        const paramsData = {
+            include: "image",
+        };
+
+        const response = await Api.get(`/users/${id}`, { params: paramsData });
+
+        return new User(response.data.data);
+    }
+
     static async updateUser(userId, data) {
         const response = await Api.post(`/users/${userId}`, data, {
             headers: { "Content-Type": "multipart/form-data" },
