@@ -25,10 +25,10 @@ class UserTransformer extends TransformerAbstract
             'created_at' => $user->created_at->format('Y-m-d'),
         ];
     }
-    public function includeImage(User $user): ?\League\Fractal\Resource\Item
+    public function includeImage(User $user)
     {
         if(!$user->image){
-            return null;
+            return $this->primitive(null);
         }
         return $this->item($user->image, new ImageTransformer());
     }
