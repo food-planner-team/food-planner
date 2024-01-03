@@ -25,6 +25,12 @@ const routes = [
                 component: () => import("../pages/ManageUsers.vue"),
             },
             {
+                path: "/panel/statystyki",
+                name: "Statistics",
+                meta: { requiresAuth: true, employeeRole: true },
+                component: () => import("../pages/Statistics.vue"),
+            },
+            {
                 path: "/panel/moje-konto",
                 name: "MyAccount",
                 meta: { requiresAuth: true },
