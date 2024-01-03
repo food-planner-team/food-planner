@@ -25,7 +25,7 @@ class ProductTransformer extends TransformerAbstract
             'kcal' => $product->kcal,
             'quantity' => $product->quantity,
             'quantity_type' => $product->quantity_type,
-            'created_at' => $product->created_at,
+            'created_at' => $product->created_at->format('Y-m-d'),
             'user_id' => $product->user_id,
         ];
     }

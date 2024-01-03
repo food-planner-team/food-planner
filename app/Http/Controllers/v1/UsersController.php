@@ -60,7 +60,7 @@ class UsersController extends ApiController
             ->get();
     }
 
-    public function delete(User $user)
+    public function destroy(User $user)
     {
         $user->delete();
         return $this->respondOK();

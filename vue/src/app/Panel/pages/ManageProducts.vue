@@ -54,10 +54,6 @@
                                             </th>
                                             <th
                                                 class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
-                                                Opis
-                                            </th>
-                                            <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Kaloryczność
                                             </th>
                                             <th
@@ -112,14 +108,6 @@
                                                 {{ product.name }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
-                                                {{
-                                                    productDescription(`Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                Quasi accusantium est eveniet maiores excepturi consequatur voluptates?
-                                                Omnis, ab fuga voluptas, eum ipsam, modi velit quo ducimus facilis nobis
-                                                minima. Eveniet.`)
-                                                }}
-                                            </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ product.kcal }} kcal
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]">
@@ -129,12 +117,10 @@
                                                 {{ product.quantityType }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
-                                                <!-- {{ product.user.name }} -->
-                                                Jan Kowalski
+                                                {{ product.user.name }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]">
-                                                <!-- {{ product.createdAt }} -->
-                                                20.12.2023
+                                                {{ product.createdAt }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 <div class="flex gap-2 items-center">
@@ -190,7 +176,7 @@
                         <Loader class="m-auto" />
                     </div>
                     <div v-if="!products.length && !isLoading">
-                        <p class="text-left text-gray-500">Brak przepisów</p>
+                        <p class="text-left text-gray-500">Brak produktów</p>
                     </div>
                 </div>
             </div>

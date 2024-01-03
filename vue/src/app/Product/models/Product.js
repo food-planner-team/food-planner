@@ -14,6 +14,7 @@ const schema = Joi.object({
     kcal: Joi.number().required(),
     status: Joi.number().required(),
     user_id: Joi.number().required(),
+    created_at: Joi.string().required(),
 });
 
 class Product {
@@ -26,6 +27,7 @@ class Product {
         this.kcal = data.kcal;
         this.status = data.status;
         this.userId = data.user_id;
+        this.createdAt = data.created_at;
 
         const image = _get(data, "image.data");
         if (image) {
@@ -40,7 +42,7 @@ class Product {
 
     static async getProducts(params) {
         const paramsData = {
-            include: "image",
+            include: "image,user",
             status: 1,
             ...params,
         };

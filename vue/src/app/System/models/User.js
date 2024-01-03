@@ -2,7 +2,9 @@ import Joi from "joi";
 import validateData from "../../common/utils/validateData.js";
 import Api from "../../common/services/Api.js";
 import _get from "lodash/get";
+import convertToArrayOfModels from "../../common/utils/convertToArrayOfModels.js";
 import store from "../../../plugins/store/index.js";
+import Image from "../../System/models/Image.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
@@ -18,6 +20,13 @@ class User {
         this.email = data.email;
         this.name = data.name;
         this.role = data.role;
+        this.createdAt = data.created_at;
+        this.kcalLimit = data.kcal_limit;
+
+        const image = _get(data, "image.data");
+        if (image) {
+            this.image = new Image(image);
+        }
     }
 
     static async fetchCurrent() {
@@ -109,13 +118,49 @@ class User {
     }
 
     static async getLoggedUser() {
-        const response = await Api.get("/user");
+        const paramsData = {
+            include: "image",
+        };
+
+        const response = await Api.get("/user", { params: paramsData });
 
         return new User(response.data);
     }
 
     static async updateUser(userId, data) {
-        const response = await Api.put(`/users/${userId}`, data);
+        const response = await Api.post(`/users/${userId}`, data, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        return new User(response.data.data);
+    }
+
+    static async getUsers(params) {
+        const paramsData = {
+            include: "image",
+            ...params,
+        };
+
+        const response = await Api.get("/users", {
+            params: paramsData,
+        });
+
+        return {
+            users: convertToArrayOfModels(User, response.data.data),
+            meta: response.data.meta,
+        };
+    }
+
+    static async removeUser(userId) {
+        const response = await Api.delete(`/users/${userId}`);
+
+        return response;
+    }
+
+    static async updateUserRole(userId, role) {
+        const response = await Api.post(`/users/${userId}/roles`, {
+            role,
+        });
 
         return new User(response.data.data);
     }
@@ -127,4 +172,5 @@ export const UserRoleEnum = {
     USER: 0,
     EMPLOYEE: 1,
     ADMIN: 2,
+    ALL: 3,
 };

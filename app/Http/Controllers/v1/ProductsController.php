@@ -84,7 +84,7 @@ class ProductsController extends ApiController
             ->get();
     }
 
-    public function delete(Product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
         return $this->respondOK();

@@ -19,6 +19,12 @@ const routes = [
                 component: () => import("../pages/ManageProducts.vue"),
             },
             {
+                path: "/panel/uzytkownicy",
+                name: "ManageUsers",
+                meta: { requiresAuth: true, adminRole: true },
+                component: () => import("../pages/ManageUsers.vue"),
+            },
+            {
                 path: "/panel/moje-konto",
                 name: "MyAccount",
                 meta: { requiresAuth: true },

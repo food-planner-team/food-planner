@@ -159,8 +159,7 @@ const handleUpdateData = async () => {
     const data = {
         name: name.value,
         email: email.value,
-        role: role.value,
-        kcalLimit: kcalLimit.value,
+        kcal_limit: kcalLimit.value,
     };
 
     if (image.value) {
