@@ -39,8 +39,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::post('/logout', LogoutController::class);
-    Route::resource('/users', UsersController::class)->only(['update', 'show']);
     Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
+    Route::resource('/users', UsersController::class)->only(['update', 'show']);
     Route::resource('/products', ProductsController::class)->except(['update']);
     Route::resource('/recipes', RecipesController::class)->except(['update']);
     Route::post('/recipes/{recipe}', [RecipesController::class, 'update']);
