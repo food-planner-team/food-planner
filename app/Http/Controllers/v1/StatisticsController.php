@@ -32,8 +32,9 @@ class StatisticsController extends ApiController
             'countUser' => $countUser,
             'countUseRecipesCurrentMonth' => $countUseRecipesCurrentMonth
         ];
-        dd($data);
+//        dd($data);
 
+        return $data;
         return $this->fractal
             ->item($product, new ProductTransformer())
             ->get();

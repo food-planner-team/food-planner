@@ -22,6 +22,7 @@ class UserTransformer extends TransformerAbstract
             'role' => $user->role,
             'email' => $user->email,
             'kcal_limit' => $user->kcal_limit,
+            'created_at' => $user->created_at->format('Y-m-d'),
         ];
     }
     public function includeImage(User $user): ?\League\Fractal\Resource\Item
