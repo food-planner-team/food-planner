@@ -1,9 +1,8 @@
-import User from "../../../app/System/models/User.js";
+import User, {UserRoleEnum} from "../../../app/System/models/User.js";
 import store from "../../store/index.js";
 import _get from "lodash/get";
 
 const userRole = () => _get(store, "state.User.user.data.role");
-
 const userIsAvailable = () => !!_get(store, "state.User.user.data");
 
 export default async (to, from, next) => {
@@ -20,9 +19,11 @@ export default async (to, from, next) => {
             return next("/");
         }
     }
-
-    if (to.meta.needEmployeeRole && userRole() !== User.rolUserRoleEnum.) {
-        return next("/404");
+    if (to.meta.employeeRole && !(userRole() === UserRoleEnum.ADMIN || userRole() === UserRoleEnum.EMPLOYEE)){
+        return next("/");
+    }
+    if (to.meta.adminRole && userRole() !== UserRoleEnum.ADMIN) {
+        return next("/");
     }
     return next();
 };

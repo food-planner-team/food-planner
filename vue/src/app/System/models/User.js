@@ -6,7 +6,6 @@ import store from "../../../plugins/store/index.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
-    role: Joi.number().required(),
     email: Joi.string().required(),
     name: Joi.string().required(),
     role: Joi.number().required(),
@@ -16,7 +15,6 @@ class User {
     constructor(data) {
         validateData(schema, data);
         this.id = data.id;
-        this.role = data.role;
         this.email = data.email;
         this.name = data.name;
         this.role = data.role;
