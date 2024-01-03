@@ -9,7 +9,7 @@ const routes = [
             {
                 path: "/panel/przepisy",
                 name: "ManageRecipes",
-                meta: { requiresAuth: true },
+                meta: { requiresAuth: true, needEmployeeRole: true },
                 component: () => import("../pages/ManageRecipes.vue"),
             },
             {
