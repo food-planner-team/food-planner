@@ -18,7 +18,7 @@
                 :style="props.style">
                 <div class="py-1">
                     <router-link v-for="link in props.links" :key="link.name"
-                        :to="{ name: link.pathName, params: link.params }" :style="{
+                        :to="{ name: link.pathName, params: link.params, query: link.query }" :style="{
                             pointerEvents: link.disabled && 'none',
                         }">
                         <MenuItem v-slot="{ active }" class="flex items-center gap-2 cursor-pointer"

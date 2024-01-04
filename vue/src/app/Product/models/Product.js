@@ -70,6 +70,32 @@ class Product {
 
         return response;
     }
+
+    static async createProduct(data) {
+        const response = await Api.post("/products", data, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        return new Product(response.data.data);
+    }
+
+    static async getProductById(productId) {
+        const response = await Api.get(`/products/${productId}`, {
+            params: {
+                include: "image",
+            },
+        });
+
+        return new Product(response.data.data);
+    }
+
+    static async updateProduct(productId, data) {
+        const response = await Api.post(`/products/${productId}`, data, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        return new Product(response.data.data);
+    }
 }
 
 export default Product;

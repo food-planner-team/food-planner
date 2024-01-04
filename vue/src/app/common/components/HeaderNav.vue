@@ -25,7 +25,7 @@
             <div class="profile-block">
                 <Dropdown icon="expand_more" :links="userLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
-                        <img v-if="image.url" :src="image.url" alt="user's avatar" width="50" height="50" />
+                        <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50" />
                         <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50" />
                     </div>
                     <span class="font-bold ml-1">
@@ -123,25 +123,25 @@ const links = computed(() => {
             children: [
                 {
                     name: "wszystkie produkty",
-                    pathName: "MainProductList",
+                    pathName: "ProductListPage",
                     icon: "list_alt",
                     action: () => (isOpen.value = !isOpen.value),
                     disabled: false,
                 },
-                // {
-                //     name: "moje produkty",
-                //     pathName: "",
-                //     icon: "favorite",
-                //     action: () => (isOpen.value = !isOpen.value),
-                //     disabled: true,
-                // },
                 {
-                    name: `dodaj produkt`,
-                    pathName: "AddProduct",
-                    icon: "add_circle",
+                    name: "moje produkty",
+                    pathName: "MyProductListPage",
+                    icon: "favorite",
                     action: () => (isOpen.value = !isOpen.value),
-                    disabled: currentUser.admin !== 1,
+                    disabled: false,
                 },
+                // {
+                //     name: `dodaj produkt`,
+                //     pathName: "AddProduct",
+                //     icon: "add_circle",
+                //     action: () => (isOpen.value = !isOpen.value),
+                //     disabled: currentUser.admin !== 1,
+                // },
             ],
         },
     ];
