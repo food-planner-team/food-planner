@@ -23,7 +23,7 @@
         </div>
         <div class="header-profile">
             <div class="profile-block">
-                <Dropdown icon="expand_more" :links="userLinks" class="hidden sm:inline-block">
+                <Dropdown icon="expand_more" :links="myAccountLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
                         <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50" />
                         <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50" />
@@ -40,7 +40,7 @@
             </span>
         </button>
         <HamburgerMenu :links="links" class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
-            :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="userLinks" />
+            :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="myAccountLinks" />
     </header>
 </template>
 <script setup>
@@ -51,6 +51,8 @@ import { useRouter } from "vue-router";
 import User from "../../System/models/User";
 import { useStore } from "vuex";
 import HamburgerMenu from "./HamburgerMenu.vue";
+import { employeeLinks, adminLinks, userLinks } from "../utils/links";
+import { UserRoleEnum } from "../../System/models/User";
 
 const store = useStore();
 
@@ -76,75 +78,14 @@ const emit = defineEmits(["close-hamburger"]);
 const style = "left: 0";
 
 const links = computed(() => {
-    const currentUser = user.value;
-    return [
-        {
-            name: "Planner",
-            pathName: "Planner",
-            icon: "event_note",
-            action: () => (isOpen.value = !isOpen.value),
-            disabled: false,
-            children: [],
-        },
-        {
-            name: "przepisy",
-            pathName: "",
-            icon: "menu_book",
-            action: "",
-            children: [
-                {
-                    name: "wszystkie przepisy",
-                    pathName: "Recipes",
-                    icon: "list_alt",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                {
-                    name: "moje przepisy",
-                    pathName: "MyRecipes",
-                    icon: "favorite",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                {
-                    name: "dodaj przepis",
-                    pathName: "AddRecipe",
-                    icon: "add_circle",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-            ],
-        },
-        {
-            name: "produkty",
-            pathName: "",
-            icon: "fastfood",
-            action: "",
-            children: [
-                {
-                    name: "wszystkie produkty",
-                    pathName: "ProductListPage",
-                    icon: "list_alt",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                {
-                    name: "moje produkty",
-                    pathName: "MyProductListPage",
-                    icon: "favorite",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                // {
-                //     name: `dodaj produkt`,
-                //     pathName: "AddProduct",
-                //     icon: "add_circle",
-                //     action: () => (isOpen.value = !isOpen.value),
-                //     disabled: currentUser.admin !== 1,
-                // },
-            ],
-        },
-    ];
+    switch (user.value.role) {
+        case UserRoleEnum.USER:
+            return userLinks(isOpen);
+        case UserRoleEnum.EMPLOYEE:
+            return employeeLinks(isOpen);
+        case UserRoleEnum.ADMIN:
+            return adminLinks(isOpen);
+    }
 });
 
 const logout = () => {
@@ -153,7 +94,7 @@ const logout = () => {
     });
 };
 
-const userLinks = ref([
+const myAccountLinks = ref([
     {
         name: "moje konto",
         pathName: "MyAccount",

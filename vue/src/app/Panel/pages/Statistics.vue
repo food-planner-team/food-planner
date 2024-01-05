@@ -1,19 +1,34 @@
 <template>
     <main class="main bg-[#fff] rounded-lg">
         <div class="wrapper">
-            <div v-for="(item, key) in statistics">
-                {{ nameByKey[key] }}: {{ item }}
+            <div class="h-full flex flex-col">
+                <div class="m-5 mt-0 flex justify-between">
+                    <div>
+                        <h1 class="font-bold text-4xl my-5 xs:mt-0">
+                            Statystyki
+                        </h1>
+                    </div>
+                </div>
+                <div class="h-full relative">
+                    <div class="relative justify-items-center pb-5 pt-1 lg:absolute left-0 top-0 h-full w-full 3xl:px-2 ">
+                        <div class="grid grid-cols-2 grid-rows-2 gap-4 h-full">
+                            <div v-for="(item, key) in statistics"
+                                class=" bg-gray-200/50 rounded-lg col-span-1 row-span-1 flex justify-center items-center text-lg font-bold">
+                                {{ nameByKey[key] }}: {{ item }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import Api from "../../common/services/Api.js";
 
 const statistics = ref([]);
-const page = ref(1);
 const nameByKey = {
     countAcceptedProducts: 'Liczba zakceptowanych produktów',
     countAcceptedRecipes: 'Liczba zakceptowanych przepisów',
