@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('recipe_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('recipe_id');
-            $table->unsignedInteger('main_product_id');
+            $table->unsignedInteger('product_id');
             $table->integer('quantity');
-            $table->boolean('optional')->default(0);
+            $table->boolean('optional')->default(false);
             $table->timestamps();
         });
     }

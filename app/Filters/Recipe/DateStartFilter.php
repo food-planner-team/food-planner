@@ -7,5 +7,5 @@ class DateStartFilter
     public static function handle($query, $date)
     {
         return $query->where('date', '>=', $date);
-    }
+            }
 }

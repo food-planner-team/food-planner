@@ -16,7 +16,7 @@ class UserRecipesController extends ApiController
     public function index(Request $request)
     {
         $user = $request->user();
-        $recipes = $user->recipes()->filter()->get();
+        $recipes = $user->userRecipes()->filter()->get();
 
         return $this->fractal
             ->collection($recipes, new RecipeTransformer())
@@ -30,22 +30,22 @@ class UserRecipesController extends ApiController
         $date = $request->get('date');
         DB::beginTransaction();
         try {
-            $user->recipes()->wherePivot('date', $date)->detach();
+            $user->userRecipes()->wherePivot('date', $date)->detach();
             $recipes = $request->get('recipes');
             foreach ($recipes as $recipe) {
-                $user->recipes()->attach($recipe['recipe_id'],[
+                $user->userRecipes()->attach($recipe['recipe_id'], [
                     'order' => $recipe['order'],
                     'date' => $date
                 ]);
             }
+            DB::commit();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();
             return $this->respondUnprocessable();
         }
-        DB::commit();
 
-        $recipes = $user->recipes()->wherePivot('date', $date)->get();
+        $recipes = $user->userRecipes()->wherePivot('date', $date)->get();
         return $this->fractal
             ->collection($recipes, new RecipeTransformer())
             ->get();

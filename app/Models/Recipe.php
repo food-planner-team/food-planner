@@ -14,8 +14,10 @@ class Recipe extends Model
     protected $fillable = [
         'name',
         'description',
-        'kcal',
         'preparation',
+        'kcal',
+        'user_id',
+        'status',
         'preparation_time',
     ];
 
@@ -24,7 +26,10 @@ class Recipe extends Model
     {
         return $this->hasMany(RecipeItem::class);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function image()
     {
         return $this->morphOne(Image::class,'imageable');

@@ -93,13 +93,16 @@
                                         class="w-[120px] h-[120px] rounded-md ml-1 flex items-center"
                                     >
                                         <img
-                                            v-if="
-                                                product.defaultProduct?.image
-                                                    ?.url
-                                            "
-                                            :src="`${product.defaultProduct?.image?.url}.webp`"
+                                            v-if="product?.image?.url"
+                                            :src="`${product?.image?.url}`"
                                             :alt="product.name"
                                             class="rounded-md"
+                                        />
+                                        <img
+                                            v-else
+                                            src="../../common/assets/no-image.jpg"
+                                            alt="no image placeholder"
+                                            class="rounded-md mix-blend-darken"
                                         />
                                     </div>
                                     <div
@@ -112,7 +115,7 @@
                                             <p>
                                                 Miara:
                                                 {{ product.quantity }}
-                                                {{ product.quantity_type }}
+                                                {{ product.quantityType }}
                                             </p>
                                         </div>
                                     </div>
@@ -154,7 +157,7 @@ import {
 } from "@headlessui/vue";
 import Loader from "../../common/components/Loader.vue";
 import { useInfiniteScroll } from "@vueuse/core";
-import MainProduct from "../../Product/models/MainProduct";
+import Product from "../../Product/models/Product";
 
 const props = defineProps({
     date: String,
@@ -178,23 +181,20 @@ const emit = defineEmits(["addProduct"]);
 const page = ref(1);
 const scrollComponent = ref(null);
 
-const getProducts = () => {
+const getProducts = async () => {
     products.value = [];
     isLoading.value = true;
     page.value = 1;
 
-    MainProduct.getMainProducts({
-        include: "defaultProduct.image",
+    const response = await Product.getProducts({
         search: searchValue.value,
         page: page.value,
-    })
-        .then((res) => {
-            products.value = res.products;
-            page.value++;
-        })
-        .finally(() => {
-            isLoading.value = false;
-        });
+        limit: 10,
+    });
+
+    products.value = response.products;
+    page.value++;
+    isLoading.value = false;
 };
 
 watch(isOpenModal, () => {
@@ -203,17 +203,17 @@ watch(isOpenModal, () => {
     getProducts();
 });
 
-const getProductsOnScroll = () => {
-    MainProduct.getMainProducts({
-        include: "defaultProduct.image",
+const getProductsOnScroll = async () => {
+    const response = await Product.getProducts({
         search: searchValue.value,
         page: page.value,
-    }).then((res) => {
-        if (page.value > res.meta.pagination.total_pages) return;
-
-        products.value.push(...res.products);
-        page.value++;
+        limit: 10,
     });
+
+    if (page.value > response.meta.pagination.total_pages) return;
+
+    products.value.push(...response.products);
+    page.value++;
 };
 
 useInfiniteScroll(

@@ -8,12 +8,33 @@
         <div class="block-stats">
             <div class="block-stats__element">
                 {{ "Kalorie " }}
-                <span class="element__highlighted"> {{ sumKcal() }} </span>
+                <span class="element__highlighted"> {{ sumKcal }} </span>
             </div>
             <div class="block-stats__element">
                 {{ "Dania " }}
                 <span class="element__highlighted"> {{ recipes.length }} </span>
             </div>
+        </div>
+        <div v-if="userKcalLimit && sumKcal > userKcalLimit">
+            <span
+                class="flex items-center gap-3 rounded-md px-3 py-2 justify-center text-sm bg-[#FFE3E3] w-[292px] text-[#C81414]"
+                style="background-image: linear-gradient(90deg, rgba(254,247,247,1) 0%, rgba(255,227,227,1) 100%);"
+            >
+                <span
+                    class="material-symbols-outlined text-xl"
+                    data-te-toggle="tooltip"
+                >
+                    info
+                </span>
+                <div>
+                    <p>
+                        Przekroczyłeś ustalony limit kalorii
+                    </p>
+                    <p class="font-bold">
+                        Twój limit to: {{ userKcalLimit }} kcal
+                    </p>
+                </div>
+            </span>
         </div>
         <div class="relative h-full w-full">
             <div class="block-items-container">
@@ -50,12 +71,17 @@ import PlannerMealBlock from "./PlannerMealBlock.vue";
 import AddMeal from "./AddMeal.vue";
 import Recipe from "../../Recipe/models/Recipe.js";
 import draggable from "vuedraggable";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import {
     getCurrentDayName,
     getLocaleDate,
 } from "../../common/utils/datesHelpers.js";
 import Loader from "../../common/components/Loader.vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const userKcalLimit = computed(() => store.getters["User/getKcalLimit"]);
 
 const windowWidth = ref(window.innerWidth);
 
@@ -81,7 +107,7 @@ const saveUserRecipes = () => {
         return { recipe_id: e.id, order: index };
     });
 
-    Recipe.saveUserRecipes(props.date, recipesData);
+    Recipe.saveUserPlannerRecipes(props.date, recipesData);
 };
 
 const dragOptions = ref({
@@ -103,11 +129,11 @@ const addMeal = (item) => {
     saveUserRecipes();
 };
 
-const sumKcal = () => {
+const sumKcal = computed(() => {
     return props.recipes.reduce((acc, curr) => {
         return acc + curr.kcal;
     }, 0);
-};
+});
 </script>
 <style lang="scss" scoped>
 .ghost {

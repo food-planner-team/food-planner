@@ -11,6 +11,7 @@ class UserTransformer extends TransformerAbstract
 {
     /** @var array */
     protected array $availableIncludes = [
+        'image'
     ];
 
     public function transform(User $user): array
@@ -18,8 +19,17 @@ class UserTransformer extends TransformerAbstract
         return [
             'id'   => $user->id,
             'name' => $user->name,
-            'admin' => $user->admin,
+            'role' => $user->role,
             'email' => $user->email,
+            'kcal_limit' => $user->kcal_limit,
+            'created_at' => $user->created_at->format('Y-m-d'),
         ];
+    }
+    public function includeImage(User $user)
+    {
+        if(!$user->image){
+            return $this->primitive(null);
+        }
+        return $this->item($user->image, new ImageTransformer());
     }
 }

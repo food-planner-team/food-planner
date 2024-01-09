@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,20 +14,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('main_product_id')->nullable();
             $table->string('name');
-            $table->string('brand_name');
-            $table->string('category_name');
-            $table->string('sku')->nullable();
-            $table->double('price');
             $table->double('quantity');
+            $table->unsignedInteger('user_id');
+            $table->integer('kcal')->nullable();
             $table->string('quantity_type');
-            $table->string('external_id');
-            $table->string('provider');
-            $table->smallInteger('order')->nullable();
+            $table->unsignedInteger('status')->default(0);
             $table->timestamps();
         });
-
     }
 
     /**

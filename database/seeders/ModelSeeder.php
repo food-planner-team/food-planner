@@ -53,6 +53,7 @@ class ModelSeeder extends Seeder
     public function seed($tasks)
     {
         $this->command->info($this->getHeader());
+        $this->command->info($this->state?"State: ".$this->getState():"");
 
         if($this->state) {
             $collection = $this->getModel()::factory($this->getAmount())->states($this->getState())->make();

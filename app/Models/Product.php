@@ -14,17 +14,20 @@ class Product extends Model
     use HasFactory, Filterable, Searchable;
 
     protected $fillable = [
-        'main_product_id',
-        'order',
         'name',
         'quantity',
+        'user_id',
         'quantity_type',
-        'image_id',
-        'external_id',
-        'provider',
+        'kcal',
+        'status'
     ];
+
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

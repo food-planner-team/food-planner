@@ -40,5 +40,21 @@ class ImageFactory
 
             return $image;
         }
+        return null;
+    }
+
+    public function update($image)
+    {
+        if (!$image) {
+            return $this->create();
+        } else if ($this->image) {
+            $path = Storage::disk($this->disk)->putFile($this->path . $image->id, $this->image);
+            $image->update([
+                'path' => $path,
+                'url' => Storage::disk($this->disk)->url($path)
+            ]);
+            return $image;
+        }
+        return null;
     }
 }

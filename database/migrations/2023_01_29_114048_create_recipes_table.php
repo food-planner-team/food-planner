@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedInteger('user_id');
             $table->text('description');
             $table->text('preparation')->nullable();
             $table->integer('kcal')->nullable();
             $table->integer('preparation_time');
+            $table->unsignedInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -21,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
+        'kcal_limit',
         'password',
     ];
 
@@ -42,8 +44,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
     public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function userRecipes()
     {
         return $this->belongsToMany(Recipe::class)->withPivot(['date', 'order'])->using(RecipeUser::class);
     }

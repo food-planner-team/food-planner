@@ -12,7 +12,7 @@ class RecipeItemTransformer extends TransformerAbstract
     /** @var array */
     protected array $availableIncludes = [
         'recipe',
-        'mainProduct',
+        'product',
     ];
 
     public function transform(RecipeItem $recipeItem): array
@@ -30,9 +30,12 @@ class RecipeItemTransformer extends TransformerAbstract
         return $this->collection($recipeItem->recipe, new RecipeTransformer);
     }
 
-    public function includeMainProduct(RecipeItem $recipeItem)
+    public function includeProduct(RecipeItem $recipeItem)
     {
-        return $this->item($recipeItem->mainProduct, new MainProductTransformer());
+        if (!$recipeItem->product) {
+            return null;
+        }
+        return $this->item($recipeItem->product, new ProductTransformer());
     }
 
 }

@@ -9,18 +9,10 @@
         <div class="header-nav">
             <div class="nav-element" v-for="link in links" :key="link.name">
                 <template v-if="link.children.length">
-                    <Dropdown
-                        :name="link.name"
-                        :icon="link.icon"
-                        :links="link.children"
-                        :style="style"
-                    />
+                    <Dropdown :name="link.name" :icon="link.icon" :links="link.children" :style="style" />
                 </template>
                 <template v-else>
-                    <router-link
-                        :to="{ name: link.pathName }"
-                        class="flex items-center gap-2"
-                    >
+                    <router-link :to="{ name: link.pathName }" class="flex items-center gap-2">
                         <span className="material-symbols-outlined">{{
                             link.icon
                         }}</span>
@@ -31,18 +23,10 @@
         </div>
         <div class="header-profile">
             <div class="profile-block">
-                <Dropdown
-                    icon="expand_more"
-                    :links="userLinks"
-                    class="hidden sm:inline-block"
-                >
+                <Dropdown icon="expand_more" :links="myAccountLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
-                        <img
-                            src="../assets/user.png"
-                            alt="user's avatar"
-                            width="50"
-                            height="50"
-                        />
+                        <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50" />
+                        <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50" />
                     </div>
                     <span class="font-bold ml-1">
                         Witaj, {{ user?.name }}!
@@ -50,38 +34,40 @@
                 </Dropdown>
             </div>
         </div>
-        <button
-            class="hamburger"
-            aria-label="hamburger-menu"
-            @click="() => (isOpen = !isOpen)"
-        >
-            <span
-                class="hamburger-box"
-                :class="[isOpen ? 'hamburger-active' : '']"
-            >
+        <button class="hamburger" aria-label="hamburger-menu" @click="() => (isOpen = !isOpen)">
+            <span class="hamburger-box" :class="[isOpen ? 'hamburger-active' : '']">
                 <span class="hamburger-inner"></span>
             </span>
         </button>
-        <HamburgerMenu
-            :links="links"
-            class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
-            :class="[isOpen ? 'right-0' : 'right-[-110%]']"
-            :userLinks="userLinks"
-        />
+        <HamburgerMenu :links="links" class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
+            :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="myAccountLinks" />
     </header>
 </template>
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import logo from "../assets/logo.svg";
 import Dropdown from "./Dropdown.vue";
 import { useRouter } from "vue-router";
 import User from "../../System/models/User";
 import { useStore } from "vuex";
 import HamburgerMenu from "./HamburgerMenu.vue";
+import { employeeLinks, adminLinks, userLinks } from "../utils/links";
+import { UserRoleEnum } from "../../System/models/User";
 
 const store = useStore();
 
 const user = computed(() => store.getters["User/getUser"]);
+const image = ref("");
+
+const getUserById = async (id) => {
+    const response = await User.getUserById(id);
+
+    image.value = response.image;
+};
+
+onBeforeMount(async () => {
+    await getUserById(user.value.id);
+});
 
 const router = useRouter();
 
@@ -92,75 +78,14 @@ const emit = defineEmits(["close-hamburger"]);
 const style = "left: 0";
 
 const links = computed(() => {
-    const currentUser = user.value;
-    return [
-        {
-            name: "Planner",
-            pathName: "Planner",
-            icon: "event_note",
-            action: () => (isOpen.value = !isOpen.value),
-            disabled: false,
-            children: [],
-        },
-        {
-            name: "przepisy",
-            pathName: "",
-            icon: "menu_book",
-            action: "",
-            children: [
-                {
-                    name: "wszystkie przepisy",
-                    pathName: "RecipeList",
-                    icon: "list_alt",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                // {
-                //     name: "moje przepisy",
-                //     pathName: "",
-                //     icon: "favorite",
-                //     action: () => (isOpen.value = !isOpen.value),
-                //     disabled: true,
-                // },
-                {
-                    name: "dodaj przepis",
-                    pathName: "AddRecipe",
-                    icon: "add_circle",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-            ],
-        },
-        {
-            name: "produkty",
-            pathName: "",
-            icon: "fastfood",
-            action: "",
-            children: [
-                {
-                    name: "wszystkie produkty",
-                    pathName: "MainProductList",
-                    icon: "list_alt",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: false,
-                },
-                // {
-                //     name: "moje produkty",
-                //     pathName: "",
-                //     icon: "favorite",
-                //     action: () => (isOpen.value = !isOpen.value),
-                //     disabled: true,
-                // },
-                {
-                    name: `dodaj produkt`,
-                    pathName: "AddProduct",
-                    icon: "add_circle",
-                    action: () => (isOpen.value = !isOpen.value),
-                    disabled: currentUser.admin !== 1,
-                },
-            ],
-        },
-    ];
+    switch (user.value.role) {
+        case UserRoleEnum.USER:
+            return userLinks(isOpen);
+        case UserRoleEnum.EMPLOYEE:
+            return employeeLinks(isOpen);
+        case UserRoleEnum.ADMIN:
+            return adminLinks(isOpen);
+    }
 });
 
 const logout = () => {
@@ -169,14 +94,13 @@ const logout = () => {
     });
 };
 
-const userLinks = ref([
-    // {
-    //     name: "ustawienia",
-    //     pathName: "",
-    //     icon: "settings",
-    //     action: () => (isOpen.value = !isOpen.value),
-    //     disabled: true,
-    // },
+const myAccountLinks = ref([
+    {
+        name: "moje konto",
+        pathName: "MyAccount",
+        icon: "person",
+        action: () => (isOpen.value = !isOpen.value),
+    },
     {
         name: "wyloguj",
         pathName: "",
@@ -254,6 +178,7 @@ const userLinks = ref([
     translate: 0 -1em;
     rotate: -45deg;
 }
+
 .header {
     background-color: $alpha;
     box-shadow: 0px 6px 24px $alpha-dark;

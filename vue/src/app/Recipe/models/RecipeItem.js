@@ -1,7 +1,7 @@
 import Joi from "joi";
 import validateData from "../../common/utils/validateData.js";
 import _get from "lodash/get";
-import MainProduct from "../../Product/models/MainProduct.js";
+import Product from "../../Product/models/Product.js";
 
 const schema = Joi.object({
     id: Joi.number().required(),
@@ -18,9 +18,9 @@ class RecipeItem {
         this.optional = data.optional;
         this.url = data.url;
 
-        const mainProduct = _get(data, "mainProduct.data");
-        if (mainProduct) {
-            this.mainProduct = new MainProduct(mainProduct);
+        const product = _get(data, "product.data");
+        if (product) {
+            this.product = new Product(product);
         }
     }
 }

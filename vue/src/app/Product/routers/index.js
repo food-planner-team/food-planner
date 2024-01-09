@@ -14,9 +14,15 @@ const routes = [
             },
             {
                 path: "/lista-produktow",
-                name: "MainProductList",
+                name: "ProductListPage",
                 meta: { requiresAuth: true },
-                component: () => import("../pages/MainProductListPage.vue"),
+                component: () => import("../pages/ProductListPage.vue"),
+            },
+            {
+                path: "/moje-produkty",
+                name: "MyProductListPage",
+                meta: { requiresAuth: true },
+                component: () => import("../pages/MyProductListPage.vue"),
             },
         ],
     },

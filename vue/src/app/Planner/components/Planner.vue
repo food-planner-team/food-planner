@@ -66,12 +66,13 @@ watch(
         });
 
         loader.value = true;
-        Recipe.fetchUserRecipes({
-            include: "image",
+        Recipe.getUserPlannerRecipes({
             dateStart: `${dateStart.value}`,
             dateEnd: `${dateEnd.value}`,
         })
             .then((res) => {
+                console.log(res);
+
                 res.forEach((e) => {
                     recipes.value[e.date].push(e);
                 });

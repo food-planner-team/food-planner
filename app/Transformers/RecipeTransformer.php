@@ -13,7 +13,7 @@ class RecipeTransformer extends TransformerAbstract
     protected array $availableIncludes = [
         'image',
         'recipeItems',
-        'recipeUser'
+        'user'
     ];
 
     public function transform(Recipe $recipe): array
@@ -25,6 +25,9 @@ class RecipeTransformer extends TransformerAbstract
             'kcal' => $recipe->kcal,
             'preparation' => $recipe->preparation,
             'preparation_time' => $recipe->preparation_time,
+            'status' => $recipe->status,
+            'user_id' => $recipe->user_id,
+            'created_at' => $recipe->created_at->format('Y-m-d'),
         ];
         if ($recipe->pivot) {
             $data['order'] = $recipe->pivot->order;
@@ -44,5 +47,9 @@ class RecipeTransformer extends TransformerAbstract
     public function includeRecipeItems(Recipe $recipe): Collection
     {
         return $this->collection($recipe->recipeItems, new RecipeItemTransformer());
+    }
+    public function includeUser(Recipe $recipe): Item
+    {
+        return $this->item($recipe->user, new UserTransformer());
     }
 }
