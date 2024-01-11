@@ -7,12 +7,6 @@ const routes = [
         component: DefaultLayout,
         children: [
             {
-                path: "/dodaj-produkt",
-                name: "AddProduct",
-                meta: { requiresAuth: true },
-                component: () => import("../pages/AddProductPage.vue"),
-            },
-            {
                 path: "/lista-produktow",
                 name: "ProductListPage",
                 meta: { requiresAuth: true },

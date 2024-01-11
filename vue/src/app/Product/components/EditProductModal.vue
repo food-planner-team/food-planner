@@ -85,7 +85,7 @@
                                 <button
                                     class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                     @click="updateProduct">
-                                    Edytuj przepis
+                                    Edytuj produkt
                                 </button>
                             </div>
                         </DialogPanel>

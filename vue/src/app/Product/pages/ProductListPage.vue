@@ -2,19 +2,30 @@
     <main class="main">
         <div class="wrapper">
             <div class="h-full flex flex-col">
-                <h1 class="font-bold text-2xl m-5 pl-3">Lista produktów</h1>
-                <div class="m-5 pl-3">
-                    <p class="pb-2 text-sm text-gray-500">
-                        <label for="search">WYSZUKAJ PRODUKT</label>
-                    </p>
-                    <div class="flex flex-wrap gap-6">
-                        <input type="search" id="search" class="rounded-lg w-full lg:w-[29rem]" placeholder="Wyszukaj"
-                            v-model="searchValue" @keyup.enter="getProducts()" />
-                        <button
-                            class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                            @click="getProducts()">
-                            Szukaj
-                        </button>
+                <div class="m-5 mt-0 flex justify-between">
+                    <div>
+                        <h1 class="font-bold text-2xl my-5 xs:mt-0">
+                            Lista produktów
+                        </h1>
+                        <div>
+                            <p class="pb-2 text-sm text-gray-500">
+                                <label for="search">NAZWA PRODUKTU</label>
+                            </p>
+                            <div class="flex flex-wrap gap-6">
+                                <input type="search" id="search" class="rounded-lg w-full md:w-[28rem]"
+                                    placeholder="Wyszukaj" v-model="searchValue" @keyup.enter="getProducts()" />
+                                <div class="flex gap-6 flex-wrap justify-center w-full md:w-auto">
+                                    <button
+                                        class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 items-center"
+                                        @click="getProducts()">
+                                        Szukaj
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-5 flex flex-col items-end gap-4">
+                        <AddProductModal />
                     </div>
                 </div>
                 <div class="h-full relative">
@@ -54,6 +65,7 @@ import Loader from "../../common/components/Loader.vue";
 import Product from "../models/Product";
 import { useInfiniteScroll } from "@vueuse/core";
 import RecipeCardInfo from "../../Recipe/components/RecipeCardInfo.vue";
+import AddProductModal from "../components/AddProductModal.vue";
 
 const searchValue = ref("");
 const products = ref([]);

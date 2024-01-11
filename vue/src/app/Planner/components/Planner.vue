@@ -1,16 +1,9 @@
 <template>
     <div class="wrapper">
         <div class="planner-container">
-            <PlannerBlock
-                v-for="item in days"
-                v-model:recipes="recipes[item]"
-                :date="item"
-                :class="{
-                    'planner-block--highlighted': item === getCurrentDay(),
-                }"
-                :loader="loader"
-                ref="plannerBlocks"
-            />
+            <PlannerBlock v-for="item in days" v-model:recipes="recipes[item]" :date="item" :class="{
+                'planner-block--highlighted': item === getCurrentDay(),
+            }" :loader="loader" ref="plannerBlocks" />
         </div>
     </div>
 </template>
@@ -71,8 +64,6 @@ watch(
             dateEnd: `${dateEnd.value}`,
         })
             .then((res) => {
-                console.log(res);
-
                 res.forEach((e) => {
                     recipes.value[e.date].push(e);
                 });

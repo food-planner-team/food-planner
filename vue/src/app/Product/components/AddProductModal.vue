@@ -27,7 +27,7 @@
                             <div class="m-4 flex justify-between items-center">
                                 <DialogTitle as="h3"
                                     class="text-2xl font-bold leading-6 text-gray-900 relative lg:after:absolute after:w-[400px] ">
-                                    Edycja produktu
+                                    Dodaj produkt
                                 </DialogTitle>
                                 <button type="button"
                                     class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -90,7 +90,7 @@
                                 <button
                                     class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                     @click="createProduct">
-                                    Dodaj przepis
+                                    Dodaj produkt
                                 </button>
                             </div>
                         </DialogPanel>
@@ -122,12 +122,10 @@ const quantityType = ref("");
 const kcal = ref("");
 const image = ref(null);
 const newImage = ref(null);
-const description = ref("");
 const imageInput = ref(null);
 const errors = reactive({
     name: false,
     image: false,
-    description: false,
 });
 
 const isOpenModal = ref(false);
@@ -139,7 +137,6 @@ function closeModal() {
 function openModal() {
     isOpenModal.value = true;
     name.value = "";
-    description.value = "";
     kcal.value = "";
     quantity.value = "";
     quantityType.value = null;
@@ -181,8 +178,7 @@ const createProduct = async () => {
         !quantity.value ||
         !quantityType.value ||
         !kcal.value ||
-        !image.value ||
-        !description.value
+        !image.value
     ) {
         store.commit("Toast/addToast", {
             message: "Popraw błędy",
@@ -194,14 +190,12 @@ const createProduct = async () => {
         errors.kcal = kcal.value > 0 ? false : true;
         errors.quantity = quantity.value > 0 ? false : true;
         errors.quantityType = quantityType.value ? false : true;
-        errors.description = description.value ? false : true;
 
         return;
     }
 
     const data = {
         name: name.value,
-        description: description.value,
         kcal: kcal.value,
         quantity: quantity.value,
         quantity_type: quantityType.value,
@@ -220,7 +214,6 @@ const createProduct = async () => {
         });
 
         name.value = "";
-        description.value = "";
         kcal.value = "";
         quantity.value = "";
         quantityType.value = null;
