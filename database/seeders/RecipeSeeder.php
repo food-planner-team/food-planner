@@ -104,7 +104,12 @@ class RecipeSeeder extends ModelSeeder
                 $recipe->user_id = $users->random();
                 $recipe->preparation_time = rand(5, 10);
                 $recipe->kcal = rand(100, 1000);
-                $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
+                $path = "";
+                if (env('APP_ENV') == 'local'){
+                    $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
+                } else {
+                    $path = __DIR__ . '/data/seed/images/' . $recipe->image;
+                }
                 unset($recipe->image);
                 $recipe->save();
                 if (file_exists($path)) {

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\MainProduct;
 use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\RecipeItem;
