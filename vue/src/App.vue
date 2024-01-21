@@ -5,7 +5,9 @@
         </transition>
     </router-view>
 </template>
-<script></script>
+<script>
+</script>
+
 <style>
 .page-enter-active,
 .page-leave-active {

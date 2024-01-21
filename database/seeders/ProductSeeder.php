@@ -493,7 +493,7 @@ class ProductSeeder extends ModelSeeder
                 $product->user_id = $users->random();
                 $path = "";
                 if (env('APP_ENV') == 'local'){
-                    $path = __DIR__ . '\data\seed\images\products\\' . $product->image;
+                    $path = __DIR__ . '\data\seed\images\products\/' . $product->image;
                 } else {
                     $path = __DIR__ . '/data/seed/images/products' . $product->image;
                 }
