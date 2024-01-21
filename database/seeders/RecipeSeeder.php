@@ -106,7 +106,7 @@ class RecipeSeeder extends ModelSeeder
                 $recipe->kcal = rand(100, 1000);
                 $path = "";
                 if (env('APP_ENV') == 'local'){
-                    $path = __DIR__ . '\data\seed\images\\' . $recipe->image;
+                    $path = __DIR__ . '\data\seed\images/' . $recipe->image;
                 } else {
                     $path = __DIR__ . '/data/seed/images/' . $recipe->image;
                 }

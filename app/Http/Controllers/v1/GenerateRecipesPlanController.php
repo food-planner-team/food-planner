@@ -24,7 +24,7 @@ class GenerateRecipesPlanController extends ApiController
         $dateSEndName = Carbon::create($dateEnd)->locale('pl')->isoFormat('D MMMM');
 
         $user = $request->user();
-        $userRecipes = $user->recipes()
+        $userRecipes = $user->userRecipes()
             ->where('date', '>=', $dateStart)
             ->where('date', '<=', $dateEnd)
             ->get();

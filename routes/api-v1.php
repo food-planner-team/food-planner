@@ -7,6 +7,8 @@ use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Auth\ResetPasswordController;
 use App\Http\Controllers\v1\Auth\SendResetPasswordController;
 use App\Http\Controllers\v1\GenerateRecipesPlanController;
+use App\Http\Controllers\v1\NotificationsController;
+use App\Http\Controllers\v1\NotificationsReadController;
 use App\Http\Controllers\v1\ProductsController;
 use App\Http\Controllers\v1\ProductUpdateStatusController;
 use App\Http\Controllers\v1\RecipesController;
@@ -39,6 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/notifications', [NotificationsController::class, 'index']);
+    Route::post('/notifications/read', NotificationsReadController::class);
     Route::post('/logout', LogoutController::class);
     Route::resource('/users/recipes', UserRecipesController::class)->except(['update']);
     Route::get('/users/{user}', [UsersController::class, 'show']);
