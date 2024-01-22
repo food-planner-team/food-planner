@@ -19,7 +19,7 @@ class RecipeUpdateStatusController extends ApiController
     public function __invoke(UpdateStatusRecipeRequest $request, Recipe $recipe)
     {
         $recipe->update(['status' => $request->get("status")]);
-        $recipe->user()->notify(new RecipeStatusChangedNotification($recipe, $request->get("message", "Recipe status changed")));
+        $recipe->user->notify(new RecipeStatusChangedNotification($recipe, $request->get("message", "Recipe status changed")));
         return $this->fractal
             ->item($recipe, new RecipeTransformer())
             ->get();

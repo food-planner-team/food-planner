@@ -24,6 +24,9 @@ export const displayCorrectQuantityType = (value, type) => {
     } else if (type === "szt.") {
         convertedValue = value;
         unit = "szt.";
+    } else if (type === "szt") {
+        convertedValue = value;
+        unit = "szt";
     }
 
     return `${convertedValue.toLocaleString(undefined, {
