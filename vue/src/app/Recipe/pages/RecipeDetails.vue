@@ -65,10 +65,6 @@
                                                                 item.product.quantityType
                                                             )
                                                         }}
-                                                        {{
-                                                            item.quantity
-                                                            + ' ' +
-                                                            item.product.quantityType }}
                                                     </p>
                                                 </div>
                                             </div>

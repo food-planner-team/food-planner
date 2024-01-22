@@ -2,20 +2,20 @@
     <header class="header relative">
         <router-link :to="{ name: 'Planner' }">
             <div class="logo-name">
-                <img :src="logo" alt="logo" width="36" height="30"/>
+                <img :src="logo" alt="logo" width="36" height="30" />
                 <p>Food Planner</p>
             </div>
         </router-link>
         <div class="header-nav">
             <div class="nav-element" v-for="link in links" :key="link.name">
                 <template v-if="link.children.length">
-                    <Dropdown :name="link.name" :icon="link.icon" :links="link.children" :style="style"/>
+                    <Dropdown :name="link.name" :icon="link.icon" :links="link.children" :style="style" />
                 </template>
                 <template v-else>
                     <router-link :to="{ name: link.pathName }" class="flex items-center gap-2">
                         <span className="material-symbols-outlined">{{
-                                link.icon
-                            }}</span>
+                            link.icon
+                        }}</span>
                         <p class="capitalize">{{ link.name }}</p>
                     </router-link>
                 </template>
@@ -25,29 +25,29 @@
 
 
 
-<!--            <button type="button"-->
-<!--                    class="relative inline-flex items-center p-3 text-sm font-medium text-center rounded-lg">-->
-<!--                <span className="material-symbols-outlined" size="xl">Notifications</span>-->
-<!--                <div v-if="notifications.length > 0"-->
-<!--                     class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full top-0 right-1 ">-->
-<!--                    {{ notifications.length }}-->
-<!--                </div>-->
-<!--            </button>-->
-<!--            <Dropdown icon="notifications" class="hidden sm:inline-block">-->
-<!--&lt;!&ndash;                <div class="profile-avatar">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <span class="font-bold ml-1">&ndash;&gt;-->
-<!--&lt;!&ndash;                        Witaj, {{ user?.name }}!&ndash;&gt;-->
-<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
-<!--            </Dropdown>-->
+            <!--            <button type="button"-->
+            <!--                    class="relative inline-flex items-center p-3 text-sm font-medium text-center rounded-lg">-->
+            <!--                <span className="material-symbols-outlined" size="xl">Notifications</span>-->
+            <!--                <div v-if="notifications.length > 0"-->
+            <!--                     class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full top-0 right-1 ">-->
+            <!--                    {{ notifications.length }}-->
+            <!--                </div>-->
+            <!--            </button>-->
+            <!--            <Dropdown icon="notifications" class="hidden sm:inline-block">-->
+            <!--&lt;!&ndash;                <div class="profile-avatar">&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+            <!--&lt;!&ndash;                <span class="font-bold ml-1">&ndash;&gt;-->
+            <!--&lt;!&ndash;                        Witaj, {{ user?.name }}!&ndash;&gt;-->
+            <!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+            <!--            </Dropdown>-->
             <div class="profile-block">
                 <NotificationDropdown />
                 <Dropdown icon="expand_more" :links="myAccountLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
-                        <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50"/>
-                        <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50"/>
+                        <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50" />
+                        <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50" />
                     </div>
                     <span class="font-bold ml-1">
                         Witaj, {{ user?.name }}!
@@ -61,19 +61,19 @@
             </span>
         </button>
         <HamburgerMenu :links="links" class="absolute top-[115%] right-0 w-full duration-500 ease-in lg:hidden"
-                       :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="myAccountLinks"/>
+            :class="[isOpen ? 'right-0' : 'right-[-110%]']" :userLinks="myAccountLinks" />
     </header>
 </template>
 <script setup>
-import {ref, computed, onBeforeMount} from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import logo from "../assets/logo.svg";
 import Dropdown from "./Dropdown.vue";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 import User from "../../System/models/User";
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 import HamburgerMenu from "./HamburgerMenu.vue";
-import {employeeLinks, adminLinks, userLinks} from "../utils/links";
-import {UserRoleEnum} from "../../System/models/User";
+import { employeeLinks, adminLinks, userLinks } from "../utils/links";
+import { UserRoleEnum } from "../../System/models/User";
 import _get from "lodash/get.js";
 import Message from "../../System/models/Message.js";
 import NotificationDropdown from "./NotificationDropdown.vue";
@@ -96,7 +96,7 @@ const getNotificationsData = async () => {
 
 onBeforeMount(async () => {
     await getUserById(user.value.id);
-    window.Echo.private(`App.Models.User.`+ _get(store, "state.User.user.data.id")).notification((notification) => {
+    window.Echo.private(`App.Models.User.` + _get(store, "state.User.user.data.id")).notification((notification) => {
         console.log(notification);
     });
     await getNotificationsData();
@@ -123,7 +123,7 @@ const links = computed(() => {
 
 const logout = () => {
     User.logout().then(() => {
-        router.push({name: "Login"});
+        router.push({ name: "Login" });
     });
 };
 
@@ -187,7 +187,7 @@ const myAccountLinks = ref([
     position: absolute;
     left: 0;
     transition: translate 0.15s 0.15s ease-in-out,
-    rotate 0.15s 0.15s ease-in-out;
+        rotate 0.15s 0.15s ease-in-out;
 }
 
 .hamburger-inner::before {

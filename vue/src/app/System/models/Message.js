@@ -28,13 +28,17 @@ class Message {
         this.data = data.data;
         this.read_at = data.read_at;
 
-        if (this.type === "App\\Notifications\\RecipeStatusChangedNotification") {
+        if (
+            this.type === "App\\Notifications\\RecipeStatusChangedNotification"
+        ) {
             const recipe = _get(data.data, "recipe");
             if (recipe) {
                 this.item = new Recipe(recipe);
             }
         }
-        if (this.type === "App\\Notifications\\ProductStatusChangedNotification") {
+        if (
+            this.type === "App\\Notifications\\ProductStatusChangedNotification"
+        ) {
             const product = _get(data.data, "product");
             if (product) {
                 this.item = new Product(product);
@@ -57,20 +61,21 @@ class Message {
     }
 
     static async readNotifications(notifications) {
-        const unreadNotifications = notifications.filter(e => e.read_at === null)
-        console.log(unreadNotifications)
+        const unreadNotifications = notifications.filter(
+            (e) => e.read_at === null
+        );
         unreadNotifications.forEach((notification) => {
             notification.read_at = new Date();
         });
-        const ids = unreadNotifications.map((notification) => notification.id)
+        const ids = unreadNotifications.map((notification) => notification.id);
         if (ids.length === 0) {
-            return
+            return;
         }
 
         const response = await Api.post("/notifications/read", {
             ids: ids,
         });
-        return response.data
+        return response.data;
     }
 }
 

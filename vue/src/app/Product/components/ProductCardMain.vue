@@ -1,8 +1,7 @@
 <template>
     <div class="h-[100px] w-[22rem] rounded-lg flex items-center gap-5 shadow-sm border bg-[#fefffe]">
-        <div class="w-[99px] h-[99px] flex items-center overflow-hidden">
-            <img v-if="product?.image?.url" :src="product?.image?.url" :alt="product.name"
-                class="rounded-l-md w-[99px] h-[99px]" />
+        <div class="w-[98px] h-[98px] flex items-center overflow-hidden">
+            <img v-if="product?.image?.url" :src="product?.image?.url" :alt="product.name" class="rounded-l-md w-[99px]" />
             <img v-else src="../../common/assets/no-image.jpg" alt="no image placeholder" />
         </div>
         <div class="flex flex-col justify-around flex-1 gap-1 py-3 h-full">

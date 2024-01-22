@@ -184,7 +184,7 @@ onMounted(async () => {
             id: product.product.id,
             image: product.product?.image,
             name: product.product.name,
-            quantity: product.product.quantity,
+            quantity: product.quantity,
             quantityType: product.product.quantityType,
             optional: Boolean(product.optional),
         };
