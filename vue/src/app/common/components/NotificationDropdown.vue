@@ -14,7 +14,7 @@
             enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
             leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
             <MenuItems
-                class="absolute right-0 z-10 mt-2 w-64 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[40rem] overflow-auto">
+                class="absolute right-0 z-10 mt-2 w-96 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[40rem] overflow-auto">
                 <div class="py-1">
                     <template v-if="notifications.length">
                         <router-link v-for="notification in notifications" :key="notification.id" :to="notification.type === 'App\\Notifications\\RecipeStatusChangedNotification' ?
