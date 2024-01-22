@@ -33,6 +33,7 @@ class ProductStatusChangedNotification extends Notification implements ShouldBro
             'data' => json_encode([
                 'message' => $this->message,
                 'product' => $this->product,
+                'new_status' => $this->product->status
             ]),
             'read_at' => null,
             'notifiable_type' => 'App\Models\User',

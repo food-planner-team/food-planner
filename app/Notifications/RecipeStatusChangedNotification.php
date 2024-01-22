@@ -21,17 +21,27 @@ class RecipeStatusChangedNotification extends Notification implements ShouldBroa
         $this->recipe = $recipe;
         $this->message = $message;
     }
+
     public function via($notifiable)
     {
-        return ['broadcast','database'];
+        return ['broadcast', 'database'];
     }
+
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'message' => $this->message,
-            'recipe' => $this->recipe,
+            'data' => json_encode([
+                'message' => $this->message,
+                'recipe' => $this->recipe,
+                'new_status' => $this->recipe->status
+            ]),
+            'read_at' => null,
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $notifiable->id,
+            'type' => 'App\Notifications\RecipeStatusChangedNotification'
         ]);
     }
+
     public function toDatabase($notifiable)
     {
         return [
