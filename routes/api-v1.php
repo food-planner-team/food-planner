@@ -7,6 +7,7 @@ use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Auth\ResetPasswordController;
 use App\Http\Controllers\v1\Auth\SendResetPasswordController;
 use App\Http\Controllers\v1\GenerateRecipesPlanController;
+use App\Http\Controllers\v1\GenerateShoppingListController;
 use App\Http\Controllers\v1\NotificationsController;
 use App\Http\Controllers\v1\NotificationsReadController;
 use App\Http\Controllers\v1\ProductsController;
@@ -38,6 +39,7 @@ Route::post('/reset', ResetPasswordController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/pdf-recipes', GenerateRecipesPlanController::class);
+    Route::get('/user/shopping-list', GenerateShoppingListController::class);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
