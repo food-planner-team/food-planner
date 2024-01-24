@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enum\RecipeStatusEnum;
 use App\Factories\ImageFactory;
+use App\Models\Product;
 use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -94,11 +95,12 @@ class RecipeSeeder extends ModelSeeder
         ];
 
         $users = User::all()->pluck('id');
+        $products = Product::all()->pluck('id');
 
         $this->useData($recipesData)
             ->setHeader("Seeding recipes")
             ->setAmount(count($recipesData))
-            ->seedModel(Recipe::class, function ($recipe) use ($users)
+            ->seedModel(Recipe::class, function ($recipe) use ($users, $products)
             {
                 $recipe->status = RecipeStatusEnum::ACCEPTED;
                 $recipe->user_id = $users->random();
@@ -112,6 +114,15 @@ class RecipeSeeder extends ModelSeeder
                 }
                 unset($recipe->image);
                 $recipe->save();
+                $chosenProductIds = $products->random(7);
+                foreach ($chosenProductIds as $productId){
+                    $recipe->recipeItems()->create([
+                        'product_id' => $productId,
+                        'recipe_id' => $recipe->id,
+                        'quantity' => rand(1, 10),
+                    ]);
+                }
+
                 if (file_exists($path)) {
                     $file = new UploadedFile($path, $recipe->id, mime_content_type($path), null, false, true);
                     $image = new ImageFactory('images/recipes/', $file, $recipe, 'public');
