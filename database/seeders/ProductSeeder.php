@@ -94,43 +94,43 @@ class ProductSeeder extends ModelSeeder
             [
                 'image' => 'cebulaczerwona.jpg',
                 'name' => 'Cebula czerwona',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'ziemniaki.jpg',
                 'name' => 'Ziemniaki',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'filetzpiersikurczaka.jpg',
                 'name' => 'Filet z piersi kurczaka',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'filetzpiersiindyka.jpg',
                 'name' => 'Filet z piersi indyka',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'schab.jpg',
                 'name' => 'Schab',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'filetzdorsza.jpg',
                 'name' => 'Filet z dorsza',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'filetzlososia.jpg',
                 'name' => 'Filet z łososia',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
@@ -226,13 +226,13 @@ class ProductSeeder extends ModelSeeder
             [
                 'image' => 'ryzbasmati.jpg',
                 'name' => 'Ryż basmati',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'ryzbrazowy.jpg',
                 'name' => 'Ryż brązowy',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
@@ -244,7 +244,7 @@ class ProductSeeder extends ModelSeeder
             [
                 'image' => 'makapszenna.jpg',
                 'name' => 'Mąka pszenna',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
@@ -256,13 +256,13 @@ class ProductSeeder extends ModelSeeder
             [
                 'image' => 'migdaly.jpg',
                 'name' => 'Migdały',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'chleb.jpg',
                 'name' => 'Chleb',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
@@ -322,13 +322,13 @@ class ProductSeeder extends ModelSeeder
             [
                 'image' => 'sol.jpg',
                 'name' => 'Sól',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
                 'image' => 'cukier.png',
                 'name' => 'Cukier',
-                'quantity_type' => 'kg',
+                'quantity_type' => 'g',
                 'status' => 1
             ],
             [
