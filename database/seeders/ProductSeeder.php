@@ -426,7 +426,7 @@ class ProductSeeder extends ModelSeeder
                 $product->kcal = rand(100, 500);
                 $product->user_id = $users->random();
                 $path = "";
-                if (env('APP_ENV') == 'local'){
+                if (env('APP_ENV') == 'local') {
                     $path = __DIR__ . '\data\seed\images\products\/' . $product->image;
                 } else {
                     $path = __DIR__ . '/data/seed/images/products' . $product->image;
@@ -436,7 +436,11 @@ class ProductSeeder extends ModelSeeder
                 $product->save();
                 if (file_exists($path)) {
                     $file = new UploadedFile($path, $product->id, mime_content_type($path), null, false, true);
-                    $image = new ImageFactory('images/products/', $file, $product, 'public');
+                    if (env('APP_ENV') == 'local') {
+                        $image = new ImageFactory('\images\products\/', $file, $product, 'public');
+                    } else {
+                        $image = new ImageFactory('images/products/', $file, $product, 'public');
+                    }
                     $image->create();
                 }
             });
