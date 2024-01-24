@@ -15,7 +15,6 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'quantity' => 'required',
             'quantity_type' => 'required|in:"g","ml","szt"',
         ];
     }
