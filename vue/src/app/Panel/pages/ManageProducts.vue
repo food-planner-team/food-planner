@@ -60,10 +60,6 @@
                                             </th>
                                             <th
                                                 class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
-                                                Wartość miary
-                                            </th>
-                                            <th
-                                                class="sticky top-0 py-2 px-4 bg-[#fff] z-10 border-b-[1px] border-gray-300">
                                                 Jednostka miary
                                             </th>
                                             <th
@@ -95,7 +91,7 @@
                                                         alt="no image placeholder" class="rounded-md mix-blend-darken" />
                                                 </div>
                                             </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]">
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[200px]">
                                                 <RecipeCardInfo :bg-color="statusBgColor(product.status)"
                                                     :text-color="statusTextColor(product.status)">
                                                     <template #icon>
@@ -112,16 +108,13 @@
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ product.kcal }} kcal
                                             </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]">
-                                                {{ product.quantity }}
-                                            </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[150px]">
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[200px]">
                                                 {{ product.quantityType }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
                                                 {{ product.user.name }}
                                             </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]">
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[210px]">
                                                 {{ product.createdAt }}
                                             </td>
                                             <td class="py-2 px-4 border-b-[1px] border-gray-300">
@@ -162,10 +155,23 @@
                                                         <span v-show="!isLoadingBtn
                                                             ">Odrzuć</span>
                                                     </button>
-                                                    <Dropdown icon="more_vert"
-                                                        class="setting__span-btn bg-gray-200 rounded-lg py-1 hover:bg-gray-300 transition-colors"
-                                                        :links="links(product.id)
-                                                            " />
+                                                    <button
+                                                        class="bg-[#FFEAEA] text-[#B03E3E] font-semibold rounded-lg py-1 px-5 hover:bg-[#FFDADA] transition-colors w-[150px] h-[30px] disabled:cursor-not-allowed disabled:opacity-60"
+                                                        @click="handleRemoveProduct(product.id)">
+                                                        <span class="flex justify-center items-center">
+                                                            <svg v-show="isLoadingBtn
+                                                                " class="w-4 h-4 text-white animate-spin" fill="none"
+                                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                                <path class="opacity-75"
+                                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                    fill="currentColor"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <span v-show="!isLoadingBtn
+                                                            ">Usuń produkt</span>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
