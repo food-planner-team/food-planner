@@ -22,7 +22,28 @@
             </div>
         </div>
         <div class="header-profile">
+
+
+
+            <!--            <button type="button"-->
+            <!--                    class="relative inline-flex items-center p-3 text-sm font-medium text-center rounded-lg">-->
+            <!--                <span className="material-symbols-outlined" size="xl">Notifications</span>-->
+            <!--                <div v-if="notifications.length > 0"-->
+            <!--                     class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full top-0 right-1 ">-->
+            <!--                    {{ notifications.length }}-->
+            <!--                </div>-->
+            <!--            </button>-->
+            <!--            <Dropdown icon="notifications" class="hidden sm:inline-block">-->
+            <!--&lt;!&ndash;                <div class="profile-avatar">&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <img v-else src="../assets/user.png" alt="user's avatar" width="50" height="50"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+            <!--&lt;!&ndash;                <span class="font-bold ml-1">&ndash;&gt;-->
+            <!--&lt;!&ndash;                        Witaj, {{ user?.name }}!&ndash;&gt;-->
+            <!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+            <!--            </Dropdown>-->
             <div class="profile-block">
+                <NotificationDropdown />
                 <Dropdown icon="expand_more" :links="myAccountLinks" class="hidden sm:inline-block">
                     <div class="profile-avatar">
                         <img v-if="image?.url" :src="image?.url" alt="user's avatar" width="50" height="50" />
@@ -53,20 +74,32 @@ import { useStore } from "vuex";
 import HamburgerMenu from "./HamburgerMenu.vue";
 import { employeeLinks, adminLinks, userLinks } from "../utils/links";
 import { UserRoleEnum } from "../../System/models/User";
+import _get from "lodash/get.js";
+import Message from "../../System/models/Message.js";
+import NotificationDropdown from "./NotificationDropdown.vue";
 
 const store = useStore();
 
 const user = computed(() => store.getters["User/getUser"]);
 const image = ref("");
+let notifications = ref([]);
 
 const getUserById = async (id) => {
     const response = await User.getUserById(id);
 
     image.value = response.image;
 };
+const getNotificationsData = async () => {
+    const response = await Message.getNotifications()
+    notifications.value = response.notifications;
+};
 
 onBeforeMount(async () => {
     await getUserById(user.value.id);
+    window.Echo.private(`App.Models.User.` + _get(store, "state.User.user.data.id")).notification((notification) => {
+        console.log(notification);
+    });
+    await getNotificationsData();
 });
 
 const router = useRouter();

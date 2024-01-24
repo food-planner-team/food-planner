@@ -1,113 +1,63 @@
 <template>
     <button
         class="inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2 text-base font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        @click="openModal"
-    >
+        @click="openModal">
         Dodaj produkt
     </button>
     <TransitionRoot appear :show="isOpenModal" as="template">
         <Dialog as="div" @close="closeModal" class="relative z-10">
-            <TransitionChild
-                as="template"
-                enter="duration-300 ease-out"
-                enter-from="opacity-0"
-                enter-to="opacity-100"
-                leave="duration-200 ease-in"
-                leave-from="opacity-100"
-                leave-to="opacity-0"
-            >
+            <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
+                leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-black bg-opacity-25" />
             </TransitionChild>
 
             <div class="fixed inset-0 overflow-y-auto">
-                <div
-                    class="flex min-h-full items-center justify-center p-4 text-center"
-                >
-                    <TransitionChild
-                        as="template"
-                        enter="duration-300 ease-out"
-                        enter-from="opacity-0 scale-95"
-                        enter-to="opacity-100 scale-100"
-                        leave="duration-200 ease-in"
-                        leave-from="opacity-100 scale-100"
-                        leave-to="opacity-0 scale-95"
-                    >
+                <div class="flex min-h-full items-center justify-center p-4 text-center">
+                    <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
+                        enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
+                        leave-to="opacity-0 scale-95">
                         <DialogPanel
-                            class="w-full max-w-5xl h-[90dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative"
-                        >
-                            <button
-                                class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
-                                @click="closeModal"
-                            >
+                            class="w-full max-w-5xl h-[90dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative">
+                            <button class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
+                                @click="closeModal">
                                 <span class="material-symbols-outlined">
                                     close
                                 </span>
                             </button>
-                            <div
-                                class="m-4 flex justify-between items-center mr-7"
-                            >
-                                <DialogTitle
-                                    as="h3"
-                                    class="text-2xl font-bold leading-6 text-gray-900 relative lg:after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]"
-                                >
+                            <div class="m-4 flex justify-between items-center mr-7">
+                                <DialogTitle as="h3"
+                                    class="text-2xl font-bold leading-6 text-gray-900 relative lg:after:absolute after:w-[400px] after:h-px after:bg-grey after:ml-6 after:top-[50%]">
                                     Dodaj produkt
                                 </DialogTitle>
-                                <button
-                                    type="button"
+                                <button type="button"
                                     class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    @click="closeModal"
-                                >
+                                    @click="closeModal">
                                     Powrót
                                 </button>
                             </div>
                             <div class="ml-4">Szukaj produktu</div>
                             <div class="m-4 flex flex-col">
                                 <div class="flex justify-between pr-2.5">
-                                    <input
-                                        type="search"
-                                        id="search"
-                                        class="rounded-md w-full lg:w-3/4"
-                                        placeholder="Wyszukaj"
-                                        v-model="searchValue"
-                                        @keyup.enter="getProducts()"
-                                    />
+                                    <input type="search" id="search" class="rounded-md w-full lg:w-3/4"
+                                        placeholder="Wyszukaj" v-model="searchValue" @keyup.enter="getProducts()" />
                                     <button
                                         class="hidden lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 w-[200px] py-2 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        @click="getProducts()"
-                                    >
+                                        @click="getProducts()">
                                         Szukaj
                                     </button>
                                 </div>
                             </div>
-                            <div
-                                class="lg:m-4 h-[420px] rounded-sm overflow-auto mr-0 p-1"
-                                v-if="products.length"
-                                ref="scrollComponent"
-                            >
-                                <div
-                                    class="lg:h-36 rounded-lg flex flex-col lg:flex-row items-center gap-2 lg:gap-5 p-5 mb-2 shadow-md"
-                                    v-for="(product, index) in products"
-                                    :key="index"
-                                >
-                                    <div
-                                        class="w-[120px] h-[120px] rounded-md ml-1 flex items-center"
-                                    >
-                                        <img
-                                            v-if="product?.image?.url"
-                                            :src="`${product?.image?.url}`"
-                                            :alt="product.name"
-                                            class="rounded-md"
-                                        />
-                                        <img
-                                            v-else
-                                            src="../../common/assets/no-image.jpg"
-                                            alt="no image placeholder"
-                                            class="rounded-md mix-blend-darken"
-                                        />
+                            <div class="lg:m-4 h-[420px] rounded-sm overflow-auto mr-0 p-1" v-if="products.length"
+                                ref="scrollComponent">
+                                <div class="lg:h-36 rounded-lg flex flex-col lg:flex-row items-center gap-2 lg:gap-5 p-5 mb-2 shadow-md"
+                                    v-for="(product, index) in products" :key="index">
+                                    <div class="w-[120px] h-[120px] rounded-md ml-1 flex items-center justify-center">
+                                        <img v-if="product?.image?.url" :src="`${product?.image?.url}`" :alt="product.name"
+                                            class="rounded-md max-w-full max-h-full mix-blend-multiply" />
+                                        <img v-else src="../../common/assets/no-image.jpg" alt="no image placeholder"
+                                            class="rounded-md mix-blend-darken" />
                                     </div>
-                                    <div
-                                        class="flex flex-col justify-center flex-1 gap-2 p-1 h-full"
-                                    >
+                                    <div class="flex flex-col justify-center flex-1 gap-2 p-1 h-full">
                                         <h1 class="font-bold text-xl">
                                             {{ product.name }}
                                         </h1>
@@ -124,17 +74,13 @@
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             @click="
                                                 $emit('addProduct', product)
-                                            "
-                                        >
+                                                ">
                                             Wybierz produkt
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                v-if="!products.length && !isLoading"
-                                class="m-4"
-                            >
+                            <div v-if="!products.length && !isLoading" class="m-4">
                                 Brak pasujących produktów
                             </div>
                             <Loader v-if="isLoading" class="m-auto" />

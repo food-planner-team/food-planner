@@ -181,7 +181,6 @@ const getUsers = async () => {
     });
 
     users.value = response.users;
-    console.log(response);
     page.value++;
     isLoading.value = false;
 };

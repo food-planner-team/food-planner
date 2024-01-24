@@ -8,22 +8,20 @@
             </div>
 
             <div class="flex items-center relative">
-                <input
-                    type="text"
-                    id="litepicker"
-                    class="w-[275px] rounded-md cursor-pointer bg-transparent"
-                    readonly
-                    :value="dateRange"
-                />
-                <span
-                    class="material-symbols-outlined absolute right-0 translate-x-[-50%] z-[-1]"
-                >
+                <input type="text" id="litepicker" class="w-[275px] rounded-md cursor-pointer bg-transparent" readonly
+                    :value="dateRange" />
+                <span class="material-symbols-outlined absolute right-0 translate-x-[-50%] z-[-1]">
                     calendar_month
                 </span>
             </div>
-            <p class="ml-auto flex cursor-pointer" @click="generatePdf">
-                <span class="material-symbols-outlined"> print </span>
-            </p>
+            <div class="flex ml-auto gap-5">
+                <p class="flex cursor-pointer" @click="generateShoppingList">
+                    <span class="material-symbols-outlined"> shopping_bag </span>
+                </p>
+                <p class="flex cursor-pointer" @click="generatePdf">
+                    <span class="material-symbols-outlined"> print </span>
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -82,6 +80,17 @@ const generatePdf = () => {
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute("download", "planner.pdf");
+        document.body.appendChild(link);
+        link.click();
+    });
+};
+
+const generateShoppingList = () => {
+    Pdf.generateSoppingList(dateStart.value, dateEnd.value).then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "shoppingList.pdf");
         document.body.appendChild(link);
         link.click();
     });

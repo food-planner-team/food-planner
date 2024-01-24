@@ -85,6 +85,11 @@ import RecipeCard from "../components/RecipeCard.vue";
 import RecipeCardInfo from "../components/RecipeCardInfo.vue";
 import RecipeFilters from "../components/RecipeFilters.vue";
 import { RecipeStatusEnum } from "../models/Recipe.js";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const recipeId = ref(route.params.id);
 
 const links = (id) => {
     return [

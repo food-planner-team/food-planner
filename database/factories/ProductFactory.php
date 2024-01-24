@@ -19,7 +19,6 @@ class ProductFactory extends Factory
     {
         return [
             'name'=> fake()->text(),
-            'quantity'=> fake()->numberBetween(1,15),
         ];
     }
 

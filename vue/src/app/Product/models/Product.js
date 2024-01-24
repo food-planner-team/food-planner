@@ -9,7 +9,7 @@ import User from "../../System/models/User.js";
 const schema = Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    quantity: Joi.number().required(),
+    quantity: Joi.number(),
     quantity_type: Joi.string().required(),
     kcal: Joi.number().required(),
     status: Joi.number().required(),
@@ -57,9 +57,10 @@ class Product {
         };
     }
 
-    static async updateProductStatus(productId, status) {
+    static async updateProductStatus(productId, status, message = "") {
         const response = await Api.post(`/products/${productId}/statuses`, {
             status,
+            message,
         });
 
         return new Product(response.data.data);

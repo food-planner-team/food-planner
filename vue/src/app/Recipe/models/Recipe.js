@@ -108,9 +108,10 @@ class Recipe {
         };
     }
 
-    static async updateRecipeStatus(recipeId, status) {
+    static async updateRecipeStatus(recipeId, status, message = "") {
         const response = await Api.post(`/recipes/${recipeId}/statuses`, {
             status,
+            message,
         });
 
         return new Recipe(response.data.data);

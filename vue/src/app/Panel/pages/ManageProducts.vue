@@ -1,6 +1,8 @@
 <template>
     <main class="main bg-[#fff] rounded-lg">
         <div class="wrapper">
+            <RejectModal v-model:isOpenModal="isOpenModal" v-model:rejectValue="rejectValue"
+                :reject="() => handleRejectProduct(productId)" />
             <div class="h-full flex flex-col">
                 <div class="m-5 mt-0 flex justify-between">
                     <div>
@@ -93,7 +95,7 @@
                                                         alt="no image placeholder" class="rounded-md mix-blend-darken" />
                                                 </div>
                                             </td>
-                                            <td class="py-2 px-4 border-b-[1px] border-gray-300">
+                                            <td class="py-2 px-4 border-b-[1px] border-gray-300 w-[130px]">
                                                 <RecipeCardInfo :bg-color="statusBgColor(product.status)"
                                                     :text-color="statusTextColor(product.status)">
                                                     <template #icon>
@@ -145,7 +147,7 @@
                                                     <button
                                                         class="bg-[#FFEAEA] text-[#B03E3E] font-semibold rounded-lg py-1 px-5 hover:bg-[#FFDADA] transition-colors w-[100px] h-[30px] disabled:cursor-not-allowed disabled:opacity-60"
                                                         :disabled="product.status === ProductStatusEnum.REJECTED"
-                                                        @click="handleRejectProduct(product.id)">
+                                                        @click="handleOpenModal(product.id)">
                                                         <span class="flex justify-center items-center">
                                                             <svg v-show="isLoadingBtn
                                                                 " class="w-4 h-4 text-white animate-spin" fill="none"
@@ -194,6 +196,8 @@ import RecipeFilters from "../../Recipe/components/RecipeFilters.vue";
 import { ProductStatusEnum } from "../../Product/models/Product.js";
 import RecipeCardInfo from "../../Recipe/components/RecipeCardInfo.vue";
 import Dropdown from "../../common/components/Dropdown.vue";
+import RejectModal from "../components/RejectModal.vue";
+
 
 const products = ref([]);
 const searchValue = ref("");
@@ -202,23 +206,12 @@ const isLoadingBtn = ref(false);
 const page = ref(1);
 const scrollComponent = ref(null);
 const filterValue = ref(ProductStatusEnum.ALL);
+const isOpenModal = ref(false);
+const rejectValue = ref("");
+const productId = ref(null);
 
 const links = (id) => {
     return [
-        // {
-        //     name: "zobacz przepis",
-        //     pathName: "ProductDetails",
-        //     params: { id: id },
-        //     icon: "search",
-        //     action: "",
-        // },
-        // {
-        //     name: "edytuj",
-        //     pathName: "UpdateProduct",
-        //     params: { id: id },
-        //     icon: "edit",
-        //     action: "",
-        // },
         {
             name: "usuń",
             pathName: "",
@@ -332,7 +325,8 @@ const handleAcceptProduct = async (productId) => {
     );
     const response = await Product.updateProductStatus(
         productId,
-        ProductStatusEnum.ACCEPTED
+        ProductStatusEnum.ACCEPTED,
+        'accepted'
     );
     products.value[productIndex].status = response.status;
     isLoadingBtn.value = false;
@@ -345,10 +339,17 @@ const handleRejectProduct = async (productId) => {
     );
     const response = await Product.updateProductStatus(
         productId,
-        ProductStatusEnum.REJECTED
+        ProductStatusEnum.REJECTED,
+        rejectValue.value
     );
     products.value[productIndex].status = response.status;
     isLoadingBtn.value = false;
+};
+
+const handleOpenModal = (id) => {
+    productId.value = id;
+    isOpenModal.value = true;
+    rejectValue.value = "";
 };
 
 const handleRemoveProduct = async (productId) => {

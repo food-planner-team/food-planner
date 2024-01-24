@@ -1,6 +1,8 @@
 <template>
     <main class="main bg-[#fff] rounded-lg">
         <div class="wrapper">
+            <RejectModal v-model:isOpenModal="isOpenModal" v-model:rejectValue="rejectValue"
+                :reject="() => handleRejectRecipe(recipeId)" />
             <div class="h-full flex flex-col">
                 <div class="m-5 mt-0 flex justify-between">
                     <div>
@@ -171,7 +173,7 @@
                                                         :disabled="recipe.status ===
                                                             RecipeStatusEnum.REJECTED
                                                             " @click="
-        handleRejectRecipe(
+        handleOpenModal(
             recipe.id
         )
         ">
@@ -223,6 +225,7 @@ import RecipeFilters from "../../Recipe/components/RecipeFilters.vue";
 import { RecipeStatusEnum } from "../../Recipe/models/Recipe.js";
 import RecipeCardInfo from "../../Recipe/components/RecipeCardInfo.vue";
 import Dropdown from "../../common/components/Dropdown.vue";
+import RejectModal from "../components/RejectModal.vue";
 
 const recipes = ref([]);
 const searchValue = ref("");
@@ -231,6 +234,9 @@ const isLoadingBtn = ref(false);
 const page = ref(1);
 const scrollComponent = ref(null);
 const filterValue = ref(RecipeStatusEnum.ALL);
+const isOpenModal = ref(false);
+const rejectValue = ref("");
+const recipeId = ref(null);
 
 const links = (id) => {
     return [
@@ -361,10 +367,17 @@ const handleAcceptRecipe = async (recipeId) => {
     );
     const response = await Recipe.updateRecipeStatus(
         recipeId,
-        RecipeStatusEnum.ACCEPTED
+        RecipeStatusEnum.ACCEPTED,
+        'accepted'
     );
     recipes.value[recipeIndex].status = response.status;
     isLoadingBtn.value = false;
+};
+
+const handleOpenModal = (id) => {
+    recipeId.value = id;
+    isOpenModal.value = true;
+    rejectValue.value = "";
 };
 
 const handleRejectRecipe = async (recipeId) => {
@@ -374,7 +387,8 @@ const handleRejectRecipe = async (recipeId) => {
     );
     const response = await Recipe.updateRecipeStatus(
         recipeId,
-        RecipeStatusEnum.REJECTED
+        RecipeStatusEnum.REJECTED,
+        rejectValue.value
     );
     recipes.value[recipeIndex].status = response.status;
     isLoadingBtn.value = false;

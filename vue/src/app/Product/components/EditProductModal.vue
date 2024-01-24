@@ -69,7 +69,7 @@
                                                 :class="errors.quantityType ? 'bg-red-100' : ''">
                                                 <option value="g">gramy</option>
                                                 <option value="ml">mililitry</option>
-                                                <option value="szt.">sztuki</option>
+                                                <option value="szt">sztuki</option>
                                             </select>
                                         </div>
                                     </div>
