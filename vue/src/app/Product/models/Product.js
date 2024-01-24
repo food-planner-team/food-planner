@@ -9,7 +9,7 @@ import User from "../../System/models/User.js";
 const schema = Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    quantity: Joi.number().required(),
+    quantity: Joi.number(),
     quantity_type: Joi.string().required(),
     kcal: Joi.number().required(),
     status: Joi.number().required(),

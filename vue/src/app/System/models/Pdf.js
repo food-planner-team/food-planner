@@ -18,6 +18,23 @@ class Pdf {
 
         return data;
     }
+
+    static async generateSoppingList(dateStart, dateEnd) {
+        const data = await Api.get(
+            `/user/shopping-list?date_start=${dateStart}&date_end=${dateEnd}`,
+            {
+                responseType: "blob",
+            }
+        )
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                throw error;
+            });
+
+        return data;
+    }
 }
 
 export default Pdf;
