@@ -12,7 +12,7 @@
                         enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95">
                         <DialogPanel
-                            class="w-full max-w-[500px] h-[90dvh] lg:h-[40rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative">
+                            class="w-full max-w-[500px] h-[90dvh] lg:h-[36rem] transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all flex flex-col relative">
                             <button class="flex justify-center items-center absolute top-5 right-5 lg:hidden"
                                 @click="closeModal">
                                 <span class="material-symbols-outlined">
@@ -53,13 +53,6 @@
                                     </div>
                                     <div class="flex flex-col w-full justify-between">
                                         <div class="flex flex-col">
-                                            <label class="mb-2 flex gap-2" for="quantity">Wartość miary</label>
-                                            <input class="border border-gray-300 rounded-md p-2" type="number" id="quantity"
-                                                min="0" placeholder="Wartość miary" v-model="quantity"
-                                                @keypress="errors.quantity = false" :class="errors.quantity ? 'bg-red-100 ' : ''
-                                                    " />
-                                        </div>
-                                        <div class="flex flex-col">
                                             <label class="mb-2 flex gap-2" for="quantityType">
                                                 Jednostka miary
                                             </label>
@@ -72,13 +65,13 @@
                                                 <option value="szt">sztuki</option>
                                             </select>
                                         </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-2" for="kcal">Ilość kalorii produktu</label>
+                                            <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal"
+                                                min="0" placeholder="Ilość kalorii produktu" v-model="kcal" :class="errors.kcal ? 'bg-red-100 ' : ''
+                                                    " @keypress="errors.kcal = false" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-col pt-5">
-                                    <label class="mb-2" for="kcal">Ilość kalorii produktu</label>
-                                    <input class="border border-gray-300 rounded-md p-2" type="number" id="kcal" min="0"
-                                        placeholder="Ilość kalorii produktu" v-model="kcal" :class="errors.kcal ? 'bg-red-100 ' : ''
-                                            " @keypress="errors.kcal = false" />
                                 </div>
                             </div>
                             <div class="flex justify-center sm:justify-end p-4">
@@ -122,7 +115,6 @@ watch(route, () => {
 
 const product = ref({});
 const name = ref("");
-const quantity = ref("");
 const quantityType = ref("");
 const kcal = ref("");
 const image = ref(null);
@@ -165,7 +157,6 @@ async function openModal() {
 
     name.value = product.value.name;
     kcal.value = product.value.kcal;
-    quantity.value = product.value.quantity;
     quantityType.value = product.value.quantityType;
     image.value = product.value.image.url;
 }
@@ -203,7 +194,6 @@ const onFileChange = (e) => {
 const updateProduct = async () => {
     if (
         !name.value ||
-        !quantity.value ||
         !quantityType.value ||
         !kcal.value ||
         !image.value
@@ -216,7 +206,6 @@ const updateProduct = async () => {
         errors.name = name.value ? false : true;
         errors.image = image.value ? false : true;
         errors.kcal = kcal.value > 0 ? false : true;
-        errors.quantity = quantity.value > 0 ? false : true;
         errors.quantityType = quantityType.value ? false : true;
 
         return;
@@ -225,7 +214,6 @@ const updateProduct = async () => {
     const data = {
         name: name.value,
         kcal: kcal.value,
-        quantity: quantity.value,
         quantity_type: quantityType.value,
     };
 
@@ -243,7 +231,6 @@ const updateProduct = async () => {
 
         name.value = "";
         kcal.value = "";
-        quantity.value = "";
         quantityType.value = null;
         newImage.value = null;
 
