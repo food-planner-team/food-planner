@@ -16,7 +16,7 @@
                 leave-from="opacity-100"
                 leave-to="opacity-0"
             >
-                <div class="fixed inset-0 bg-black bg-opacity-25" />
+                <div class="fixed inset-0 bg-black bg-opacity-25"/>
             </TransitionChild>
 
             <div class="fixed inset-0 overflow-y-auto">
@@ -57,7 +57,7 @@
                                     class="lg:inline-flex justify-center rounded-md border border-transparent bg-primary-dark px-12 py-2.5 text-sm font-medium text-white hover:bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hidden"
                                     @click="closeModal"
                                 >
-                                    Powrót
+                                    Zamknij
                                 </button>
                             </div>
                             <div class="ml-4">
@@ -123,7 +123,7 @@
                                             class="inline-flex justify-center rounded-md border border-transparent bg-white px-12 w-[200px] py-2.5 text-sm font-medium text-black hover:bg-primary-dark hover:text-white border-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             @click="addMeal(item)"
                                         >
-                                            Wybierz danie
+                                            Dodaj danie
                                         </button>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                             >
                                 Brak pasujących przepisów
                             </div>
-                            <Loader v-if="isLoading" class="m-auto" />
+                            <Loader v-if="isLoading" class="m-auto"/>
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import {ref, watch} from "vue";
 import {
     TransitionRoot,
     TransitionChild,
@@ -152,11 +152,13 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
-import { getLocaleDate } from "../../common/utils/datesHelpers.js";
+import {getLocaleDate} from "../../common/utils/datesHelpers.js";
 import Recipe from "../../Recipe/models/Recipe.js";
 import Loader from "../../common/components/Loader.vue";
-import { useInfiniteScroll } from "@vueuse/core";
+import {useInfiniteScroll} from "@vueuse/core";
+import {useStore} from "vuex";
 
+const store = useStore();
 const props = defineProps({
     date: String,
 });
@@ -178,7 +180,15 @@ const emit = defineEmits(["update"]);
 
 function addMeal(v) {
     emit("update", v);
-    closeModal();
+    store.commit("Toast/addToast", {
+        message: "Product został dodany do listy",
+        type: "success",
+    });
+    if (searchValue.value !== "") {
+        searchValue.value = ""
+        getRecipes();
+    }
+
 }
 
 const page = ref(1);
@@ -229,7 +239,7 @@ useInfiniteScroll(
     () => {
         getRecipesOnScroll();
     },
-    { distance: 300 }
+    {distance: 300}
 );
 </script>
 
@@ -239,6 +249,7 @@ img {
     width: 100%;
     object-fit: cover;
 }
+
 .meal-block {
     display: flex;
     align-items: center;

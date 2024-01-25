@@ -31,13 +31,13 @@ class ProductTransformer extends TransformerAbstract
 
     public function includeImage(Product $product)
     {
-        if (!$product->image) return $this->null();
+        if (!$product->image) return null;
         return $this->item($product->image, new ImageTransformer);
     }
 
     public function includeUser(Product $product)
     {
-        if (!$product->image) return $this->null();
+        if (!$product->image) return null;
         return $this->item($product->user, new UserTransformer);
     }
 
