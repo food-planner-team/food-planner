@@ -439,7 +439,7 @@ class ProductSeeder extends ModelSeeder
                     if (env('APP_ENV') == 'local') {
                         $image = new ImageFactory('\images\products\/', $file, $product, 'public');
                     } else {
-                        $image = new ImageFactory('images/products/', $file, $product, 'public');
+                        $image = new ImageFactory('/images/products/', $file, $product, 'public');
                     }
                     $image->create();
                 }
